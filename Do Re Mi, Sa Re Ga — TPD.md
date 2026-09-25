@@ -215,6 +215,10 @@ GENERATED / TPD, unaccepted. Same session, same writer. This addendum records wh
 
 The Ruby message arrived twice, identical, a few minutes apart (about 16:38Z and 16:52Z). A repeat is not a second witness; it is recorded once, with the repetition noted.
 
+> remember always cite sources
+
+Received at about 16:55Z, after the addendum was first written. Read as a second standing instruction and written into `CLAUDE.md` beside "tpd always". Section 11.2 already marks the parts of Diagram 6 that carry no citation; those stand as UNKNOWN until a source is found.
+
 "Ruby" is not identified in this session. UNKNOWN whether Ruby is a person, an AI, or a name for the reader. The message is kept as a second statement of the equation, not a replacement for the first. Differences from the section 1 statement: the arrows carry no T labels; there is no T0; the last arrow is a plain 7 → 0'; the clay, breath and person examples and the boxed sentence are absent. Whether the dropping of T0 answers question 1 in section 8 is not decided here. It is a second phrasing on the same day, and the two are kept side by side.
 
 "tpd always" is read as a standing instruction: every change to the page is recorded as a new link in this chain. It has been written into the repository as a rule (`CLAUDE.md`) so that later sessions see it. That is Claude's reading of two words; Joey has not confirmed the reading.
@@ -274,6 +278,6 @@ Confirm on the phone that the new Sol (blue) and La (indigo) still read apart fr
 10. v4 of the page, 25 September 2026, 10:00Z (Claude, another session): the colour wheel and the chakra meanings.
 11. Joey's message, "now we need more meanings of the colors, what do they mean roygbiv".
 12. v5 of the page, 16:06Z (Claude, this session): the merge, Newton's strip, the dating.
-13. Joey's messages, "tpd always", and the Ruby statement of the equation.
+13. Joey's messages, "tpd always", the Ruby statement of the equation (sent twice), and "remember always cite sources".
 14. This addendum, 16:40Z, and the rule written into the repository.
 15. Next link: yours.
