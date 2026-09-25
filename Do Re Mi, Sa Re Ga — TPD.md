@@ -194,3 +194,84 @@ Open the page on the phone and tap one piece and one step; the audio needs a tap
 7. The Ar Don Go helix script, 09:21Z, same session, as the nearest shape in the Blender material to Diagram 2.
 8. This TPD, 25 September 2026, 09:55Z.
 9. Next link: yours.
+
+## 11. Addendum, 25 September 2026, 16:40Z (22:25 Kathmandu)
+
+GENERATED / TPD, unaccepted. Same session, same writer. This addendum records what happened after section 10 was written. Nothing above it was changed.
+
+### 11.0 Joey's words since section 1 (SOURCED, verbatim)
+
+> now we need more meanings of the colors, what do they mean roygbiv
+
+> tpd always
+
+> Here is the simplest way I would describe the equation to you, Ruby:
+>
+> 0 → 1 → 2 → 3 → 4 → 5 → 6 → 7 → 0' (where 0' is not the same as 0)
+>
+> The numbers 0 through 7 are not meanings. They are merely distinct observable states. "7" carries no more weight than "3."
+>
+> The arrows are the crucial element. Each arrow denotes whatever drives one state into another: heat, breath, pressure, movement, time, language, learning, decay, experience, and so on. Thus the theory examines transformation rather than the numbers. For instance, the movement from 3 to 4.
+
+"Ruby" is not identified in this session. UNKNOWN whether Ruby is a person, an AI, or a name for the reader. The message is kept as a second statement of the equation, not a replacement for the first. Differences from the section 1 statement: the arrows carry no T labels; there is no T0; the last arrow is a plain 7 → 0'; the clay, breath and person examples and the boxed sentence are absent. Whether the dropping of T0 answers question 1 in section 8 is not decided here. It is a second phrasing on the same day, and the two are kept side by side.
+
+"tpd always" is read as a standing instruction: every change to the page is recorded as a new link in this chain. It has been written into the repository as a rule (`CLAUDE.md`) so that later sessions see it. That is Claude's reading of two words; Joey has not confirmed the reading.
+
+### 11.1 Versions since v3 (SOURCED to the artifact service and the repository)
+
+- v4, id 1790330416-4a50, 25 September 2026, 10:00:16Z (15:45 Kathmandu). Published from another session. Added a Diagram 6, "Seven colours, one that isn't there": a colour wheel of seven wedges labelled with note, sargam and chakra, a dashed magenta wedge marked 0′, a meanings table (colour, note, chakra, what it carries) in Nepal and India terms, and a magenta row. Changed the palette: Sol from blue-green to blue, La from blue to indigo, so the seven colours read as true ROYGBIV; added a magenta token. Footer gained Newton's <em>Opticks</em>.
+- v5, id 1790352361-9a87, 25 September 2026, 16:06Z (21:51 Kathmandu). This session. A first publish at 16:04Z was refused because v4 was newer; v5 is the merge. It keeps everything in v4 and adds: a spectrum strip in Newton's band widths with each colour's note, Newton's letter, wavelength and frequency; the one-octave paragraph and the 860 THz line; a Light column and Newton's letter in the table; longer meanings; and a closing hint that dates the rainbow chakra colours to 1977, gives the Nāradīya Śikṣā animals, and sets China's five colours beside the seven. Repository commits 2fc17f8 (16:04:06Z, before the merge) and e85c6ff (16:06:05Z, the merge).
+
+Fingerprint at v5:
+
+```text
+541b4ed30006d2a6740a49ad074b896f06cc32eb5c7f9f7c621f92d837f5542c  do-re-mi-tangram.html  (41,985 bytes)
+```
+
+### 11.2 Who made what in Diagram 6
+
+| Part | Made by | Label |
+|---|---|---|
+| Wheel with chakra labels and the magenta 0′ wedge | Other session, v4 | GENERATED |
+| Chakra pairings (root to crown) and the Nepal and India meanings (sindoor, saffron, Saraswati, Krishna, edge of seeing) | Other session, v4 | GENERATED, drawing on common usage; no single source cited |
+| Palette change to true indigo | Other session, v4 | GENERATED |
+| Spectrum strip in Newton's widths; wavelengths and frequencies | This session, v5 | SOURCED for the widths and numbers, see 11.3; layout GENERATED |
+| Added meanings (luck and new year, marigolds, imperial yellow, 555 nm, lapis lazuli, indikon, ultraviolet and bees) | This session, v5 | GENERATED, general knowledge, not cited to a page |
+| "In Ar Don Go the hero is an orange ping-pong ball" | This session, v5 | SOURCED to `Ar Don Go.md` (Drive, 20 September 2026), which reports Joey's 2016 interview answer on choosing an orange ping-pong ball |
+| 1977 dating of the rainbow chakras; the śikṣā animals; the five Chinese colours | This session, v5 | SOURCED, see 11.3 |
+| "Magenta is 0′ ≠ 0" and "the eye sees one octave, the ear hears ten" | v4 wrote the first, v5 the second | GENERATED interpretation |
+
+### 11.3 External facts added in v4 and v5
+
+| Claim | Source (snippet; the pages themselves were not opened) | Status |
+|---|---|---|
+| Newton had five colours and added orange and indigo to make seven, to match the notes | Wikimedia Commons, "Newton's colour circle"; huevaluechroma.com, "The Dimensions of Colour"; Whipple Library, "Universal Harmony" | SOURCED |
+| He divided the spectrum by the Dorian scale starting on D, with the string fractions 1/9, 1/16, 1/10, 1/9, 1/10, 1/16, 1/9 | huevaluechroma.com snippet | SOURCED; the band widths on the page are computed from these fractions by this session |
+| Newton thought violet was a recurrence of red, as notes recur an octave apart | Whipple Library snippet | SOURCED |
+| Visible spectrum 380 to 750 nm; magenta is non-spectral, no single wavelength | Wikipedia "Spectral color", "Violet (color)"; sciencenotes.org | SOURCED |
+| Band centres 700, 610, 580, 530, 480, 445, 405 nm and the THz figures | Chosen by this session as representative centres; frequencies computed as c/λ | GENERATED numbers within SOURCED ranges |
+| Rainbow chakra colours set out by Christopher Hills, <em>Nuclear Evolution</em>, 1977 | subtleyoga.com; chakratraining.com; divine-warrior.co.uk | SOURCED to secondary pages |
+| Nāradīya Śikṣā: Sa peacock, Re bull, Ga goat, Ma heron, Pa koel, Dha horse, Ni elephant | sreenivasaraos.com, "Naradiya Shiksha" | SOURCED to a secondary page |
+| Chinese five colours 青 赤 黄 白 黑 and the five elements | General knowledge, not searched in this session | UNKNOWN as to source |
+| The chakra pairings root to crown and the Nepal and India meanings in v4 | Not cited by v4 | UNKNOWN as to source |
+
+### 11.4 Competing readings added
+
+6. **Newton's analogy is old and was not believed by later physicists.** The seven-colour count is arbitrary; the spectrum is continuous, and most people see six bands. The page presents Newton's choice as a fact about light. It is a fact about Newton.
+
+7. **The chakra table risks the page's own warning.** v4 pairs each colour with a chakra in the common way, and v5 dates that pairing to 1977 in the same section. A reader may take the pairing as ancient because the notes beside it are. The dating sentence is there to stop that, and it may not be read.
+
+8. **Two statements of the equation now exist from the same day.** The Ruby version drops the T labels and T0. If the arrows' names were part of the theory, the second statement has simplified it; if they were only notation, nothing changed. Not decided here.
+
+### 11.5 Next check, updated
+
+Confirm on the phone that the new Sol (blue) and La (indigo) still read apart from each other on the tangram and the staircase; indigo is dark and the white label may be the only thing separating it from the ink in dark mode. Decide whether the Ruby statement should replace the section 1 statement on the page, or sit beside it, or stay off the page. Record that as a separate dated note.
+
+## 12. The chain, continued
+
+10. v4 of the page, 25 September 2026, 10:00Z (Claude, another session): the colour wheel and the chakra meanings.
+11. Joey's message, "now we need more meanings of the colors, what do they mean roygbiv".
+12. v5 of the page, 16:06Z (Claude, this session): the merge, Newton's strip, the dating.
+13. Joey's messages, "tpd always", and the Ruby statement of the equation.
+14. This addendum, 16:40Z, and the rule written into the repository.
+15. Next link: yours.
