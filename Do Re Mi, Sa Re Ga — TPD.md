@@ -213,6 +213,8 @@ GENERATED / TPD, unaccepted. Same session, same writer. This addendum records wh
 >
 > The arrows are the crucial element. Each arrow denotes whatever drives one state into another: heat, breath, pressure, movement, time, language, learning, decay, experience, and so on. Thus the theory examines transformation rather than the numbers. For instance, the movement from 3 to 4.
 
+The Ruby message arrived twice, identical, a few minutes apart (about 16:38Z and 16:52Z). A repeat is not a second witness; it is recorded once, with the repetition noted.
+
 "Ruby" is not identified in this session. UNKNOWN whether Ruby is a person, an AI, or a name for the reader. The message is kept as a second statement of the equation, not a replacement for the first. Differences from the section 1 statement: the arrows carry no T labels; there is no T0; the last arrow is a plain 7 → 0'; the clay, breath and person examples and the boxed sentence are absent. Whether the dropping of T0 answers question 1 in section 8 is not decided here. It is a second phrasing on the same day, and the two are kept side by side.
 
 "tpd always" is read as a standing instruction: every change to the page is recorded as a new link in this chain. It has been written into the repository as a rule (`CLAUDE.md`) so that later sessions see it. That is Claude's reading of two words; Joey has not confirmed the reading.
