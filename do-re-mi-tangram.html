@@ -1,0 +1,456 @@
+<title>Do Re Mi, Sa Re Ga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&family=Noto+Serif+SC:wght@600&display=swap">
+<style>
+:root{
+  --ground:#F6F4FB; --panel:#FFFFFF; --ink:#1F1B3A; --muted:#625C80; --line:#DDD8EC; --soft:#EEEAF8;
+  --n0:#E5484D; --n1:#F07A1A; --n2:#E8B400; --n3:#3DA35D; --n4:#1FA3A3; --n5:#3E63DD; --n6:#8E4EC6; --n7:#E5484D;
+  --on-note:#FFFFFF;
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --han:"Noto Serif SC","Songti SC","SimSun",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#15131F; --panel:#1E1B2C; --ink:#EEEAF9; --muted:#A79FC4; --line:#332E47; --soft:#262238;
+    --n0:#F06A6E; --n1:#F5923F; --n2:#F2C530; --n3:#56BF77; --n4:#3BBDBD; --n5:#6A88F0; --n6:#A974DA; --n7:#F06A6E;
+    --on-note:#15131F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#15131F; --panel:#1E1B2C; --ink:#EEEAF9; --muted:#A79FC4; --line:#332E47; --soft:#262238;
+  --n0:#F06A6E; --n1:#F5923F; --n2:#F2C530; --n3:#56BF77; --n4:#3BBDBD; --n5:#6A88F0; --n6:#A974DA; --n7:#F06A6E;
+  --on-note:#15131F;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.55 var(--body);padding-inline:16px;padding-block:32px 64px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,7vw,4rem);font-weight:800;letter-spacing:-.01em}
+h1 .twin{color:var(--muted)}
+h2{font-size:clamp(1.6rem,4.5vw,2.2rem);font-weight:800}
+.kicker{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+p{margin:0;max-width:62ch}
+.lede{font-size:1.15rem;color:var(--muted);margin-top:14px}
+section{display:flex;flex-direction:column;gap:14px}
+.fig{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:560px}
+.fig.circle svg{min-width:0;max-width:480px;margin:0 auto}
+.fig.tan svg{min-width:0}
+.hint{font-size:.9rem;color:var(--muted)}
+svg text{font-family:var(--body);fill:var(--ink)}
+.step{cursor:pointer;outline:none}
+.step rect{transition:transform .15s ease;transform-box:fill-box;transform-origin:bottom}
+.step:hover rect,.step:focus-visible rect,.step.on rect{transform:scaleY(1.04)}
+.step:focus-visible rect{stroke:var(--ink);stroke-width:3}
+.step:focus-visible circle{stroke:var(--ink);stroke-width:3}
+.syl{font-family:var(--display)!important;font-weight:800;fill:var(--on-note)!important}
+.small{font-size:13px;fill:var(--muted)!important}
+.mono{font-family:var(--mono)!important}
+.hymn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.hymn ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.hymn li{display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px dashed var(--line)}
+.hymn li:last-child{border-bottom:0}
+.chip{font-family:var(--display);font-weight:800;min-width:3.2em;text-align:center;border-radius:8px;padding:0 8px;color:var(--on-note);flex-shrink:0}
+.hymn em{font-style:normal;color:var(--muted)}
+.hymn b{color:var(--ink)}
+.col h3{font-size:1.2rem;margin:0 0 8px}
+.foot{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+
+/* the equation */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:4px 2px;font-family:var(--mono);font-size:1rem}
+.chain .st{width:2.2em;height:2.2em;border-radius:50%;display:grid;place-items:center;color:var(--on-note);font-weight:800;font-family:var(--display);font-size:1.1rem}
+.chain .st.prime{box-shadow:0 0 0 3px var(--panel),0 0 0 5px var(--ink)}
+.chain .arr{display:inline-flex;flex-direction:column;align-items:center;line-height:1;padding:0 2px;color:var(--muted)}
+.chain .arr small{font-size:.7rem;margin-bottom:-2px}
+.chain .arr span{font-size:1.4rem}
+.eq{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.eq p{max-width:none}
+.eq h3{font-size:1.15rem;margin:0 0 6px}
+.eq .q{font-family:var(--mono);font-size:.95rem;background:var(--soft);border-radius:10px;padding:10px 14px;margin:8px 0}
+.box{border:2px solid var(--ink);border-radius:12px;padding:14px 18px;font-family:var(--display);font-weight:800;font-size:clamp(1.15rem,3vw,1.45rem);line-height:1.25;text-wrap:balance;max-width:none}
+.box.mono{font-family:var(--mono);font-weight:500;font-size:1.1rem;display:inline-block}
+.tri{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.tri div{border-top:2px solid var(--line);padding-top:10px}
+.tri b{display:block;font-family:var(--display);font-size:1.05rem;margin-bottom:4px}
+
+/* tangram controls */
+.ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.seg button,.btn{font:inherit;font-family:var(--display);font-weight:800;font-size:1rem;border:0;background:transparent;color:var(--ink);padding:10px 16px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+.seg button:focus-visible,.btn:focus-visible{outline:3px solid var(--n5);outline-offset:-3px}
+.btn{border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.tan polygon{stroke:var(--panel);stroke-width:3;vector-effect:non-scaling-stroke;stroke-linejoin:round;cursor:pointer;transition:filter .15s}
+.tan g.piece:hover polygon,.tan g.piece:focus-visible polygon,.tan g.piece.on polygon{filter:brightness(1.12)}
+.tan g.piece.on polygon{stroke:var(--ink)}
+.tan g.piece{outline:none}
+.tan g.piece:focus-visible polygon{stroke:var(--ink)}
+.tan text{pointer-events:none}
+.stat{font-family:var(--mono);font-size:.95rem;color:var(--ink);background:var(--soft);border-radius:10px;padding:10px 14px;max-width:none}
+.stat b{font-family:var(--display);font-size:1.15rem}
+
+/* seven boards */
+.han{display:flex;gap:18px;flex-wrap:wrap}
+.han div{text-align:center;min-width:88px}
+.han .zi{font-family:var(--han);font-size:3.2rem;line-height:1.1;display:block}
+.han .py{font-family:var(--mono);font-size:.85rem;color:var(--muted);display:block}
+.han .gl{font-size:.95rem;display:block}
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tl li{display:grid;grid-template-columns:7.5em 1fr;gap:14px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.tl li:last-child{border-bottom:0}
+.tl .yr{font-family:var(--mono);font-size:.9rem;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
+.tl b{font-family:var(--display);font-size:1.05rem}
+.tl p{max-width:none;font-size:.95rem}
+@media (max-width:480px){.tl li{grid-template-columns:1fr;gap:2px}}
+@media (prefers-reduced-motion:reduce){.step rect{transition:none}.tan polygon{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="kicker">Scavenger hunt · clue diagrams</p>
+    <h1>Do Re Mi, <span class="twin">Sa Re Ga</span></h1>
+    <p class="lede">Seven notes, two languages, seven boards, and one journey that comes back changed. Tap any step or piece to hear it.</p>
+  </header>
+
+  <section>
+    <p class="kicker">Diagram 1</p>
+    <h2>The staircase</h2>
+    <p>Each note is one step up. Count from zero and the eighth step, high Do, lands on 7. It has the same <em>name</em> as the Do you started on, but it is an octave higher. Same word, different state: that is 0′, not 0.</p>
+    <div class="fig"><svg id="stairs" viewBox="0 0 800 360" role="img" aria-label="Eight rising steps: Do Re Mi Fa Sol La Ti Do, matched with C D E F G A B C and Sa Re Ga Ma Pa Dha Ni Sa, numbered 0 to 7"></svg></div>
+    <p class="hint">Row by row, under each step: its number counting from 0, the letter in C major, and its Sanskrit twin.</p>
+  </section>
+
+  <section>
+    <p class="kicker">Diagram 2</p>
+    <h2>0 → 7 → 0′: the spiral</h2>
+    <p>Bend the staircase into a ring and the top step lands over the bottom one. High Do sounds like low Do, so the journey seems to end where it began. Look closer and it lands one level up. The second zero has climbed seven steps to get there.</p>
+    <div class="fig circle"><svg id="ring" viewBox="0 0 480 480" role="img" aria-label="Seven notes placed along one turn of a spiral. The eighth point, high Do, sits directly above the first but further out, labelled 7 and zero prime. Each arrow between notes is labelled T1 to T7."></svg></div>
+    <p class="hint">The arrows carry the letter T. Each one is the step that turns one note into the next. Tap a note to hear it, and hear how the last one sounds like the first without being it.</p>
+  </section>
+
+  <section>
+    <p class="kicker">Underneath the diagrams</p>
+    <h2>The equation</h2>
+    <p>This is the simplest way to explain it to someone seeing it cold.</p>
+    <div class="fig">
+      <div class="chain" id="chain" aria-label="0 to 1 to 2 to 3 to 4 to 5 to 6 to 7 to zero prime, each arrow labelled T"></div>
+      <p class="hint" style="margin-top:14px">with</p>
+      <p class="box mono" style="margin-top:6px">0′ ≠ 0</p>
+    </div>
+    <div class="eq">
+      <div>
+        <h3>0, 1, 2, 3, 4, 5, 6, 7</h3>
+        <p>These are not meanings. They are simply different observable states. 7 is no more special than 3.</p>
+      </div>
+      <div>
+        <h3>The arrows are the important part</h3>
+        <p>Each arrow T is whatever causes one state to become another: heat, breath, pressure, movement, time, language, learning, decay, experience. So the theory studies transformation, not the numbers.</p>
+      </div>
+      <div>
+        <h3>Two questions every arrow asks</h3>
+        <p class="q">3 →T₄→ 4</p>
+        <p>What had to happen for state 3 to become state 4?</p>
+        <p class="q">4 → 3</p>
+        <p>Can the transformation actually be reversed? Sometimes yes. Sometimes no.</p>
+      </div>
+      <div>
+        <h3>The final 0′ is the key</h3>
+        <p>The system eventually appears to return to where it started. But the second zero has a history. A piece of clay before and after firing cannot simply be returned to its original condition. A person after an experience may return to the same place but is not the same previous state. A breath can leave and another breath enter, but time has passed.</p>
+      </div>
+    </div>
+    <p class="box">A thing is not only what it is. It is also how it became.</p>
+    <div class="tri">
+      <div><b>The numbers</b>show where something is.</div>
+      <div><b>The arrows</b>show what happened to it.</div>
+      <div><b>The final zero</b>shows that returning is not the same as never having left.</div>
+    </div>
+    <p class="hint">The scale is the smallest case. It takes seven arrows to come round, and the note it lands on sounds like Do because it is Do, an octave up. The tangram below is the case you can hold in your hands.</p>
+  </section>
+
+  <section>
+    <p class="kicker">Diagram 3</p>
+    <h2>Seven pieces, one square</h2>
+    <p>A tangram has seven pieces and a scale has seven notes. Line the pieces up in order and you have the scale. Fit them together and they make one square: the whole set, the octave, home. Take the same seven pieces and build something else, and that is a tune. Bigger piece, lower note, the way bigger drums are lower.</p>
+    <div class="ctl">
+      <div class="seg" role="group" aria-label="Arrangement">
+        <button type="button" id="b-scale" data-lay="scale" aria-pressed="false">Line up</button>
+        <button type="button" id="b-home" data-lay="home" aria-pressed="true">Square</button>
+        <button type="button" id="b-tune" data-lay="tune" aria-pressed="false">Boat</button>
+      </div>
+      <button type="button" class="btn" id="b-play">Play the scale</button>
+    </div>
+    <div class="fig tan"><svg id="tangram" viewBox="0 0 800 460" role="img" aria-label="Seven tangram pieces coloured by note. Do and Re are the two large triangles, Mi the medium triangle, Fa the square, Sol the parallelogram, La and Ti the small triangles. They can be shown lined up in a row, fitted into one square, or rearranged into a boat."></svg></div>
+    <p class="stat" id="tstat"></p>
+    <p class="hint">Every time the pieces go out and come back, the square gets another prime. It is the same square. It has also been a boat.</p>
+  </section>
+
+  <section>
+    <p class="kicker">Diagram 4</p>
+    <h2>Where the names came from</h2>
+    <p>Three separate traditions landed on the same count. The Sanskrit names are centuries older. The European ones come from a Latin hymn used by Guido of Arezzo in 11th-century Italy. The seven boards come from China, and this page gives each board a note.</p>
+    <div class="fig hymn">
+      <div class="col">
+        <h3>Latin hymn, <em>Ut queant laxis</em></h3>
+        <ol id="latin"></ol>
+      </div>
+      <div class="col">
+        <h3>Sanskrit svaras</h3>
+        <ol id="sanskrit"></ol>
+      </div>
+      <div class="col">
+        <h3>Seven boards, <em>七巧板</em></h3>
+        <ol id="boards"></ol>
+      </div>
+    </div>
+    <p class="hint">Guido's system had six notes. Si was added later, from <b>S</b>ancte <b>I</b>ohannes, then changed to Ti in English so each note starts with a different letter. Ut became Do because Do is easier to sing. The fractions are each board's share of the square.</p>
+  </section>
+
+  <section>
+    <p class="kicker">Diagram 5</p>
+    <h2>Seven boards of skill</h2>
+    <p>Tangram is the English name. In Chinese the puzzle is 七巧板, qīqiǎobǎn, three characters that say exactly what it is.</p>
+    <div class="fig">
+      <div class="han" aria-label="The three characters of qiqiaoban">
+        <div><span class="zi" lang="zh">七</span><span class="py">qī</span><span class="gl">seven</span></div>
+        <div><span class="zi" lang="zh">巧</span><span class="py">qiǎo</span><span class="gl">skill, cleverness</span></div>
+        <div><span class="zi" lang="zh">板</span><span class="py">bǎn</span><span class="gl">board</span></div>
+      </div>
+    </div>
+    <div class="fig">
+      <ol class="tl">
+        <li><span class="yr">1079 to 1118</span><div><b>Banquet tables</b><p>Huang Bosi, a scholar of the Northern Song, designs a set of rectangular tables and a book of diagrams, the <em>Yanji tu</em>, showing how to push them together in different ways to seat guests. The pieces are furniture, but the game is already there.</p></div></li>
+        <li><span class="yr">1617</span><div><b>Butterfly tables</b><p>In the Ming dynasty Ge Shan publishes the <em>Butterfly Table Diagrams</em>: thirteen tables in six shapes of triangles and trapezoids, named because their angles look like wings.</p></div></li>
+        <li><span class="yr">late 1700s</span><div><b>Seven pieces</b><p>A simpler set appears, cut from one square: two large triangles, one medium, two small, a square and a parallelogram. This is the puzzle as it is still made.</p></div></li>
+        <li><span class="yr">1813</span><div><b>The first book</b><p>The earliest surviving tangram book, <em>Qiqiao tu hebi</em> (Complete Tangram Diagrams), is published by Bi Wu Jushi with diagrams by Sang Xia Ke.</p></div></li>
+        <li><span class="yr">1815 to 1816</span><div><b>Across the sea</b><p>Captain M. Donnaldson is given a pair of the books, one of problems and one of solutions, when his ship <em>Trader</em> calls at Canton. The ship reaches Philadelphia in February 1816 and the first American tangram book is copied from them.</p></div></li>
+        <li><span class="yr">1817 to 1818</span><div><b>The craze</b><p>The first Western book appears in London in March 1817. Within two years tangram books are printed in England, France, Switzerland, Italy, the Netherlands, Denmark, Germany and the United States.</p></div></li>
+        <li><span class="yr">1848</span><div><b>The word</b><p>Thomas Hill's <em>Geometrical Puzzle for the Young</em> holds the first known use of the English word tangram. Where he got it is not settled: perhaps Tang, the dynasty, plus the Greek -gram, or an old English word for an oddly contrived thing.</p></div></li>
+        <li><span class="yr">1942</span><div><b>Thirteen shapes</b><p>Fu Traing Wang and Chuan-Chih Hsiung prove that the seven pieces can make exactly thirteen convex shapes with no dents: one triangle, six four-sided figures, two pentagons and four hexagons. Everything else, the boat included, has a dent somewhere.</p></div></li>
+      </ol>
+    </div>
+    <p class="hint">One more thing the pieces know about 0′. Six of them look the same in a mirror. The parallelogram does not, so some figures can only be built if you turn it over. Same piece, other side.</p>
+  </section>
+
+  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids.” Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words.</p>
+</div>
+
+<script>
+const NOTES=[
+  {s:"Do",l:"C",g:"Sa",sk:"Shadja",f:261.63,latin:"Ut queant laxis",syl:"Ut → Do",board:"Large triangle",frac:"¼"},
+  {s:"Re",l:"D",g:"Re",sk:"Rishabha",f:293.66,latin:"Resonare fibris",syl:"Re",board:"Large triangle",frac:"¼"},
+  {s:"Mi",l:"E",g:"Ga",sk:"Gandhara",f:329.63,latin:"Mira gestorum",syl:"Mi",board:"Medium triangle",frac:"⅛"},
+  {s:"Fa",l:"F",g:"Ma",sk:"Madhyama",f:349.23,latin:"Famuli tuorum",syl:"Fa",board:"Square",frac:"⅛"},
+  {s:"Sol",l:"G",g:"Pa",sk:"Panchama",f:392.00,latin:"Solve polluti",syl:"Sol",board:"Parallelogram",frac:"⅛"},
+  {s:"La",l:"A",g:"Dha",sk:"Dhaivata",f:440.00,latin:"Labii reatum",syl:"La",board:"Small triangle",frac:"1⁄16"},
+  {s:"Ti",l:"B",g:"Ni",sk:"Nishada",f:493.88,latin:"Sancte Iohannes",syl:"Si → Ti",board:"Small triangle",frac:"1⁄16"},
+  {s:"Do",l:"C",g:"Sa",sk:"",f:523.25}
+];
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+const txt=(p,x,y,s,cls,anchor="middle")=>{const t=el("text",{x,y,"text-anchor":anchor,class:cls||""},p);t.textContent=s;return t};
+const key=(g,fn)=>g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();fn()}});
+
+let ctx;
+function play(f){
+  try{
+    ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime;
+    o.type="triangle";o.frequency.value=f;
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.3,t+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t+1.2);
+    o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+1.25);
+  }catch(e){}
+}
+
+/* Diagram 1: staircase */
+const st=document.getElementById("stairs");
+const W=84,GAP=10,X0=26,BASE=250,H0=48,DH=24;
+NOTES.forEach((n,i)=>{
+  const x=X0+i*(W+GAP),h=H0+i*DH,y=BASE-h,c=`var(--n${i})`;
+  const g=el("g",{class:"step",tabindex:0,role:"button","aria-label":`${n.s}, ${n.l}, ${n.g}, step ${i}`},st);
+  el("rect",{x,y,width:W,height:h,rx:12,fill:c},g);
+  txt(g,x+W/2,y+34,n.s,"syl").setAttribute("font-size",26);
+  const hit=()=>{play(n.f);g.classList.add("on");setTimeout(()=>g.classList.remove("on"),220)};
+  g.addEventListener("click",hit);key(g,hit);
+  txt(st,x+W/2,BASE+30,i===7?"7 · 0′":String(i),"mono").setAttribute("font-size",18);
+  txt(st,x+W/2,BASE+56,n.l,"small");
+  const sg=txt(st,x+W/2,BASE+84,n.g,"");sg.setAttribute("font-size",18);sg.setAttribute("font-weight",700);sg.style.fill=c;
+});
+el("line",{x1:X0-6,x2:X0+8*(W+GAP)-GAP+6,y1:BASE,y2:BASE,stroke:"var(--line)","stroke-width":2},st);
+txt(st,X0-14,BASE+30,"#","small","end");
+const xa=X0+W/2, xb=X0+7*(W+GAP)+W/2, yTop=BASE-(H0+7*DH)-18;
+el("path",{d:`M ${xb} ${yTop} C ${xb-140} ${yTop-26}, ${xa+140} ${BASE-H0-70}, ${xa} ${BASE-H0-10}`,fill:"none",stroke:"var(--muted)","stroke-width":2,"stroke-dasharray":"6 6","marker-end":"url(#ah)"},st);
+const defs=el("defs",{},st),m=el("marker",{id:"ah",viewBox:"0 0 10 10",refX:5,refY:5,markerWidth:7,markerHeight:7,orient:"auto-start-reverse"},defs);
+el("path",{d:"M0 0 L10 5 L0 10 z",fill:"var(--muted)"},m);
+txt(st,(xa+xb)/2-40,yTop+2,"back home, one level up: 7 = 0′","small");
+
+/* Diagram 2: spiral */
+const rg=document.getElementById("ring"),CX=240,CY=240,R0=126,DR=8,NR=24,STEP=2*Math.PI/7;
+const rdefs=el("defs",{},rg),rm=el("marker",{id:"ah2",viewBox:"0 0 10 10",refX:8,refY:5,markerWidth:6,markerHeight:6,orient:"auto"},rdefs);
+el("path",{d:"M0 0 L10 5 L0 10 z",fill:"var(--muted)"},rm);
+const ang=i=>-Math.PI/2+i*STEP, rad=i=>R0+i*DR;
+const pt=(i)=>[CX+rad(i)*Math.cos(ang(i)),CY+rad(i)*Math.sin(ang(i))];
+/* guide spiral: one full turn, dashed */
+let d="";
+for(let k=0;k<=140;k++){const i=k/20,[x,y]=pt(i);d+=(k?" L":"M")+x.toFixed(1)+" "+y.toFixed(1)}
+el("path",{d,fill:"none",stroke:"var(--line)","stroke-width":3},rg);
+/* arrows between nodes, labelled T1..T7 */
+for(let i=0;i<7;i++){
+  const trim0=(NR+3)/rad(i),trim1=(NR+3)/rad(i+1);
+  let dd="";const a0=i+trim0/STEP,a1=i+1-trim1/STEP;
+  for(let k=0;k<=12;k++){const t=a0+(a1-a0)*k/12,[x,y]=pt(t);dd+=(k?" L":"M")+x.toFixed(1)+" "+y.toFixed(1)}
+  el("path",{d:dd,fill:"none",stroke:"var(--muted)","stroke-width":2,"marker-end":"url(#ah2)"},rg);
+  const mi=i+.5,lr=rad(mi)+40,lx=CX+lr*Math.cos(ang(mi)),ly=CY+lr*Math.sin(ang(mi))+4;
+  txt(rg,lx,ly,"T"+(i+1),"mono small");
+}
+const r0=txt(rg,CX,CY-8,"0 → 7 → 0′","mono");r0.setAttribute("font-size",22);
+txt(rg,CX,CY+18,"0′ ≠ 0","mono").setAttribute("font-size",18);
+txt(rg,CX,CY+42,"returning ≠ never leaving","small");
+NOTES.forEach((n,i)=>{
+  const [x,y]=pt(i);
+  const g=el("g",{class:"step",tabindex:0,role:"button","aria-label":i===7?`High Do / Sa, step 7, zero prime`:`${n.s} / ${n.g}, step ${i}`},rg);
+  if(i===7)el("circle",{cx:x,cy:y,r:NR+6,fill:"none",stroke:"var(--ink)","stroke-width":2,"stroke-dasharray":"4 4"},g);
+  el("circle",{cx:x,cy:y,r:NR,fill:`var(--n${i})`},g);
+  const t=txt(g,x,y+1,n.s,"syl");t.setAttribute("font-size",17);
+  const t2=txt(g,x,y+14,n.g,"syl");t2.setAttribute("font-size",10);
+  const hit=()=>play(n.f);g.addEventListener("click",hit);key(g,hit);
+  const lr=rad(i)+(i===7?46:40),lx=CX+lr*Math.cos(ang(i)),ly=CY+lr*Math.sin(ang(i))+4;
+  txt(rg,lx,ly,i===7?"7 · 0′":String(i),"mono small");
+});
+
+/* The equation chain */
+const chain=document.getElementById("chain");
+const state=(label,i,prime)=>{const s=document.createElement("span");s.className="st"+(prime?" prime":"");s.style.background=`var(--n${i})`;s.textContent=label;s.setAttribute("aria-label",prime?"zero prime":label);return s};
+const arrow=(sub)=>{const a=document.createElement("span");a.className="arr";a.innerHTML=`<small>T<sub>${sub}</sub></small><span>→</span>`;return a};
+for(let i=0;i<=7;i++){chain.appendChild(state(String(i),i,false));chain.appendChild(arrow(i<7?i+1:0))}
+chain.appendChild(state("0′",0,true));
+
+/* Diagram 3: tangram */
+const TG=document.getElementById("tangram");
+const U=50; /* px per stage unit */
+/* canonical shapes, in raw units; the square is 4 by 4 */
+const L=[[0,0],[4,0],[2,2]], M=[[0,0],[2,0],[0,2]], S=[[1,0],[2,1],[1,2],[0,1]], P=[[0,0],[2,0],[3,-1],[1,-1]], T=[[0,0],[2,0],[1,1]];
+const PIECES=[
+  {i:0,shape:L,fs:26},{i:1,shape:L,fs:26},{i:2,shape:M,fs:20},{i:3,shape:S,fs:20},{i:4,shape:P,fs:18},{i:5,shape:T,fs:14},{i:6,shape:T,fs:14}
+];
+/* the layouts: raw coordinates, then a uniform scale and offset onto the 16 by 9.2 stage */
+const rowX=[0,4.33,8.67,11,13.33,16.67,19], rowB=i=>10-0.8*i;
+const LAYOUTS={
+  home:{k:2,ox:4,oy:0.6,pts:[
+    [[0,0],[4,0],[2,2]], [[0,4],[0,0],[2,2]], [[4,4],[2,4],[4,2]], [[3,1],[4,2],[3,3],[2,2]],
+    [[0,4],[2,4],[3,3],[1,3]], [[4,0],[4,2],[3,1]], [[3,3],[1,3],[2,2]] ]},
+  tune:{k:1.05,ox:4.85,oy:0.4,pts:[
+    [[0,6],[4,6],[2,8]], [[3,6],[3,2],[5,4]], [[3,6],[1,6],[3,4]], [[3,0],[4,1],[3,2],[2,1]],
+    [[3,7],[5,7],[6,6],[4,6]], [[3,7],[5,7],[4,8]], [[4,8],[2,8],[3,7]] ]},
+  scale:{k:0.75,ox:0.125,oy:0,pts:(()=>{
+    const B=rowB,x=rowX;return [
+      [[x[0]+4,B(0)],[x[0],B(0)],[x[0]+2,B(0)-2]],
+      [[x[1]+4,B(1)],[x[1],B(1)],[x[1]+2,B(1)-2]],
+      [[x[2]+2,B(2)],[x[2],B(2)],[x[2]+2,B(2)-2]],
+      [[x[3]+1,B(3)-2],[x[3]+2,B(3)-1],[x[3]+1,B(3)],[x[3],B(3)-1]],
+      [[x[4],B(4)],[x[4]+2,B(4)],[x[4]+3,B(4)-1],[x[4]+1,B(4)-1]],
+      [[x[5]+2,B(5)],[x[5],B(5)],[x[5]+1,B(5)-1]],
+      [[x[6]+2,B(6)],[x[6],B(6)],[x[6]+1,B(6)-1]] ]})()}
+};
+/* similarity transform (scale, rotation, translation) taking the canonical shape onto the target */
+function fit(shape,q,lay){
+  const px=p=>[(p[0]*lay.k+lay.ox)*U,(p[1]*lay.k+lay.oy)*U];
+  const q0=px(q[0]),q1=px(q[1]),p0=shape[0],p1=shape[1];
+  const s=Math.hypot(q1[0]-q0[0],q1[1]-q0[1])/Math.hypot(p1[0]-p0[0],p1[1]-p0[1]);
+  const th=Math.atan2(q1[1]-q0[1],q1[0]-q0[0])-Math.atan2(p1[1]-p0[1],p1[0]-p0[0]);
+  const c=Math.cos(th),sn=Math.sin(th);
+  return {s,th,tx:q0[0]-s*(c*p0[0]-sn*p0[1]),ty:q0[1]-s*(sn*p0[0]+c*p0[1])};
+}
+const tanPieces=PIECES.map((pc,idx)=>{
+  const n=NOTES[pc.i];
+  const g=el("g",{class:"piece",tabindex:0,role:"button","aria-label":`${n.s}, ${n.g}, ${n.board}`},TG);
+  const poly=el("polygon",{points:pc.shape.map(p=>p.join(",")).join(" "),fill:`var(--n${pc.i})`},g);
+  const lab=el("text",{"text-anchor":"middle",class:"syl"},TG);
+  const lab2=el("text",{"text-anchor":"middle",class:"syl"},TG);
+  const cx=pc.shape.reduce((a,p)=>a+p[0],0)/pc.shape.length, cy=pc.shape.reduce((a,p)=>a+p[1],0)/pc.shape.length;
+  const hit=()=>{play(n.f);g.classList.add("on");setTimeout(()=>g.classList.remove("on"),260)};
+  g.addEventListener("click",hit);key(g,hit);
+  const fits={};for(const k in LAYOUTS)fits[k]=fit(pc.shape,LAYOUTS[k].pts[idx],LAYOUTS[k]);
+  return {pc,n,g,poly,lab,lab2,cx,cy,fits,cur:{...fits.home}};
+});
+function render(tp){
+  const {s,th,tx,ty}=tp.cur,c=Math.cos(th),sn=Math.sin(th);
+  tp.g.setAttribute("transform",`translate(${tx.toFixed(2)} ${ty.toFixed(2)}) rotate(${(th*180/Math.PI).toFixed(2)}) scale(${s.toFixed(3)})`);
+  const wx=tx+s*(c*tp.cx-sn*tp.cy), wy=ty+s*(sn*tp.cx+c*tp.cy);
+  const fs=Math.max(11,tp.pc.fs*s/100), two=s>=60&&tp.pc.shape!==T||s>=90;
+  tp.lab.setAttribute("x",wx.toFixed(1));tp.lab.setAttribute("y",(wy+(two?fs*0.1:fs*0.35)).toFixed(1));tp.lab.setAttribute("font-size",fs.toFixed(1));tp.lab.textContent=tp.n.s;
+  tp.lab2.setAttribute("x",wx.toFixed(1));tp.lab2.setAttribute("y",(wy+fs*0.9).toFixed(1));tp.lab2.setAttribute("font-size",(fs*0.6).toFixed(1));tp.lab2.textContent=two?tp.n.g:"";
+}
+tanPieces.forEach(render);
+let current="home",returns=0,anim=null;
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function setLayout(name){
+  if(name===current)return;
+  if(name==="home")returns++;
+  current=name;
+  document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lay===name)));
+  const from=tanPieces.map(tp=>({...tp.cur})),to=tanPieces.map(tp=>tp.fits[name]);
+  const t0=performance.now(),dur=reduce?0:650;
+  if(anim)cancelAnimationFrame(anim);
+  const step=now=>{
+    const u=dur?Math.min(1,(now-t0)/dur):1,e=u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;
+    tanPieces.forEach((tp,i)=>{
+      const a=from[i],b=to[i];let dth=b.th-a.th;while(dth>Math.PI)dth-=2*Math.PI;while(dth<-Math.PI)dth+=2*Math.PI;
+      tp.cur={s:a.s+(b.s-a.s)*e,th:a.th+dth*e,tx:a.tx+(b.tx-a.tx)*e,ty:a.ty+(b.ty-a.ty)*e};
+      render(tp);
+    });
+    if(u<1)anim=requestAnimationFrame(step);else anim=null;
+  };
+  anim=requestAnimationFrame(step);
+  status();
+}
+const primes=n=>n<=4?"0"+"′".repeat(n):`0′×${n}`;
+function status(){
+  const sEl=document.getElementById("tstat");
+  if(current==="home"){
+    sEl.innerHTML=returns===0
+      ?`<b>0</b> · The square, as it came out of the box. Seven pieces, nothing moved yet.`
+      :`<b>${primes(returns)}</b> · The same square, rebuilt ${returns===1?"once":returns+" times"}. It went out ${returns===1?"once":returns+" times"} and came back.`;
+  }else if(current==="scale"){
+    sEl.innerHTML=`<b>0 → 6</b> · The seven pieces in order, Do to Ti. Bigger piece, lower note. This is the scale laid flat.`;
+  }else{
+    sEl.innerHTML=`<b>a tune</b> · The same seven pieces, nothing added, nothing missing, sailing. Press Square to bring them home.`;
+  }
+}
+status();
+document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>setLayout(b.dataset.lay)));
+let playing=false;
+document.getElementById("b-play").addEventListener("click",()=>{
+  if(playing)return;playing=true;
+  const order=[0,1,2,3,4,5,6];
+  order.forEach((i,k)=>setTimeout(()=>{
+    const tp=tanPieces[i];play(tp.n.f);tp.g.classList.add("on");setTimeout(()=>tp.g.classList.remove("on"),300);
+  },k*380));
+  setTimeout(()=>{
+    play(NOTES[7].f);tanPieces.forEach(tp=>tp.g.classList.add("on"));
+    setTimeout(()=>{tanPieces.forEach(tp=>tp.g.classList.remove("on"));playing=false},700);
+  },7*380);
+});
+
+/* Diagram 4: the three lists */
+const SK=[3,2,2,2,2,3,2];
+const lat=document.getElementById("latin"),san=document.getElementById("sanskrit"),brd=document.getElementById("boards");
+NOTES.slice(0,7).forEach((n,i)=>{
+  const c=`var(--n${i})`;
+  const first=n.latin.slice(0,i===6?1:2), rest=n.latin.slice(i===6?1:2);
+  const li=document.createElement("li");
+  li.innerHTML=`<span class="chip" style="background:${c}">${n.syl}</span><span><b>${first}</b>${rest}</span>`;
+  lat.appendChild(li);
+  const li2=document.createElement("li");
+  li2.innerHTML=`<span class="chip" style="background:${c}">${n.g}</span><span><b>${n.sk.slice(0,SK[i])}</b>${n.sk.slice(SK[i])}</span>`;
+  san.appendChild(li2);
+  const li3=document.createElement("li");
+  li3.innerHTML=`<span class="chip" style="background:${c}">${n.s}</span><span><b>${n.board}</b> <em>${n.frac}</em></span>`;
+  brd.appendChild(li3);
+});
+</script>
