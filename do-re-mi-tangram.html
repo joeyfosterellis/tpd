@@ -108,6 +108,23 @@ svg text{font-family:var(--body);fill:var(--ink)}
 .tl b{font-family:var(--display);font-size:1.05rem}
 .tl p{max-width:none;font-size:.95rem}
 @media (max-width:480px){.tl li{grid-template-columns:1fr;gap:2px}}
+/* seven colours */
+.fig.spec svg{min-width:640px}
+.fig.wheel svg{min-width:0;max-width:420px;margin:0 auto}
+.band{cursor:pointer;outline:none}
+.band rect{transition:transform .15s ease;transform-box:fill-box;transform-origin:bottom}
+.band:hover rect,.band:focus-visible rect,.band.on rect{transform:scaleY(1.05)}
+.band:focus-visible rect{stroke:var(--ink);stroke-width:3}
+.ctable{width:100%;border-collapse:collapse;font-size:.95rem;min-width:640px}
+.ctable th{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 8px 8px 0;border-bottom:1px solid var(--line);font-weight:500}
+.ctable td{padding:10px 8px 10px 0;border-bottom:1px dashed var(--line);vertical-align:top}
+.ctable tr:last-child td{border-bottom:0}
+.ctable .sw{display:block;width:2.4em;height:2.4em;border-radius:8px}
+.ctable .nm{font-family:var(--display);font-weight:800;font-size:1.05rem;white-space:nowrap}
+.ctable .nm small{display:block;font-family:var(--mono);font-weight:500;font-size:.75rem;color:var(--muted)}
+.ctable .num{font-family:var(--mono);font-size:.85rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ctable .mean{max-width:none}
+
 @media (prefers-reduced-motion:reduce){.step rect{transition:none}.tan polygon{transition:none}}
 </style>
 
@@ -115,7 +132,7 @@ svg text{font-family:var(--body);fill:var(--ink)}
   <header>
     <p class="kicker">Scavenger hunt · clue diagrams</p>
     <h1>Do Re Mi, <span class="twin">Sa Re Ga</span></h1>
-    <p class="lede">Seven notes, two languages, seven boards, and one journey that comes back changed. Tap any step or piece to hear it.</p>
+    <p class="lede">Seven notes, two languages, seven boards, seven colours, and one journey that comes back changed. Tap any step or piece to hear it.</p>
   </header>
 
   <section>
@@ -237,7 +254,23 @@ svg text{font-family:var(--body);fill:var(--ink)}
     <p class="hint">One more thing the pieces know about 0′. Six of them look the same in a mirror. The parallelogram does not, so some figures can only be built if you turn it over. Same piece, other side.</p>
   </section>
 
-  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids.” Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words.</p>
+  <section>
+    <p class="kicker">Diagram 6</p>
+    <h2>Seven colours</h2>
+    <p>The colours on this page are not decoration. Do is red and Ti is violet because that is the order light itself uses, and because the man who fixed the rainbow at seven did it to match the notes. In 1704 Isaac Newton had five colours in his prism and added two, orange and indigo, so the count would come to seven. He then divided the spectrum by the same string lengths that give the seven notes, and he wrote that violet is red coming round again, the way a note comes round an octave up. Newton's rainbow is Diagram 2 in light.</p>
+    <div class="fig spec"><svg id="spectrum" viewBox="0 0 800 300" role="img" aria-label="The spectrum as seven bands, red to violet, each band as wide as Newton made it from the Dorian scale, labelled with its note, Newton's note letter, wavelength and frequency"></svg></div>
+    <p class="hint">Band widths are Newton's: red, yellow and green are the whole tones, orange and indigo are the two half tones, which is why the two colours he added are the two narrow ones. Newton started his scale on D. This page starts it on Do. Tap a band to hear its note. His "blue" is close to what we would now call blue-green, and his "indigo" is close to what we would now call blue, which is how this page colours Sol and La.</p>
+    <p>Bend the spectrum into a ring and there is a gap. Violet does not run into red. Red doubled is 860 THz, which is ultraviolet, real and invisible. So the eye fills the gap itself, with purple and magenta, colours that have no wavelength at all. The circle closes with a colour that is not in the light. That is 0′ for the eye: the return is made, and it is made of something new.</p>
+    <div class="fig wheel"><svg id="wheel" viewBox="0 0 420 420" role="img" aria-label="The seven spectral colours as wedges of a ring, with an eighth wedge of magenta closing the gap between violet and red, marked as zero prime because magenta has no wavelength"></svg></div>
+    <p class="hint">The whole visible spectrum, 380 to 750 nm, is a frequency ratio of just under 2 to 1. The eye sees about one octave. The ear hears ten.</p>
+    <div class="fig"><table class="ctable" id="ctable">
+      <thead><tr><th></th><th>Colour</th><th>Light</th><th>What it has meant</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <p class="hint">The rainbow on the seven chakras, red at the root and violet at the crown, is not ancient. It was set out in California in 1977 in Christopher Hills's <em>Nuclear Evolution</em> and spread from there. The older Indian text on the notes, the Nāradīya Śikṣā, gives each svara an animal rather than a colour: Sa the peacock, Re the bull, Ga the goat, Ma the heron, Pa the koel, Dha the horse, Ni the elephant. And China's oldest colour system counts five, not seven: 青 qīng blue-green, 赤 chì red, 黄 huáng yellow, 白 bái white, 黑 hēi black, one for each of the five elements. Seven notes, seven boards, seven colours, and five colours. The count is a choice, and Newton made his to fit the music.</p>
+  </section>
+
+  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words.</p>
 </div>
 
 <script>
@@ -436,6 +469,78 @@ document.getElementById("b-play").addEventListener("click",()=>{
     setTimeout(()=>{tanPieces.forEach(tp=>tp.g.classList.remove("on"));playing=false},700);
   },7*380);
 });
+
+/* Diagram 6: seven colours */
+const COLS=[
+  {n:"Red",newton:"D",lam:700,w:1/9,mean:"The longest wave the eye can catch and the lowest note of light. Blood, fire, stop. In Nepal and India the colour of tika and of a bride. In China the colour of luck and a new year. In Ar Don Go the hero is an orange ping-pong ball, and orange begins here."},
+  {n:"Orange",newton:"E",lam:610,w:1/18,mean:"Newton's first added colour, and the first narrow band. Saffron, bhagwa: the cloth of sadhus and Theravada monks, the colour of giving things up. Turmeric on the hands, marigolds at Tihar. A ping-pong ball."},
+  {n:"Yellow",newton:"F",lam:580,w:1/12,mean:"The brightest colour to the eye at any given energy. The sun. In imperial China the emperor's colour, forbidden to everyone else. Haldi. Caution, on a road sign."},
+  {n:"Green",newton:"G",lam:530,w:1/12,mean:"The eye's peak sensitivity sits at 555 nm, in green, so this is the colour we see best and the one we tire of least. Growth, spring, go. The colour of Islam and of the bansuri's bamboo."},
+  {n:"Blue",sub:"Newton's blue, now blue-green",newton:"A",lam:480,w:1/15,mean:"Sky and water, and the colour of distance: far hills go blue. For most of history the rarest pigment, ground from lapis lazuli and worth more than gold, which is why painters saved it for the robe of Mary. Krishna's skin."},
+  {n:"Indigo",sub:"Newton's indigo, now blue",newton:"B",lam:445,w:3/80,mean:"Newton's second added colour, and the second narrow band, the one most people cannot pick out of a rainbow. A dye from a plant, and the plant is named for India: Greek indikon, the Indian thing. The colour of every pair of jeans."},
+  {n:"Violet",newton:"C",lam:405,w:1/16,mean:"The shortest wave we can see. Beyond it is ultraviolet, which bees see and we do not. Newton thought violet was red coming round again. Roman emperors wore purple, but their purple came from sea snails and is not this violet: it is the 0′ colour, the one with no wavelength."}
+];
+const THz=lam=>Math.round(299792.458/lam);
+const SP=document.getElementById("spectrum");
+{
+  const tot=COLS.reduce((a,c)=>a+c.w,0),X0s=20,Wt=760,Y=40,H=120;let x=X0s;
+  COLS.forEach((c,i)=>{
+    const w=c.w/tot*Wt,n=NOTES[i];
+    const g=el("g",{class:"band",tabindex:0,role:"button","aria-label":`${c.n}, ${n.s}, ${c.lam} nanometres, ${THz(c.lam)} terahertz`},SP);
+    el("rect",{x,y:Y,width:w,height:H,fill:`var(--n${i})`,stroke:"var(--panel)","stroke-width":2},g);
+    const t=txt(g,x+w/2,Y+H/2+8,n.s,"syl");t.setAttribute("font-size",w<70?16:22);
+    const hit=()=>{play(n.f);g.classList.add("on");setTimeout(()=>g.classList.remove("on"),220)};
+    g.addEventListener("click",hit);key(g,hit);
+    const cx=x+w/2;
+    txt(SP,cx,Y+H+26,c.n,"").setAttribute("font-size",w<70?12:14);
+    txt(SP,cx,Y+H+48,c.newton,"mono small");
+    txt(SP,cx,Y+H+70,c.lam+" nm","small").setAttribute("font-size",11);
+    txt(SP,cx,Y+H+88,THz(c.lam)+" THz","small").setAttribute("font-size",11);
+    x+=w;
+  });
+  txt(SP,X0s,Y-14,"Newton's widths, 1704: whole tones wide, half tones narrow","small","start");
+  txt(SP,X0s,Y+H+120,"760 nm",  "mono small","start");
+  txt(SP,X0s+Wt,Y+H+120,"380 nm","mono small","end");
+  el("line",{x1:X0s,x2:X0s+Wt,y1:Y+H+104,y2:Y+H+104,stroke:"var(--line)","stroke-width":2,"marker-end":"url(#ah)"},SP);
+  const d6=el("defs",{},SP),m6=el("marker",{id:"ah6",viewBox:"0 0 10 10",refX:5,refY:5,markerWidth:7,markerHeight:7,orient:"auto"},d6);
+  el("path",{d:"M0 0 L10 5 L0 10 z",fill:"var(--line)"},m6);
+  SP.lastChild.previousSibling.setAttribute("marker-end","url(#ah6)");
+  txt(SP,X0s+Wt/2,Y+H+120,"shorter waves, higher notes","small");
+}
+/* the wheel: seven spectral wedges and one that is not in the light */
+const WH=document.getElementById("wheel");
+{
+  const cx=210,cy=210,r1=110,r2=180,segs=[...COLS.map((c,i)=>({i,lab:c.n,a:42})),{i:"m",lab:"magenta",a:66}];
+  let a0=-Math.PI/2;
+  const P=(r,a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)];
+  segs.forEach(sg=>{
+    const a1=a0+sg.a*Math.PI/180,[x1,y1]=P(r2,a0),[x2,y2]=P(r2,a1),[x3,y3]=P(r1,a1),[x4,y4]=P(r1,a0),big=sg.a>180?1:0;
+    const d=`M ${x1} ${y1} A ${r2} ${r2} 0 ${big} 1 ${x2} ${y2} L ${x3} ${y3} A ${r1} ${r1} 0 ${big} 0 ${x4} ${y4} Z`;
+    const isM=sg.i==="m";
+    const g=el("g",{class:isM?"":"band",tabindex:isM?-1:0,role:isM?"img":"button","aria-label":isM?"magenta, zero prime, no wavelength":sg.lab},WH);
+    el("path",{d,fill:isM?"#D6338F":`var(--n${sg.i})`,stroke:isM?"var(--ink)":"var(--panel)","stroke-width":isM?2:2,"stroke-dasharray":isM?"5 4":"none"},g);
+    if(!isM){const n=NOTES[sg.i];const hit=()=>play(n.f);g.addEventListener("click",hit);key(g,hit);
+      const [tx,ty]=P((r1+r2)/2,(a0+a1)/2);const t=txt(g,tx,ty+6,n.s,"syl");t.setAttribute("font-size",16);}
+    else{const [tx,ty]=P((r1+r2)/2,(a0+a1)/2);const t=txt(g,tx,ty+6,"0′","syl");t.setAttribute("font-size",20);t.style.fill="#fff";}
+    a0=a1;
+  });
+  const c1=txt(WH,cx,cy-10,"one octave of light","mono");c1.setAttribute("font-size",15);
+  txt(WH,cx,cy+14,"380 to 750 nm","small");
+  txt(WH,cx,cy+34,"the seam is not in the light","small");
+  txt(WH,cx,404,"magenta: no wavelength, made by the eye to close the ring","small");
+}
+/* the table */
+{
+  const tb=document.querySelector("#ctable tbody");
+  COLS.forEach((c,i)=>{
+    const n=NOTES[i],tr=document.createElement("tr");
+    tr.innerHTML=`<td><span class="sw" style="background:var(--n${i})"></span></td>
+      <td class="nm">${c.n}<small>${n.s} · ${n.g} · Newton ${c.newton}${c.sub?"<br>"+c.sub:""}</small></td>
+      <td class="num">${c.lam} nm<br>${THz(c.lam)} THz</td>
+      <td class="mean">${c.mean}</td>`;
+    tb.appendChild(tr);
+  });
+}
 
 /* Diagram 4: the three lists */
 const SK=[3,2,2,2,2,3,2];
