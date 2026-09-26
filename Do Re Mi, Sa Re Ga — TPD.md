@@ -215,6 +215,8 @@ GENERATED / TPD, unaccepted. Same session, same writer. This addendum records wh
 
 The Ruby message arrived twice, identical, a few minutes apart (about 16:38Z and 16:52Z). A repeat is not a second witness; it is recorded once, with the repetition noted.
 
+A third copy arrived on 26 September 2026 at about 01:10Z (06:55 Kathmandu), prefixed "remember:". Both statements of the equation are now kept verbatim in their own file, `The Equation — Joey's words.md`, in the repository and in Drive, so that later sessions read them before writing about 0 → 7 → 0′.
+
 > remember always cite sources
 
 Received at about 16:55Z, after the addendum was first written. Read as a second standing instruction and written into `CLAUDE.md` beside "tpd always". Section 11.2 already marks the parts of Diagram 6 that carry no citation; those stand as UNKNOWN until a source is found.
