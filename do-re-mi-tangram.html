@@ -5,7 +5,7 @@
 <style>
 :root{
   --ground:#F6F4FB; --panel:#FFFFFF; --ink:#1F1B3A; --muted:#625C80; --line:#DDD8EC; --soft:#EEEAF8;
-  --n0:#E5484D; --n1:#F07A1A; --n2:#E8B400; --n3:#3DA35D; --n4:#3E63DD; --n5:#3A2E8C; --n6:#8E4EC6; --n7:#E5484D; --mag:#E0339B;
+  --n0:#E5484D; --n1:#F07A1A; --n2:#E8B400; --n3:#3DA35D; --n4:#3E63DD; --n5:#3A2E8C; --n6:#8E4EC6; --n7:#E5484D; --mag:#E0339B; --black:#0B0A10; --white:#FFFFFF;
   --on-note:#FFFFFF;
   --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,sans-serif;
@@ -16,14 +16,14 @@
   :root:not([data-theme="light"]){
     color-scheme:dark;
     --ground:#15131F; --panel:#1E1B2C; --ink:#EEEAF9; --muted:#A79FC4; --line:#332E47; --soft:#262238;
-    --n0:#F06A6E; --n1:#F5923F; --n2:#F2C530; --n3:#56BF77; --n4:#6A88F0; --n5:#7B6BD6; --n6:#A974DA; --n7:#F06A6E; --mag:#F05FB5;
+    --n0:#F06A6E; --n1:#F5923F; --n2:#F2C530; --n3:#56BF77; --n4:#6A88F0; --n5:#7B6BD6; --n6:#A974DA; --n7:#F06A6E; --mag:#F05FB5; --black:#0B0A10; --white:#FFFFFF;
     --on-note:#15131F;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --ground:#15131F; --panel:#1E1B2C; --ink:#EEEAF9; --muted:#A79FC4; --line:#332E47; --soft:#262238;
-  --n0:#F06A6E; --n1:#F5923F; --n2:#F2C530; --n3:#56BF77; --n4:#6A88F0; --n5:#7B6BD6; --n6:#A974DA; --n7:#F06A6E; --mag:#F05FB5;
+  --n0:#F06A6E; --n1:#F5923F; --n2:#F2C530; --n3:#56BF77; --n4:#6A88F0; --n5:#7B6BD6; --n6:#A974DA; --n7:#F06A6E; --mag:#F05FB5; --black:#0B0A10; --white:#FFFFFF;
   --on-note:#15131F;
 }
 *{box-sizing:border-box}
@@ -114,10 +114,10 @@ svg text{font-family:var(--body);fill:var(--ink)}
 .band rect{transition:transform .15s ease;transform-box:fill-box;transform-origin:bottom}
 .band:hover rect,.band:focus-visible rect,.band.on rect{transform:scaleY(1.05)}
 .band:focus-visible rect{stroke:var(--ink);stroke-width:3}
-.fig.wheel svg{min-width:0;max-width:540px;margin:0 auto}
+.fig.wheel svg{min-width:0;max-width:580px;margin:0 auto}
 .wedge{cursor:pointer;outline:none;transition:transform .15s ease;transform-box:fill-box;transform-origin:center}
-.wedge:hover,.wedge:focus-visible{transform:scale(1.03)}
-.wedge:focus-visible path{stroke:var(--ink);stroke-width:3}
+.wedge:hover,.wedge:focus-visible,.wedge.on{transform:scale(1.04)}
+.wedge:focus-visible path,.wedge:focus-visible circle{stroke:var(--ink);stroke-width:3}
 .tbl{overflow-x:auto}
 table{border-collapse:collapse;width:100%;min-width:720px;font-size:.95rem}
 th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
@@ -126,21 +126,65 @@ td:first-child{font-family:var(--mono)}
 td .num{font-family:var(--mono);font-size:.85rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
 .sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:8px}
 .sw.mag{border:2px dashed var(--mag);background:transparent;width:10px;height:10px}
+.sw.blk{background:var(--black);border:1px solid var(--line)}
+.sw.wht{background:var(--white);border:1px solid var(--muted)}
 td em{font-style:italic;color:var(--muted)}
-@media (prefers-reduced-motion:reduce){.step rect{transition:none}.tan polygon{transition:none}.wedge{transition:none}}
+/* sound */
+.keys{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.key{font:inherit;font-family:var(--display);font-weight:800;font-size:1rem;border:0;border-radius:12px;color:var(--on-note);padding:14px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1;transition:transform .12s ease}
+.key small{font-family:var(--mono);font-weight:500;font-size:.68rem;opacity:.9}
+.key:hover,.key.on{transform:translateY(-4px)}
+.key:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.key.prime{box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 5px var(--ink)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.btn.on{background:var(--soft)}
+.chain .st{cursor:pointer;transition:transform .12s ease;outline:none}
+.chain .st:hover,.chain .st.on{transform:scale(1.18)}
+.chain .st:focus-visible{box-shadow:0 0 0 3px var(--panel),0 0 0 6px var(--n5)}
+.chain .st.prime:focus-visible{box-shadow:0 0 0 3px var(--panel),0 0 0 5px var(--ink),0 0 0 8px var(--n5)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row .lab{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.step rect{transition:none}.tan polygon{transition:none}.wedge{transition:none}.key{transition:none}.chain .st{transition:none}}
 </style>
 
 <div class="wrap">
   <header>
     <p class="kicker">Scavenger hunt · clue diagrams</p>
     <h1>Do Re Mi, <span class="twin">Sa Re Ga</span></h1>
-    <p class="lede">Seven notes, two languages, seven boards, seven colours, and one journey that comes back changed. Tap any step or piece to hear it.</p>
+    <p class="lede">Seven notes, two languages, seven boards, seven colours, and one journey that comes back changed. Tap any step, piece or colour to hear it. Pick a voice, hold a drone, or press the play button under each diagram.</p>
   </header>
+
+  <section>
+    <p class="kicker">Sound</p>
+    <h2>Eight keys, three voices, one drone</h2>
+    <p>Everything on this page makes a sound. Choose the voice it is made in. The drone is Sa, Pa, Sa, the three strings of a tanpura: the note that does not move while the others climb.</p>
+    <div class="fig" style="display:flex;flex-direction:column;gap:16px">
+      <div class="ctl">
+        <div class="row"><span class="lab">Voice</span>
+          <div class="seg" role="group" aria-label="Voice">
+            <button type="button" data-voice="flute" aria-pressed="true">Flute</button>
+            <button type="button" data-voice="bell" aria-pressed="false">Bell</button>
+            <button type="button" data-voice="pluck" aria-pressed="false">Pluck</button>
+          </div>
+        </div>
+        <button type="button" class="btn" id="b-drone" aria-pressed="false">Sa drone</button>
+      </div>
+      <div class="keys" id="keys" role="group" aria-label="Eight keys, Do to high Do"></div>
+      <div class="row">
+        <button type="button" class="btn" id="b-up">Up, 0 → 7</button>
+        <button type="button" class="btn" id="b-down">Down, 7 → 0</button>
+        <button type="button" class="btn" id="b-oct">0 and 0′ together</button>
+        <button type="button" class="btn" id="b-all">All eight at once</button>
+      </div>
+    </div>
+    <p class="hint">On a keyboard, the number keys 1 to 8 play the eight notes. Down is the reversal question: the same arrows run backwards. Play 0 and 0′ together and you hear why they share a name and are not the same note.</p>
+  </section>
 
   <section>
     <p class="kicker">Diagram 1</p>
     <h2>The staircase</h2>
     <p>Each note is one step up. Count from zero and the eighth step, high Do, lands on 7. It has the same <em>name</em> as the Do you started on, but it is an octave higher. Same word, different state: that is 0′, not 0.</p>
+    <div class="ctl"><button type="button" class="btn" id="b-climb">Climb the stairs</button></div>
     <div class="fig"><svg id="stairs" viewBox="0 0 800 360" role="img" aria-label="Eight rising steps: Do Re Mi Fa Sol La Ti Do, matched with C D E F G A B C and Sa Re Ga Ma Pa Dha Ni Sa, numbered 0 to 7"></svg></div>
     <p class="hint">Row by row, under each step: its number counting from 0, the letter in C major, and its Sanskrit twin.</p>
   </section>
@@ -149,6 +193,7 @@ td em{font-style:italic;color:var(--muted)}
     <p class="kicker">Diagram 2</p>
     <h2>0 → 7 → 0′: the spiral</h2>
     <p>Bend the staircase into a ring and the top step lands over the bottom one. High Do sounds like low Do, so the journey seems to end where it began. Look closer and it lands one level up. The second zero has climbed seven steps to get there.</p>
+    <div class="ctl"><button type="button" class="btn" id="b-walk">Walk the spiral</button></div>
     <div class="fig circle"><svg id="ring" viewBox="0 0 480 480" role="img" aria-label="Seven notes placed along one turn of a spiral. The eighth point, high Do, sits directly above the first but further out, labelled 7 and zero prime. Each arrow between notes is labelled T1 to T7."></svg></div>
     <p class="hint">The arrows carry the letter T. Each one is the step that turns one note into the next. Tap a note to hear it, and hear how the last one sounds like the first without being it.</p>
   </section>
@@ -158,6 +203,7 @@ td em{font-style:italic;color:var(--muted)}
     <h2>The equation</h2>
     <p>This is the simplest way to explain it to someone seeing it cold.</p>
     <div class="fig">
+      <div class="ctl" style="margin-bottom:14px"><button type="button" class="btn" id="b-chain">Play the chain</button><span class="hint">Tap any state to hear it.</span></div>
       <div class="chain" id="chain" aria-label="0 to 1 to 2 to 3 to 4 to 5 to 6 to 7 to zero prime, each arrow labelled T"></div>
       <p class="hint" style="margin-top:14px">with</p>
       <p class="box mono" style="margin-top:6px">0′ ≠ 0</p>
@@ -202,11 +248,11 @@ td em{font-style:italic;color:var(--muted)}
         <button type="button" id="b-home" data-lay="home" aria-pressed="true">Square</button>
         <button type="button" id="b-tune" data-lay="tune" aria-pressed="false">Boat</button>
       </div>
-      <button type="button" class="btn" id="b-play">Play the scale</button>
+      <div class="row"><button type="button" class="btn" id="b-play">Play the scale</button><button type="button" class="btn" id="b-pic">Play the picture</button></div>
     </div>
     <div class="fig tan"><svg id="tangram" viewBox="0 0 800 460" role="img" aria-label="Seven tangram pieces coloured by note. Do and Re are the two large triangles, Mi the medium triangle, Fa the square, Sol the parallelogram, La and Ti the small triangles. They can be shown lined up in a row, fitted into one square, or rearranged into a boat."></svg></div>
     <p class="stat" id="tstat"></p>
-    <p class="hint">Every time the pieces go out and come back, the square gets another prime. It is the same square. It has also been a boat.</p>
+    <p class="hint">Every time the pieces go out and come back, the square gets another prime. It is the same square. It has also been a boat. Play the picture reads the pieces where they lie, left to right and top to bottom, so the square, the row and the boat are three tunes from one set of notes.</p>
   </section>
 
   <section>
@@ -258,18 +304,20 @@ td em{font-style:italic;color:var(--muted)}
 
   <section>
     <p class="kicker">Diagram 6</p>
-    <h2>Seven colours, one that isn't there</h2>
+    <h2>Seven colours, and three that aren't there</h2>
     <p>Red is the lowest-frequency light we can see, violet the highest; Do is the lowest note, Ti the highest. Walk 0 → 6 and in both light and sound you are climbing in vibration. That rhyme is not an accident. When Isaac Newton split the spectrum in <em>Opticks</em> (1704) he had five colours and added two, orange and indigo, so that the count would match the seven notes of the scale. He then divided the spectrum by the same string lengths that give the notes, and he wrote that violet is red coming round again, the way a note comes round an octave up. Newton's rainbow is Diagram 2 in light.</p>
+    <div class="ctl"><button type="button" class="btn" id="b-rainbow">Play the rainbow</button></div>
     <div class="fig spec"><svg id="spectrum" viewBox="0 0 800 300" role="img" aria-label="The spectrum as seven bands, red to violet, each band as wide as Newton made it from the Dorian scale, labelled with its note, Newton's note letter, wavelength and frequency"></svg></div>
     <p class="hint">Band widths are Newton's: red, yellow and green are the whole tones, orange and indigo the two half tones, which is why the two colours he added are the two narrow ones. Newton started his scale on D. This page starts it on Do. Tap a band to hear its note.</p>
-    <div class="fig wheel"><svg id="wheel" viewBox="0 0 540 540" role="img" aria-label="A colour wheel of seven bands, red to violet, each labelled with its note, its Sanskrit name and its chakra, joined back to red by a narrow dashed magenta wedge labelled zero prime"></svg></div>
-    <p>Past violet is ultraviolet, which no eye can see. Red doubled is 860 THz, real and invisible. Yet the wheel closes: violet comes back round to red through <strong>magenta</strong>, a colour with no wavelength, which the brain invents to join the two ends. The colour that returns you to red was never in the rainbow at all. Magenta is 0′ ≠ 0.</p>
+    <div class="ctl"><button type="button" class="btn" id="b-round">Round the wheel</button></div>
+    <div class="fig wheel"><svg id="wheel" viewBox="-20 -30 580 600" role="img" aria-label="A colour wheel of seven bands, red to violet, each labelled with its note, its Sanskrit name and its chakra, joined back to red by a narrow dashed magenta wedge labelled zero prime. The centre is black, labelled 0, no light yet. A white ring around the outside is labelled all seven at once."></svg></div>
+    <p>Three colours are missing from the rainbow, and between them they are the whole equation. <strong>Black</strong> is no light at all: the centre of the wheel, nothing has happened yet, 0. <strong>White</strong> is all seven at once, the ring around the outside: the octave sounding together, the square with every piece in it. And past violet is ultraviolet, which no eye can see. Red doubled is 860 THz, real and invisible. Yet the wheel closes: violet comes back round to red through <strong>magenta</strong>, a colour with no wavelength that the brain invents to join the two ends. The colour that returns you to red was never in the rainbow at all. Magenta is 0′ ≠ 0.</p>
     <p class="hint">The whole visible spectrum, 380 to 750 nm, is a frequency ratio of just under 2 to 1. The eye sees about one octave. The ear hears ten.</p>
     <div class="fig tbl"><table id="meanings"><thead><tr><th>#</th><th>Colour</th><th>Note</th><th>Light</th><th>Chakra</th><th>What it carries</th></tr></thead><tbody></tbody></table></div>
-    <p class="hint">Tap a band or a wedge to hear its note. The chakra pairings follow the common seven-chakra convention; the meanings are the ones the colours carry in Nepal and India, where the notes are Sa Re Ga. The rainbow on the chakras, red at the root and violet at the crown, is younger than it looks: it was set out in California in 1977 in Christopher Hills's <em>Nuclear Evolution</em> and spread from there. The older Indian text on the notes, the Nāradīya Śikṣā, gives each svara an animal rather than a colour: Sa the peacock, Re the bull, Ga the goat, Ma the heron, Pa the koel, Dha the horse, Ni the elephant. And China's oldest colour system counts five, not seven: 青 qīng blue-green, 赤 chì red, 黄 huáng yellow, 白 bái white, 黑 hēi black, one for each element. Seven notes, seven boards, seven colours, five colours. The count is a choice, and Newton made his to fit the music.</p>
+    <p class="hint">Tap a band or a wedge to hear its note; tap the black centre for silence and the white ring for all eight notes at once. The chakra pairings follow the common seven-chakra convention; the meanings are the ones the colours carry in Nepal and India, where the notes are Sa Re Ga. The rainbow on the chakras, red at the root and violet at the crown, is younger than it looks: it was set out in California in 1977 in Christopher Hills's <em>Nuclear Evolution</em> and spread from there. The older Indian text on the notes, the Nāradīya Śikṣā, gives each svara an animal rather than a colour: Sa the peacock, Re the bull, Ga the goat, Ma the heron, Pa the koel, Dha the horse, Ni the elephant. And China's oldest colour system counts five, not seven: 青 qīng blue-green, 赤 chì red, 黄 huáng yellow, 白 bái white, 黑 hēi black, one for each element. Seven notes, seven boards, seven colours, five colours. The count is a choice, and Newton made his to fit the music.</p>
   </section>
 
-  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words.</p>
+  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words. Black as 0 was Joey’s answer to Clue 4.</p>
 </div>
 
 <script>
@@ -284,31 +332,99 @@ const NOTES=[
   {s:"Do",l:"C",g:"Sa",sk:"",f:523.25}
 ];
 const NS="http://www.w3.org/2000/svg";
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
 const txt=(p,x,y,s,cls,anchor="middle")=>{const t=el("text",{x,y,"text-anchor":anchor,class:cls||""},p);t.textContent=s;return t};
 const key=(g,fn)=>g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();fn()}});
 
-let ctx;
-function play(f){
+/* sound engine: three voices, a drone, a sequencer */
+let ctx,master,voice="flute",drone=null,busy=false;
+function ac(){
+  ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+  if(ctx.state==="suspended")ctx.resume();
+  if(!master){master=ctx.createGain();master.gain.value=0.9;master.connect(ctx.destination)}
+  return ctx;
+}
+function play(f,dur=1.2){
   try{
-    ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
-    const o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime;
-    o.type="triangle";o.frequency.value=f;
-    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.3,t+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t+1.2);
-    o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+1.25);
+    const c=ac(),t=c.currentTime,g=c.createGain();g.connect(master);
+    if(voice==="flute"){
+      const o=c.createOscillator();o.type="sine";o.frequency.value=f;o.connect(g);
+      const o2=c.createOscillator();o2.type="sine";o2.frequency.value=f*2;const g2=c.createGain();g2.gain.value=0.16;o2.connect(g2).connect(g);
+      const buf=c.createBuffer(1,Math.floor(c.sampleRate*0.12),c.sampleRate),d=buf.getChannelData(0);
+      for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);
+      const n=c.createBufferSource();n.buffer=buf;const bp=c.createBiquadFilter();bp.type="bandpass";bp.frequency.value=f*2;bp.Q.value=2;const gn=c.createGain();gn.gain.value=0.12;n.connect(bp).connect(gn).connect(g);
+      g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.3,t+0.06);g.gain.setValueAtTime(0.3,t+dur*0.55);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.start(t);o2.start(t);n.start(t);o.stop(t+dur+.05);o2.stop(t+dur+.05);
+    }else if(voice==="bell"){
+      g.gain.value=0.55;
+      [[1,0.5,1.8],[2.76,0.22,0.9],[5.4,0.07,0.5]].forEach(([r,a,len])=>{
+        const o=c.createOscillator();o.type="sine";o.frequency.value=f*r;const gg=c.createGain();
+        gg.gain.setValueAtTime(a,t);gg.gain.exponentialRampToValueAtTime(0.0001,t+dur*len);
+        o.connect(gg).connect(g);o.start(t);o.stop(t+dur*len+.05);
+      });
+    }else{
+      const o=c.createOscillator();o.type="triangle";o.frequency.value=f;
+      const lp=c.createBiquadFilter();lp.type="lowpass";lp.frequency.setValueAtTime(f*6,t);lp.frequency.exponentialRampToValueAtTime(f*1.5,t+dur*0.7);
+      o.connect(lp).connect(g);g.gain.setValueAtTime(0.5,t);g.gain.exponentialRampToValueAtTime(0.0001,t+dur*0.9);o.start(t);o.stop(t+dur);
+    }
   }catch(e){}
 }
+function setDrone(on){
+  try{
+    const c=ac(),t=c.currentTime;
+    if(on&&!drone){
+      const g=c.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.08,t+1.5);
+      const lp=c.createBiquadFilter();lp.type="lowpass";lp.frequency.value=900;lp.connect(g).connect(master);
+      /* Sa, Pa, Sa: 130.81, 196.00, 261.63 */
+      const oscs=[[130.81,1],[196.00,0.45],[261.63,0.7]].map(([f,a],k)=>{const o=c.createOscillator();o.type="sawtooth";o.frequency.value=f;o.detune.value=k*2;const gg=c.createGain();gg.gain.value=a;o.connect(gg).connect(lp);o.start(t);return o});
+      drone={g,oscs};
+    }else if(!on&&drone){
+      const d=drone;drone=null;d.g.gain.setValueAtTime(d.g.gain.value,t);d.g.gain.exponentialRampToValueAtTime(0.0001,t+0.9);
+      setTimeout(()=>d.oscs.forEach(o=>{try{o.stop()}catch(e){}}),1000);
+    }
+  }catch(e){}
+}
+const flash=(g,ms=260)=>{if(!g)return;g.classList.add("on");setTimeout(()=>g.classList.remove("on"),ms)};
+function run(items,ms,fn){
+  if(busy)return false;busy=true;
+  items.forEach((it,k)=>setTimeout(()=>fn(it,k),k*ms));
+  setTimeout(()=>{busy=false},items.length*ms+150);
+  return true;
+}
+const note=i=>NOTES[Math.min(i,7)];
+document.querySelectorAll("[data-voice]").forEach(b=>b.addEventListener("click",()=>{
+  voice=b.dataset.voice;document.querySelectorAll("[data-voice]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));play(NOTES[0].f,0.8);
+}));
+const bd=document.getElementById("b-drone");
+bd.addEventListener("click",()=>{const on=bd.getAttribute("aria-pressed")!=="true";bd.setAttribute("aria-pressed",String(on));setDrone(on)});
+/* the eight keys */
+const keysEl=document.getElementById("keys"),keyEls=[];
+NOTES.forEach((n,i)=>{
+  const b=document.createElement("button");b.type="button";b.className="key"+(i===7?" prime":"");b.style.background=`var(--n${i})`;
+  b.innerHTML=`${n.s}<small>${i===7?"7 · 0′":i}</small><small>${n.g}</small>`;b.setAttribute("aria-label",`${n.s}, ${n.g}, ${i===7?"high Do, zero prime":"step "+i}`);
+  b.addEventListener("click",()=>{play(n.f);flash(b)});keysEl.appendChild(b);keyEls.push(b);
+});
+document.addEventListener("keydown",e=>{
+  if(e.metaKey||e.ctrlKey||e.altKey)return;const t=e.target;if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))return;
+  const k="12345678".indexOf(e.key);if(k<0)return;play(NOTES[k].f);flash(keyEls[k]);
+});
+const UP=[0,1,2,3,4,5,6,7],DOWN=[7,6,5,4,3,2,1,0];
+document.getElementById("b-up").addEventListener("click",()=>run(UP,360,i=>{play(NOTES[i].f);flash(keyEls[i])}));
+document.getElementById("b-down").addEventListener("click",()=>run(DOWN,360,i=>{play(NOTES[i].f);flash(keyEls[i])}));
+document.getElementById("b-oct").addEventListener("click",()=>{play(NOTES[0].f,1.8);play(NOTES[7].f,1.8);flash(keyEls[0],600);flash(keyEls[7],600)});
+document.getElementById("b-all").addEventListener("click",()=>{NOTES.forEach(n=>play(n.f,1.8));keyEls.forEach(k=>flash(k,600))});
 
 /* Diagram 1: staircase */
 const st=document.getElementById("stairs");
-const W=84,GAP=10,X0=26,BASE=250,H0=48,DH=24;
+const W=84,GAP=10,X0=26,BASE=250,H0=48,DH=24,stairEls=[];
 NOTES.forEach((n,i)=>{
   const x=X0+i*(W+GAP),h=H0+i*DH,y=BASE-h,c=`var(--n${i})`;
   const g=el("g",{class:"step",tabindex:0,role:"button","aria-label":`${n.s}, ${n.l}, ${n.g}, step ${i}`},st);
   el("rect",{x,y,width:W,height:h,rx:12,fill:c},g);
   txt(g,x+W/2,y+34,n.s,"syl").setAttribute("font-size",26);
   const hit=()=>{play(n.f);g.classList.add("on");setTimeout(()=>g.classList.remove("on"),220)};
-  g.addEventListener("click",hit);key(g,hit);
+  g.addEventListener("click",hit);key(g,hit);stairEls.push(g);
   txt(st,x+W/2,BASE+30,i===7?"7 · 0′":String(i),"mono").setAttribute("font-size",18);
   txt(st,x+W/2,BASE+56,n.l,"small");
   const sg=txt(st,x+W/2,BASE+84,n.g,"");sg.setAttribute("font-size",18);sg.setAttribute("font-weight",700);sg.style.fill=c;
@@ -320,6 +436,7 @@ el("path",{d:`M ${xb} ${yTop} C ${xb-140} ${yTop-26}, ${xa+140} ${BASE-H0-70}, $
 const defs=el("defs",{},st),m=el("marker",{id:"ah",viewBox:"0 0 10 10",refX:5,refY:5,markerWidth:7,markerHeight:7,orient:"auto-start-reverse"},defs);
 el("path",{d:"M0 0 L10 5 L0 10 z",fill:"var(--muted)"},m);
 txt(st,(xa+xb)/2-40,yTop+2,"back home, one level up: 7 = 0′","small");
+document.getElementById("b-climb").addEventListener("click",()=>run(UP,360,i=>{play(NOTES[i].f);flash(stairEls[i])}));
 
 /* Diagram 2: spiral */
 const rg=document.getElementById("ring"),CX=240,CY=240,R0=126,DR=8,NR=24,STEP=2*Math.PI/7;
@@ -343,9 +460,10 @@ for(let i=0;i<7;i++){
 const r0=txt(rg,CX,CY-8,"0 → 7 → 0′","mono");r0.setAttribute("font-size",22);
 txt(rg,CX,CY+18,"0′ ≠ 0","mono").setAttribute("font-size",18);
 txt(rg,CX,CY+42,"returning ≠ never leaving","small");
+const ringNodes=[];
 NOTES.forEach((n,i)=>{
   const [x,y]=pt(i);
-  const g=el("g",{class:"step",tabindex:0,role:"button","aria-label":i===7?`High Do / Sa, step 7, zero prime`:`${n.s} / ${n.g}, step ${i}`},rg);
+  const g=el("g",{class:"step",tabindex:0,role:"button","aria-label":i===7?`High Do / Sa, step 7, zero prime`:`${n.s} / ${n.g}, step ${i}`},rg);ringNodes.push(g);
   if(i===7)el("circle",{cx:x,cy:y,r:NR+6,fill:"none",stroke:"var(--ink)","stroke-width":2,"stroke-dasharray":"4 4"},g);
   el("circle",{cx:x,cy:y,r:NR,fill:`var(--n${i})`},g);
   const t=txt(g,x,y+1,n.s,"syl");t.setAttribute("font-size",17);
@@ -354,13 +472,27 @@ NOTES.forEach((n,i)=>{
   const lr=rad(i)+(i===7?46:40),lx=CX+lr*Math.cos(ang(i)),ly=CY+lr*Math.sin(ang(i))+4;
   txt(rg,lx,ly,i===7?"7 · 0′":String(i),"mono small");
 });
+/* the walker: a ball that goes round once and lands one level up */
+const walker=el("circle",{cx:pt(0)[0],cy:pt(0)[1],r:9,fill:"var(--ink)",stroke:"var(--panel)","stroke-width":3,opacity:0,"pointer-events":"none"},rg);
+document.getElementById("b-walk").addEventListener("click",()=>{
+  if(busy)return;busy=true;
+  const per=reduce?1:520,t0=performance.now();let last=-1;walker.setAttribute("opacity",1);
+  const step=now=>{
+    const u=Math.min(7,(now-t0)/per),[x,y]=pt(u);walker.setAttribute("cx",x.toFixed(1));walker.setAttribute("cy",y.toFixed(1));
+    const i=Math.floor(u+1e-6);if(i>last){last=i;play(NOTES[i].f);flash(ringNodes[i],320)}
+    if(u<7)requestAnimationFrame(step);else setTimeout(()=>{walker.setAttribute("opacity",0);busy=false},700);
+  };
+  requestAnimationFrame(step);
+});
 
 /* The equation chain */
 const chain=document.getElementById("chain");
-const state=(label,i,prime)=>{const s=document.createElement("span");s.className="st"+(prime?" prime":"");s.style.background=`var(--n${i})`;s.textContent=label;s.setAttribute("aria-label",prime?"zero prime":label);return s};
+const chainSt=[];
+const state=(label,i,prime)=>{const s=document.createElement("span");s.className="st"+(prime?" prime":"");s.style.background=`var(--n${i})`;s.textContent=label;s.setAttribute("aria-label",prime?"zero prime":label);s.setAttribute("role","button");s.tabIndex=0;const f=prime?NOTES[7].f:NOTES[i].f;const hit=()=>{play(f);flash(s)};s.addEventListener("click",hit);key(s,hit);chainSt.push(s);return s};
 const arrow=(sub)=>{const a=document.createElement("span");a.className="arr";a.innerHTML=`<small>T<sub>${sub}</sub></small><span>→</span>`;return a};
 for(let i=0;i<=7;i++){chain.appendChild(state(String(i),i,false));chain.appendChild(arrow(i<7?i+1:0))}
 chain.appendChild(state("0′",0,true));
+document.getElementById("b-chain").addEventListener("click",()=>run(chainSt,380,(s,k)=>{play(note(k).f);flash(s,300)}));
 
 /* Diagram 3: tangram */
 const TG=document.getElementById("tangram");
@@ -413,19 +545,18 @@ const tanPieces=PIECES.map((pc,idx)=>{
 function render(tp){
   const {s,th,tx,ty}=tp.cur,c=Math.cos(th),sn=Math.sin(th);
   tp.g.setAttribute("transform",`translate(${tx.toFixed(2)} ${ty.toFixed(2)}) rotate(${(th*180/Math.PI).toFixed(2)}) scale(${s.toFixed(3)})`);
-  const wx=tx+s*(c*tp.cx-sn*tp.cy), wy=ty+s*(sn*tp.cx+c*tp.cy);
+  const wx=tx+s*(c*tp.cx-sn*tp.cy), wy=ty+s*(sn*tp.cx+c*tp.cy);tp.wx=wx;tp.wy=wy;
   const fs=Math.max(11,tp.pc.fs*s/100), two=s>=60&&tp.pc.shape!==T||s>=90;
   tp.lab.setAttribute("x",wx.toFixed(1));tp.lab.setAttribute("y",(wy+(two?fs*0.1:fs*0.35)).toFixed(1));tp.lab.setAttribute("font-size",fs.toFixed(1));tp.lab.textContent=tp.n.s;
   tp.lab2.setAttribute("x",wx.toFixed(1));tp.lab2.setAttribute("y",(wy+fs*0.9).toFixed(1));tp.lab2.setAttribute("font-size",(fs*0.6).toFixed(1));tp.lab2.textContent=two?tp.n.g:"";
 }
 tanPieces.forEach(render);
 let current="home",returns=0,anim=null;
-const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 function setLayout(name){
   if(name===current)return;
   if(name==="home")returns++;
   current=name;
-  document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lay===name)));
+  document.querySelectorAll(".seg button[data-lay]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lay===name)));
   const from=tanPieces.map(tp=>({...tp.cur})),to=tanPieces.map(tp=>tp.fits[name]);
   const t0=performance.now(),dur=reduce?0:650;
   if(anim)cancelAnimationFrame(anim);
@@ -455,18 +586,18 @@ function status(){
   }
 }
 status();
-document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>setLayout(b.dataset.lay)));
-let playing=false;
-document.getElementById("b-play").addEventListener("click",()=>{
-  if(playing)return;playing=true;
-  const order=[0,1,2,3,4,5,6];
-  order.forEach((i,k)=>setTimeout(()=>{
-    const tp=tanPieces[i];play(tp.n.f);tp.g.classList.add("on");setTimeout(()=>tp.g.classList.remove("on"),300);
-  },k*380));
-  setTimeout(()=>{
-    play(NOTES[7].f);tanPieces.forEach(tp=>tp.g.classList.add("on"));
-    setTimeout(()=>{tanPieces.forEach(tp=>tp.g.classList.remove("on"));playing=false},700);
-  },7*380);
+document.querySelectorAll(".seg button[data-lay]").forEach(b=>b.addEventListener("click",()=>setLayout(b.dataset.lay)));
+function playPieces(order){
+  run([...order,-1],380,(i)=>{
+    if(i>=0){const tp=tanPieces[i];play(tp.n.f);flash(tp.g,300)}
+    else{play(NOTES[7].f);tanPieces.forEach(tp=>flash(tp.g,700))}
+  });
+}
+document.getElementById("b-play").addEventListener("click",()=>playPieces([0,1,2,3,4,5,6]));
+/* play the picture: the pieces as they lie, left to right, top to bottom */
+document.getElementById("b-pic").addEventListener("click",()=>{
+  const order=tanPieces.map((tp,i)=>i).sort((a,b)=>{const A=tanPieces[a],B=tanPieces[b];const ra=Math.round(A.wy/70),rb=Math.round(B.wy/70);return ra-rb||A.wx-B.wx});
+  playPieces(order);
 });
 
 /* Diagram 6: seven colours */
@@ -483,7 +614,7 @@ const THz=lam=>Math.round(299792.458/lam);
 /* the spectrum, in Newton's widths */
 const SP=document.getElementById("spectrum");
 {
-  const tot=COL.reduce((a,c)=>a+c.w,0),X0s=20,Wt=760,Y=40,H=120;let x=X0s;
+  const tot=COL.reduce((a,c)=>a+c.w,0),X0s=20,Wt=760,Y=40,H=120;let x=X0s;const bandEls=[];
   const d6=el("defs",{},SP),m6=el("marker",{id:"ah6",viewBox:"0 0 10 10",refX:5,refY:5,markerWidth:7,markerHeight:7,orient:"auto"},d6);
   el("path",{d:"M0 0 L10 5 L0 10 z",fill:"var(--line)"},m6);
   COL.forEach((c,i)=>{
@@ -492,7 +623,7 @@ const SP=document.getElementById("spectrum");
     el("rect",{x,y:Y,width:w,height:H,fill:`var(--n${i})`,stroke:"var(--panel)","stroke-width":2},g);
     const t=txt(g,x+w/2,Y+H/2+8,n.s,"syl");t.setAttribute("font-size",w<70?16:22);
     const hit=()=>{play(n.f);g.classList.add("on");setTimeout(()=>g.classList.remove("on"),220)};
-    g.addEventListener("click",hit);key(g,hit);
+    g.addEventListener("click",hit);key(g,hit);bandEls.push(g);
     const cx=x+w/2;
     txt(SP,cx,Y+H+26,c.c,"").setAttribute("font-size",w<70?12:14);
     txt(SP,cx,Y+H+48,c.newton,"mono small");
@@ -505,11 +636,21 @@ const SP=document.getElementById("spectrum");
   txt(SP,X0s,Y+H+120,"760 nm","mono small","start");
   txt(SP,X0s+Wt,Y+H+120,"380 nm","mono small","end");
   txt(SP,X0s+Wt/2,Y+H+120,"shorter waves, higher notes","small");
+  /* red to violet, then red again an octave up, as Newton heard it */
+  document.getElementById("b-rainbow").addEventListener("click",()=>run(UP,340,i=>{play(NOTES[i].f);flash(bandEls[i===7?0:i],i===7?600:260)}));
 }
 /* the wheel, with the join that is not in the spectrum */
 const wh=document.getElementById("wheel"),WC=270,WR=178,WI=76;
 const wedge=(a0,a1,r0,r1)=>{const p=(a,r)=>[WC+r*Math.cos(a),WC+r*Math.sin(a)];const [x0,y0]=p(a0,r1),[x1,y1]=p(a1,r1),[x2,y2]=p(a1,r0),[x3,y3]=p(a0,r0);const big=(a1-a0)>Math.PI?1:0;return `M${x0} ${y0} A${r1} ${r1} 0 ${big} 1 ${x1} ${y1} L${x2} ${y2} A${r0} ${r0} 0 ${big} 0 ${x3} ${y3} Z`};
-const MAGW=Math.PI/7.5, SEG=(2*Math.PI-MAGW)/7; let wang=-Math.PI/2;
+const MAGW=Math.PI/7.5, SEG=(2*Math.PI-MAGW)/7; let wang=-Math.PI/2;const wedgeEls=[];
+/* white ring: all seven at once (drawn first so the wedges sit on top) */
+const gw=el("g",{class:"wedge",tabindex:0,role:"button","aria-label":"White, the outer ring: all seven colours at once, the octave together"},wh);
+el("circle",{cx:WC,cy:WC,r:WR+52,fill:"none",stroke:"var(--white)","stroke-width":10,"stroke-opacity":0.95},gw);
+el("circle",{cx:WC,cy:WC,r:WR+57,fill:"none",stroke:"var(--line)","stroke-width":1},gw);
+el("circle",{cx:WC,cy:WC,r:WR+47,fill:"none",stroke:"var(--line)","stroke-width":1},gw);
+txt(wh,WC,WC-WR-66,"white · all seven at once","small");
+const chord=()=>NOTES.forEach(n=>play(n.f));
+gw.addEventListener("click",chord);key(gw,chord);
 COL.forEach((k,i)=>{
   const a0=wang,a1=wang+SEG,mid=(a0+a1)/2; wang=a1;
   const g=el("g",{class:"wedge",tabindex:0,role:"button","aria-label":`${k.c}, ${NOTES[i].s}, ${NOTES[i].g}, ${k.chakra}`},wh);
@@ -521,7 +662,7 @@ COL.forEach((k,i)=>{
   const lx=WC+(WR+24)*Math.cos(mid),ly=WC+(WR+24)*Math.sin(mid)+4;
   const anchor=Math.cos(mid)>0.3?"start":Math.cos(mid)<-0.3?"end":"middle";
   txt(wh,lx,ly,k.chakra.split(" · ")[0],"small",anchor);
-  const hit=()=>play(NOTES[i].f); g.addEventListener("click",hit); key(g,hit);
+  const hit=()=>{play(NOTES[i].f);flash(g)}; g.addEventListener("click",hit); key(g,hit);wedgeEls.push(g);
 });
 const m0=wang,m1=wang+MAGW,mm=(m0+m1)/2;
 const gm=el("g",{class:"wedge",tabindex:0,role:"button","aria-label":"Magenta, the join back to red, zero prime"},wh);
@@ -529,12 +670,20 @@ el("path",{d:wedge(m0+0.012,m1-0.012,WI,WR),fill:"none",stroke:"var(--mag)","str
 const mx=WC+(WI+WR)/2*Math.cos(mm),my=WC+(WI+WR)/2*Math.sin(mm);
 const tm=txt(gm,mx,my+6,"0′","mono");tm.setAttribute("font-size",20);tm.style.fill="var(--mag)";
 const ml=txt(wh,WC+(WR+24)*Math.cos(mm),WC+(WR+24)*Math.sin(mm)+4,"magenta: no wavelength","small","end");ml.style.fill="var(--mag)";
-gm.addEventListener("click",()=>play(NOTES[7].f)); key(gm,()=>play(NOTES[7].f));
-const c0=txt(wh,WC,WC-4,"0 → 6 → 0′","mono");c0.setAttribute("font-size",16);
-txt(wh,WC,WC+16,"one octave of light","small");
+gm.addEventListener("click",()=>{play(NOTES[7].f);flash(gm)}); key(gm,()=>{play(NOTES[7].f);flash(gm)});
+document.getElementById("b-round").addEventListener("click",()=>run([...wedgeEls,gm],340,(g,k)=>{play(note(k).f);flash(g,k===7?700:260)}));
+/* black centre: 0, no light yet */
+const gb=el("g",{class:"wedge",tabindex:0,role:"button","aria-label":"Black, the centre, zero: no light yet. Silence."},wh);
+el("circle",{cx:WC,cy:WC,r:WI-10,fill:"var(--black)"},gb);
+const c0=txt(gb,WC,WC-2,"0","mono");c0.setAttribute("font-size",28);c0.style.fill="var(--white)";
+const c1=txt(gb,WC,WC+18,"black · no light","small");c1.style.fill="#A79FC4";
+const c2=txt(gb,WC,WC+34,"one octave of light around it","small");c2.setAttribute("font-size",10);c2.style.fill="#7C74A0";
+gb.addEventListener("click",()=>{});key(gb,()=>{});
 /* meanings table */
 const tb=document.querySelector("#meanings tbody");
+const trb=document.createElement("tr");trb.innerHTML=`<td>0</td><td><span class="sw blk"></span>Black</td><td>silence</td><td><span class="num">no light</span></td><td>—</td><td>No light at all. The centre of the wheel, before the first colour: nothing has happened yet. Joey's answer to Clue 4.</td>`;tb.appendChild(trb);
 COL.forEach((k,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i}</td><td><span class="sw" style="background:var(--n${i})"></span>${k.c}</td><td>${NOTES[i].s} / ${NOTES[i].g}<br><span class="num">Newton ${k.newton}</span></td><td><span class="num">${k.lam} nm<br>${THz(k.lam)} THz</span></td><td>${k.chakra}<br><em>${k.where}</em></td><td>${k.m}</td>`;tb.appendChild(tr)});
+const trw=document.createElement("tr");trw.innerHTML=`<td>0–6</td><td><span class="sw wht"></span>White</td><td>the chord</td><td><span class="num">all of it</span></td><td>—</td><td>All seven at once. The octave sounding together; the square with every piece in it. Not a colour of the rainbow, but the rainbow before the prism.</td>`;tb.appendChild(trw);
 const trm=document.createElement("tr");trm.innerHTML=`<td>0′</td><td><span class="sw mag"></span>Magenta</td><td>Do′ / Sa′</td><td><span class="num">none</span></td><td>—</td><td>Not in the spectrum. The brain's bridge from violet back to red: the return that is not the start.</td>`;tb.appendChild(trm);
 
 /* Diagram 4: the three lists */
