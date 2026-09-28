@@ -103,6 +103,10 @@ Sent as "add this:" after v22 of the page. Not a fourth statement of the equatio
 > When Gabriel García Márquez read Gregory Rabassa's English translation of One Hundred Years of Solitude, he famously declared it superior to his original Spanish text. Why? Because Rabassa introduced a fresh set of rhythmic and syntactic possibilities inherent to English prose that did not exist in Spanish.
 > The translated work (0') did not match the original (0), but its differences were not deficits; they were an accumulation of new tonal resonances.
 
+### Corrections on the page, 28 September 2026, about 10:55Z
+
+Joey, after the page's checks were put to him: "1. correct but tell reason using theory 2. i dont know yet, lets work both ways 3. i like buttons". On the page (v24) two sentences of the text above are corrected at his ask, shown as struck and inserted text so that the words as sent stay readable: "(literally, sound passing through: per-sonare)" gains the note that this is the Roman grammarians' etymology, that the long ō of persōna does not fit it, and that most scholars derive the word from Etruscan phersu; and "during the Council of Nicaea" becomes "from Tertullian, about 200, to the Council of Constantinople in 381". The text in this file stays exactly as he sent it. The reason for showing rather than erasing, given on the page in the theory's terms: the text as sent is 0, the check is an arrow, the corrected text is 0′, and 0′ ≠ 0 means the earlier state is not erased.
+
 GENERATED observation, not a ruling: this text answers, for language, the question section 8 of the page's TPD left open, whether the arrows can be reversed. His answer here is that translation's arrow is "non-invertible" and that the return lands on 0′, a different word in the same language. It also gives the theory a new claim, that 0′ can carry a surplus ("gain in translation"), which the clay and breath examples of Statement 1 do not say. Both are his; neither is checked here beyond the snippet checks recorded on the page and in the page's TPD, addendum 43.
 
 ## Where this is used
