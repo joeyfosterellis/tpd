@@ -50,6 +50,7 @@ svg text{font-family:var(--body);fill:var(--ink)}
 .step:focus-visible rect{stroke:var(--ink);stroke-width:3}
 .step:focus-visible circle{stroke:var(--ink);stroke-width:3}
 .syl{font-family:var(--display)!important;font-weight:800;fill:var(--on-note)!important}
+.syl.han{font-family:var(--han)!important;font-weight:600}
 .small{font-size:13px;fill:var(--muted)!important}
 .mono{font-family:var(--mono)!important}
 .han{font-family:var(--han)!important}
@@ -190,8 +191,8 @@ td em{font-style:italic;color:var(--muted)}
 <div class="wrap">
   <header>
     <p class="kicker">Scavenger hunt · clue diagrams</p>
-    <h1>Sa Re Ga, <span class="twin">Do Re Mi, <span lang="zh-Hant">上尺工</span></span></h1>
-    <p class="lede">Seven states and the arrows between them. The states have names in three languages, seven boards and seven colours; the arrows are what the theory is about. Tap a state to hear where it is. Tap an arrow to hear what happened.</p>
+    <h1>Sa Re Ga <span lang="zh-Hant" style="white-space:nowrap">上尺工</span><span class="twin" style="white-space:nowrap">, Do Re Mi</span></h1>
+    <p class="lede">Seven states and the arrows between them. Each state has a Sanskrit name and a Chinese name, side by side, and an English one underneath: the English names are 0, where you start; Sanskrit and Chinese are 7, where this page is going. The arrows are what the theory is about. Tap a state to hear where it is. Tap an arrow to hear what happened.</p>
   </header>
 
   <section>
@@ -225,8 +226,8 @@ td em{font-style:italic;color:var(--muted)}
     <h2>The staircase</h2>
     <p>Each note is one step up. Count from zero and the eighth step, high Sa, lands on 7. It has the same <em>name</em> as the Sa you started on, but it is an octave higher. Same word, different state: that is 0′, not 0.</p>
     <div class="ctl"><button type="button" class="btn" id="b-climb">Climb the stairs</button></div>
-    <div class="fig"><svg id="stairs" viewBox="0 0 800 380" role="img" aria-label="Eight rising steps: Sa Re Ga Ma Pa Dha Ni Sa, matched with C D E F G A B C and Do Re Mi Fa Sol La Ti Do, numbered 0 to 7"></svg></div>
-    <p class="hint">Row by row, under each step: its number counting from 0, the letter in C major, its European twin, and its Chinese name in gongche notation.</p>
+    <div class="fig"><svg id="stairs" viewBox="0 0 800 360" role="img" aria-label="Eight rising steps: Sa Re Ga Ma Pa Dha Ni Sa, matched with C D E F G A B C and Do Re Mi Fa Sol La Ti Do, numbered 0 to 7"></svg></div>
+    <p class="hint">On each step, the Sanskrit svara and the Chinese gongche character at one size. Under it: the number counting from 0, the letter in C major, and the English name, small.</p>
   </section>
 
   <section>
@@ -320,19 +321,19 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 4</p>
     <h2>Where the names came from</h2>
-    <p>Four traditions landed on the same count. The Sanskrit names are the oldest by centuries. The European ones come from a Latin hymn used by Guido of Arezzo in 11th-century Italy. The Chinese names are gongche notation, 工尺譜, seven characters used as note names since the Tang dynasty (618 to 907) and still sung in Kunqu opera; two of them, 凡 and 乙, sit a little sharp of Ma and a little flat of Ni. The seven boards come from China too, and this page gives each board a note.</p>
+    <p>Four traditions landed on the same count. The Sanskrit names are the oldest by centuries; the Chinese names stand beside them at the same level on this page. The English names, Do Re Mi, are the ones most readers start from, and they come from a Latin hymn used by Guido of Arezzo in 11th-century Italy. The Chinese names are gongche notation, 工尺譜, seven characters used as note names since the Tang dynasty (618 to 907) and still sung in Kunqu opera; two of them, 凡 and 乙, sit a little sharp of Ma and a little flat of Ni. The seven boards come from China too, and this page gives each board a note.</p>
     <div class="fig hymn">
       <div class="col">
         <h3>Sanskrit svaras</h3>
         <ol id="sanskrit"></ol>
       </div>
       <div class="col">
-        <h3>Latin hymn, <em>Ut queant laxis</em></h3>
-        <ol id="latin"></ol>
-      </div>
-      <div class="col">
         <h3>Gongche, <em lang="zh-Hant">工尺譜</em></h3>
         <ol id="gongche"></ol>
+      </div>
+      <div class="col">
+        <h3>English, from the Latin hymn</h3>
+        <ol id="latin"></ol>
       </div>
       <div class="col">
         <h3>Seven boards, <em>七巧板</em></h3>
@@ -551,7 +552,7 @@ bd.addEventListener("click",()=>{const on=bd.getAttribute("aria-pressed")!=="tru
 const keysEl=document.getElementById("keys"),keyEls=[];
 NOTES.forEach((n,i)=>{
   const b=document.createElement("button");b.type="button";b.className="key"+(i===7?" prime":"");b.style.background=`var(--n${i})`;
-  b.innerHTML=`${n.s}<small>${i===7?"7 · 0′":i}</small><small>${n.g} · <span lang="zh-Hant">${n.z}</span></small>`;b.setAttribute("aria-label",`${n.s}, ${n.g}, ${i===7?"high Sa, zero prime":"step "+i}`);
+  b.innerHTML=`${n.s} <span lang="zh-Hant" class="han">${n.z}</span><small>${i===7?"7 · 0′":i}</small><small>${n.g}</small>`;b.setAttribute("aria-label",`${n.s}, ${n.g}, ${i===7?"high Sa, zero prime":"step "+i}`);
   b.addEventListener("click",()=>{play(n.f);flash(b)});keysEl.appendChild(b);keyEls.push(b);
 });
 document.addEventListener("keydown",e=>{
@@ -571,13 +572,14 @@ NOTES.forEach((n,i)=>{
   const x=X0+i*(W+GAP),h=H0+i*DH,y=BASE-h,c=`var(--n${i})`;
   const g=el("g",{class:"step",tabindex:0,role:"button","aria-label":`${n.s}, ${n.l}, ${n.g}, step ${i}`},st);
   el("rect",{x,y,width:W,height:h,rx:12,fill:c},g);
-  txt(g,x+W/2,y+34,n.s,"syl").setAttribute("font-size",26);
+  const big=h>=70;
+  const t1=txt(g,x+W/2,big?y+30:y+26,n.s,"syl");t1.setAttribute("font-size",big?24:20);
+  const t2=txt(g,x+W/2,big?y+56:y+46,n.z,"syl han");t2.setAttribute("font-size",big?22:18);t2.setAttribute("lang","zh-Hant");
   const hit=()=>{play(n.f);g.classList.add("on");setTimeout(()=>g.classList.remove("on"),220)};
   g.addEventListener("click",hit);key(g,hit);stairEls.push(g);
   txt(st,x+W/2,BASE+30,i===7?"7 · 0′":String(i),"mono").setAttribute("font-size",18);
   txt(st,x+W/2,BASE+56,n.l,"small");
-  const sg=txt(st,x+W/2,BASE+84,n.g,"");sg.setAttribute("font-size",18);sg.setAttribute("font-weight",700);sg.style.fill=c;
-  const zh=txt(st,x+W/2,BASE+106,n.z,"han");zh.setAttribute("font-size",18);zh.setAttribute("lang","zh-Hant");
+  const sg=txt(st,x+W/2,BASE+84,n.g,"small");sg.setAttribute("font-size",14);
 });
 el("line",{x1:X0-6,x2:X0+8*(W+GAP)-GAP+6,y1:BASE,y2:BASE,stroke:"var(--line)","stroke-width":2},st);
 txt(st,X0-14,BASE+30,"#","small","end");
@@ -620,8 +622,8 @@ NOTES.forEach((n,i)=>{
   const g=el("g",{class:"step",tabindex:0,role:"button","aria-label":i===7?`High Sa / Do, step 7, zero prime`:`${n.s} / ${n.g}, step ${i}`},rg);ringNodes.push(g);
   if(i===7)el("circle",{cx:x,cy:y,r:NR+6,fill:"none",stroke:"var(--ink)","stroke-width":2,"stroke-dasharray":"4 4"},g);
   el("circle",{cx:x,cy:y,r:NR,fill:`var(--n${i})`},g);
-  const t=txt(g,x,y+1,n.s,"syl");t.setAttribute("font-size",17);
-  const t2=txt(g,x,y+14,n.g,"syl");t2.setAttribute("font-size",10);
+  const t=txt(g,x,y-3,n.s,"syl");t.setAttribute("font-size",15);
+  const t2=txt(g,x,y+13,n.z,"syl han");t2.setAttribute("font-size",14);t2.setAttribute("lang","zh-Hant");
   const hit=()=>play(n.f);g.addEventListener("click",hit);key(g,hit);
   const lr=rad(i)+(i===7?46:40),lx=CX+lr*Math.cos(ang(i)),ly=CY+lr*Math.sin(ang(i))+4;
   txt(rg,lx,ly,i===7?"7 · 0′":String(i),"mono small");
@@ -709,9 +711,9 @@ const tanPieces=PIECES.map((pc,idx)=>{
   const g=el("g",{class:"piece",tabindex:0,role:"button","aria-label":`${n.s}, ${n.g}, ${n.board}`},TG);
   const poly=el("polygon",{points:pc.shape.map(p=>p.join(",")).join(" "),fill:`var(--n${pc.i})`},g);
   const lab=el("text",{"text-anchor":"middle",class:"syl"},TG);
-  const lab2=el("text",{"text-anchor":"middle",class:"syl"},TG);
+  const lab2=el("text",{"text-anchor":"middle",class:"syl han"},TG);
   const cx=pc.shape.reduce((a,p)=>a+p[0],0)/pc.shape.length, cy=pc.shape.reduce((a,p)=>a+p[1],0)/pc.shape.length;
-  const hit=()=>{play(n.f);flash(g,300);said(`<b>${n.s} · ${n.g}</b> · ${n.board.toLowerCase()}, ${n.frac} of the square, ${n.f.toFixed(2)} Hz. Step ${pc.i}.`)};
+  const hit=()=>{play(n.f);flash(g,300);said(`<b>${n.s} <span lang="zh-Hant">${n.z}</span></b> · ${n.g} · ${n.board.toLowerCase()}, ${n.frac} of the square, ${n.f.toFixed(2)} Hz. Step ${pc.i}.`)};
   g.addEventListener("click",hit);key(g,hit);
   const fits={};for(const k in LAYOUTS)fits[k]=fit(pc.shape,LAYOUTS[k].pts[idx],LAYOUTS[k]);
   return {pc,n,g,poly,lab,lab2,cx,cy,fits,cur:{...fits.home}};
@@ -721,8 +723,8 @@ function render(tp){
   tp.g.setAttribute("transform",`translate(${tx.toFixed(2)} ${ty.toFixed(2)}) rotate(${(th*180/Math.PI).toFixed(2)}) scale(${s.toFixed(3)})`);
   const wx=tx+s*(c*tp.cx-sn*tp.cy), wy=ty+s*(sn*tp.cx+c*tp.cy);tp.wx=wx;tp.wy=wy;
   const fs=Math.max(11,tp.pc.fs*s/100), two=s>=60&&tp.pc.shape!==T||s>=90;
-  tp.lab.setAttribute("x",wx.toFixed(1));tp.lab.setAttribute("y",(wy+(two?fs*0.1:fs*0.35)).toFixed(1));tp.lab.setAttribute("font-size",fs.toFixed(1));tp.lab.textContent=tp.n.s;
-  tp.lab2.setAttribute("x",wx.toFixed(1));tp.lab2.setAttribute("y",(wy+fs*0.9).toFixed(1));tp.lab2.setAttribute("font-size",(fs*0.6).toFixed(1));tp.lab2.textContent=two?tp.n.g:"";
+  tp.lab.setAttribute("x",wx.toFixed(1));tp.lab.setAttribute("y",(wy+(two?fs*0.05:fs*0.35)).toFixed(1));tp.lab.setAttribute("font-size",fs.toFixed(1));tp.lab.textContent=tp.n.s;
+  tp.lab2.setAttribute("x",wx.toFixed(1));tp.lab2.setAttribute("y",(wy+fs*1.05).toFixed(1));tp.lab2.setAttribute("font-size",fs.toFixed(1));tp.lab2.textContent=two?tp.n.z:"";tp.lab2.setAttribute("lang","zh-Hant");
 }
 tanPieces.forEach(render);
 let current="home",returns=0,anim=null;
@@ -800,7 +802,8 @@ const SP=document.getElementById("spectrum");
     const g=el("g",{class:"band",tabindex:0,role:"button","aria-label":`${c.c}, ${n.s}, ${c.lam} nanometres, ${THz(c.lam)} terahertz`},SP);
     el("rect",{x,y:Y,width:w,height:H,fill:`var(--n${i})`,stroke:"var(--panel)","stroke-width":2},g);
     el("rect",{x:x+1,y:Y+H-14,width:Math.max(0,w-2),height:12,fill:`var(--s${i})`},g);
-    const t=txt(g,x+w/2,Y+H/2+8,n.s,"syl");t.setAttribute("font-size",w<70?16:22);
+    const t=txt(g,x+w/2,Y+H/2-2,n.s,"syl");t.setAttribute("font-size",w<70?15:20);
+    const tz=txt(g,x+w/2,Y+H/2+22,n.z,"syl han");tz.setAttribute("font-size",w<70?15:20);tz.setAttribute("lang","zh-Hant");
     const hit=()=>{play(n.f);g.classList.add("on");setTimeout(()=>g.classList.remove("on"),220)};
     g.addEventListener("click",hit);key(g,hit);bandEls.push(g);
     const cx=x+w/2;
@@ -835,8 +838,8 @@ COL.forEach((k,i)=>{
   const g=el("g",{class:"wedge",tabindex:0,role:"button","aria-label":`${k.c}, ${NOTES[i].s}, ${NOTES[i].g}, ${k.chakra}`},wh);
   el("path",{d:wedge(a0+0.012,a1-0.012,WI,WR),fill:`var(--n${i})`},g);
   const tx=WC+(WI+WR)/2*Math.cos(mid),ty=WC+(WI+WR)/2*Math.sin(mid);
-  const t=txt(g,tx,ty-4,NOTES[i].s,"syl");t.setAttribute("font-size",22);
-  const t2=txt(g,tx,ty+14,NOTES[i].g,"syl");t2.setAttribute("font-size",12);
+  const t=txt(g,tx,ty-6,NOTES[i].s,"syl");t.setAttribute("font-size",19);
+  const t2=txt(g,tx,ty+13,NOTES[i].z,"syl han");t2.setAttribute("font-size",18);t2.setAttribute("lang","zh-Hant");
   const n=txt(g,tx,ty+30,String(i),"mono");n.setAttribute("font-size",12);n.style.fill="var(--on-note)";
   const lx=WC+(WR+24)*Math.cos(mid),ly=WC+(WR+24)*Math.sin(mid)+4;
   const anchor=Math.cos(mid)>0.3?"start":Math.cos(mid)<-0.3?"end":"middle";
@@ -861,20 +864,20 @@ gb.addEventListener("click",()=>{});key(gb,()=>{});
 /* meanings table */
 const tb=document.querySelector("#meanings tbody");
 const trb=document.createElement("tr");trb.innerHTML=`<td>0</td><td><span class="sw blk"></span>Black</td><td><span class="sw" style="background:#2D2926"></span>Black C</td><td>silence</td><td><span class="num">no light</span></td><td>—</td><td>No light at all. The centre of the wheel, before the first colour: nothing has happened yet. Joey's answer to Clue 4.</td>`;tb.appendChild(trb);
-COL.forEach((k,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i}</td><td><span class="sw" style="background:var(--n${i})"></span>${k.c}</td><td><span class="sw" style="background:${k.pms[1]}"></span>${k.pms[0]}</td><td>${NOTES[i].s} / ${NOTES[i].g} / <span lang="zh-Hant">${NOTES[i].z}</span><br><span class="num">Newton ${k.newton}</span></td><td><span class="sw" style="background:var(--s${i})" title="the light itself"></span><span class="num">${k.lam} nm<br>${THz(k.lam)} THz</span></td><td>${k.chakra}<br><em>${k.where}</em></td><td>${k.m}</td>`;tb.appendChild(tr)});
+COL.forEach((k,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i}</td><td><span class="sw" style="background:var(--n${i})"></span>${k.c}</td><td><span class="sw" style="background:${k.pms[1]}"></span>${k.pms[0]}</td><td>${NOTES[i].s} <span lang="zh-Hant">${NOTES[i].z}</span><br><span class="num">${NOTES[i].g} · Newton ${k.newton}</span></td><td><span class="sw" style="background:var(--s${i})" title="the light itself"></span><span class="num">${k.lam} nm<br>${THz(k.lam)} THz</span></td><td>${k.chakra}<br><em>${k.where}</em></td><td>${k.m}</td>`;tb.appendChild(tr)});
 const trw=document.createElement("tr");trw.innerHTML=`<td>0–6</td><td><span class="sw wht"></span>White</td><td><span class="sw" style="background:#F4F5F0;border:1px solid var(--line)"></span>11-0601 TCX Bright White</td><td>the chord</td><td><span class="num">all of it</span></td><td>—</td><td>All seven at once. The octave sounding together; the square with every piece in it. Not a colour of the rainbow, but the rainbow before the prism.</td>`;tb.appendChild(trw);
-const trm=document.createElement("tr");trm.innerHTML=`<td>0′</td><td><span class="sw mag"></span>Magenta</td><td>—</td><td>Sa′ / Do′ / <span lang="zh-Hant">仩</span></td><td><span class="num">none</span></td><td>—</td><td>Not in the spectrum. The brain's bridge from violet back to red: the return that is not the start.</td>`;tb.appendChild(trm);
+const trm=document.createElement("tr");trm.innerHTML=`<td>0′</td><td><span class="sw mag"></span>Magenta</td><td>—</td><td>Sa′ <span lang="zh-Hant">仩</span><br><span class="num">Do′</span></td><td><span class="num">none</span></td><td>—</td><td>Not in the spectrum. The brain's bridge from violet back to red: the return that is not the start.</td>`;tb.appendChild(trm);
 
 /* Diagram 7: basic words and emoji */
 const EMO=[
   {e:"👀",w:"look",n:"before",f:0,bg:"var(--black)"},
-  {e:"🦚",w:"peacock",n:"0 · Sa",f:NOTES[0].f},
-  {e:"🐂",w:"bull",n:"1 · Re",f:NOTES[1].f},
-  {e:"🐐",w:"goat",n:"2 · Ga",f:NOTES[2].f},
-  {e:"🦢",w:"heron",n:"3 · Ma",f:NOTES[3].f},
-  {e:"🐦",w:"koel",n:"4 · Pa",f:NOTES[4].f},
-  {e:"🐴",w:"horse",n:"5 · Dha",f:NOTES[5].f},
-  {e:"🐘",w:"elephant",n:"6 · Ni",f:NOTES[6].f},
+  {e:"🦚",w:"peacock",n:"0 · Sa 上",f:NOTES[0].f},
+  {e:"🐂",w:"bull",n:"1 · Re 尺",f:NOTES[1].f},
+  {e:"🐐",w:"goat",n:"2 · Ga 工",f:NOTES[2].f},
+  {e:"🦢",w:"heron",n:"3 · Ma 凡",f:NOTES[3].f},
+  {e:"🐦",w:"koel",n:"4 · Pa 六",f:NOTES[4].f},
+  {e:"🐴",w:"horse",n:"5 · Dha 五",f:NOTES[5].f},
+  {e:"🐘",w:"elephant",n:"6 · Ni 乙",f:NOTES[6].f},
   {e:"🫠",w:"melt",n:"7 · 0′",f:NOTES[7].f,bg:"var(--mag)",prime:true}
 ];
 const emoEl=document.getElementById("emo"),emoBtns=[],estat=document.getElementById("estat");
@@ -925,7 +928,7 @@ function dent(px,py,depth=34){
   const r=rads[Math.round(((a+2*Math.PI)%(2*Math.PI))/(2*Math.PI)*NPTS)%NPTS];
   marks.push({x:DOX+(r+2)*Math.cos(a),y:DOY+(r+2)*Math.sin(a),o:0.75});presses++;
   const zone=Math.max(0,Math.min(7,Math.floor((px-(DOX-DOR))/(2*DOR)*8)));play(NOTES[zone].f,0.6);
-  dlab.textContent=`${NOTES[zone].s} · ${NOTES[zone].g}`;
+  dlab.textContent=`${NOTES[zone].s} ${NOTES[zone].z} · ${NOTES[zone].g}`;
   drawDoh();dohStatus();
 }
 function svgPoint(ev){const pt=DOS.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const q=pt.matrixTransform(DOS.getScreenCTM().inverse());
@@ -963,10 +966,10 @@ NOTES.slice(0,7).forEach((n,i)=>{
   li.innerHTML=`<span class="chip" style="background:${c}">${n.syl}</span><span><b>${first}</b>${rest}</span>`;
   lat.appendChild(li);
   const li2=document.createElement("li");
-  li2.innerHTML=`<span class="chip" style="background:${c}">${n.s}</span><span><b>${n.sk.slice(0,SK[i])}</b>${n.sk.slice(SK[i])}</span>`;
+  li2.innerHTML=`<span class="chip" style="background:${c}">${n.s}</span><span><b>${n.sk.slice(0,SK[i])}</b>${n.sk.slice(SK[i])} <em lang="zh-Hant">${n.z}</em></span>`;
   san.appendChild(li2);
   const li4=document.createElement("li");
-  li4.innerHTML=`<span class="chip han" style="background:${c}" lang="zh-Hant">${n.z}</span><span><b>${n.zp}</b> <em>${n.s} · ${n.g}</em></span>`;
+  li4.innerHTML=`<span class="chip han" style="background:${c}" lang="zh-Hant">${n.z}</span><span><b>${n.zp}</b> <em>${n.s}</em></span>`;
   gch.appendChild(li4);
   const li3=document.createElement("li");
   li3.innerHTML=`<span class="chip" style="background:${c}">${n.s}</span><span><b>${n.board}</b> <em>${n.frac}</em></span>`;
