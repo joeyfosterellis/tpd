@@ -160,6 +160,14 @@ td em{font-style:italic;color:var(--muted)}
 .rebus .forms{font-size:.8rem;color:var(--muted);line-height:1.5}
 .rebus .forms span{font-size:1.1rem;color:var(--ink)}
 .eqn{font-family:var(--mono);font-weight:700;font-size:1rem;text-align:center;padding:10px;background:var(--panel);border-radius:12px;margin-top:12px}
+.srow{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:12px}
+.srow button{font:inherit;border:0;border-radius:14px;padding:10px 2px 8px;cursor:pointer;background:var(--c);color:var(--on-note);display:flex;flex-direction:column;align-items:center;gap:4px;transition:transform .12s ease}
+.srow button:hover,.srow button.on{transform:translateY(-4px)}
+.srow button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.srow .e{font-size:clamp(1.4rem,4vw,2.1rem);line-height:1}
+.srow .w{font-family:var(--mono);font-size:.62rem;letter-spacing:.04em}
+.srow .n{font-family:var(--mono);font-size:.62rem;opacity:.9}
+@media (max-width:560px){.srow{grid-template-columns:repeat(4,1fr)}}
 /* the clay before the kiln: neon on the black of a flatbed scan, the same in both themes */
 .doh{background:#000;border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:12px}
 .doh svg{display:block;width:100%;height:auto;max-width:560px;margin:0 auto;touch-action:none;cursor:pointer;outline:none}
@@ -453,6 +461,12 @@ td em{font-style:italic;color:var(--muted)}
     <div class="eqn" id="req">👀 + 🦚 + 🌱 = /eyes-on-sa/</div>
     <div class="rebus" id="rebus"></div>
     <p class="hint">The official names are from the Unicode Character Database (version 14.0, as shipped in Python 3.11), so they are the names the pictures were given when they were standardised, and they sometimes surprise: 🐴 is HORSE FACE, 💨 is DASH SYMBOL, ☀ is BLACK SUN WITH RAYS. The parts and the sounds are this page's readings. A conjugation here means the forms one emoji takes: a plain text form and an emoji form (☀ and ☀️ differ by one invisible character, U+FE0F), five skin tones, a gender, a black-bird variant joined with an invisible joiner, or a whole family of coloured circles. Two more conjugations come from Joey's own app: each card there has a second, after-dark set of emoji, and the mascot grows 🥚 → 🐣 → 🦘 as cards are learned.</p>
+    <h3 style="font-size:1.3rem;margin-top:18px">Read the scale as a rebus for sound</h3>
+    <p class="why"><b>Why this is here.</b> The cards above read their pictures for sense: a bull for the bull's note. A strict rebus reads a picture against its sense, only for the noise it makes: a bee for "be". So here is the scale a second time, eight pictures chosen for nothing but their first syllable. Say the row aloud and you have sung the scale: saw, ra(dio), ga(me), ma(gnet), pa(rachute), do(or), knee(ling), saw. The Chinese did exactly this to build their writing: 我, a picture of a halberd, was borrowed for the word "I" because the two sounded alike, and the halberd was forgotten. That borrowing is called 假借 jiǎjiè, and every row below pairs its emoji with one such borrowed character. Tap a picture to hear its note and take it apart.</p>
+    <div class="eqn" id="seq">🪚 + 📻 + 🎮 + 🧲 + 🪂 + 🚪 + 🧎 + 🪚⬆️ = sa re ga ma pa dha ni sa′</div>
+    <div class="srow" id="srow" role="group" aria-label="Eight pictures read for sound, one per note"></div>
+    <div class="rebus" id="srebus"></div>
+    <p class="hint">Read for sound, the animals go: no picture here means what it shows. The first syllable of each official Unicode name, or of its everyday name, is the note; the rest of the word is thrown away, as the halberd was. The borrowed characters are the classic examples taught with 假借, from memory and marked so; Joey knows the language and is asked to correct them.</p>
     <div class="fig tbl"><table id="why"><thead><tr><th></th><th>Word</th><th>Why this one</th><th>From</th></tr></thead><tbody>
       <tr><td>👀</td><td>look</td><td>Before the first note nothing has happened yet: black, no light. The first act is to look. One of your three glyphs, the one you glossed as attention, noticing.</td><td>Your house-style notes on 👀 🟣 🫠; the black centre of the wheel</td></tr>
       <tr><td>🦚</td><td>peacock, Sa</td><td>The Nāradīya Śikṣā hears Sa in the peacock's cry. It is also the bird that opens into every colour at once, which is what Sa does for the scale.</td><td>Nāradīya Śikṣā, via sreenivasarao's blog (snippet)</td></tr>
@@ -981,6 +995,28 @@ function showRebus(m){
 }
 showRebus(EMO[0]);
 emoBtns.forEach((b,i)=>b.addEventListener("click",()=>showRebus(EMO[i])));
+const SOUND=[
+ {e:"🪚",say:"saw",n:"Sa",nm:"CARPENTRY SAW · U+1FA9A",parts:"a hand saw, blade toothed along one edge, wooden handle",snd:"saw → sa. the tool is thrown away, the noise kept",zh:"我 wǒ, I: a picture of a halberd, borrowed for the pronoun that sounded like it",forms:"one form; new in Unicode 13.0 (2020)",c:"var(--n0)",f:NOTES[0].f},
+ {e:"📻",say:"ra(dio)",n:"Re",nm:"RADIO · U+1F4FB",parts:"a box with a dial, a speaker grille and an aerial",snd:"RA-dio → re",zh:"來 lái, to come: a picture of a wheat plant, borrowed for the verb",forms:"one form",c:"var(--n1)",f:NOTES[1].f},
+ {e:"🎮",say:"ga(me)",n:"Ga",nm:"VIDEO GAME · U+1F3AE",parts:"a controller, two grips, a cross of buttons on the left, four on the right",snd:"GA-me → ga",zh:"其 qí, his, its: a picture of a winnowing basket, borrowed for the pronoun",forms:"one form; its cousins 🕹️ joystick and 👾 alien monster",c:"var(--n2)",f:NOTES[2].f},
+ {e:"🧲",say:"ma(gnet)",n:"Ma",nm:"MAGNET · U+1F9F2",parts:"a horseshoe magnet, red with silver tips",snd:"MAG-net → ma",zh:"萬 wàn, ten thousand: a picture of a scorpion, borrowed for the number",forms:"one form",c:"var(--n3)",f:NOTES[3].f},
+ {e:"🪂",say:"pa(rachute)",n:"Pa",nm:"PARACHUTE · U+1FA82",parts:"a canopy with lines down to a hanging figure",snd:"PA-rachute → pa",zh:"北 běi, north: two people standing back to back, borrowed for the direction",forms:"one form; new in Unicode 12.0 (2019)",c:"var(--n4)",f:NOTES[4].f},
+ {e:"🚪",say:"do(or)",n:"Dha",nm:"DOOR · U+1F6AA",parts:"a closed door in its frame, a round handle",snd:"door → dhā, the long a",zh:"自 zì, self: a picture of a nose, borrowed for the word for oneself",forms:"one form",c:"var(--n5)",f:NOTES[5].f},
+ {e:"🧎",say:"knee(ling)",n:"Ni",nm:"KNEELING PERSON · U+1F9CE",parts:"a figure on one knee, the other foot forward",snd:"KNEE-ling → ni",zh:"而 ér, and: a picture of a beard, borrowed for the conjunction",forms:"five skin tones; a woman 🧎‍♀️ or a man 🧎‍♂️ by U+200D; since Unicode 12.0, facing right by a further joiner",c:"var(--n6)",f:NOTES[6].f},
+ {e:"🪚⬆️",say:"saw, up",n:"Sa′",nm:"CARPENTRY SAW + UPWARDS BLACK ARROW · U+1FA9A, U+2B06 + FE0F",parts:"the same saw, and an arrow pointing up",snd:"saw again → sa′, one floor up",zh:"西 xī, west: a picture of a bird's nest, borrowed for the direction the bird returns to at dusk",forms:"the arrow has a text form ⬆ and an emoji form ⬆️, one selector apart; the saw has one",c:"var(--mag)",f:NOTES[7].f}
+];
+const srowEl=document.getElementById("srow"),srebEl=document.getElementById("srebus"),seqEl=document.getElementById("seq"),sBtns=[];
+function showSound(m){
+  seqEl.textContent=`${m.e} = ${m.say} → ${m.n}`;
+  srebEl.innerHTML=`<div class="pic"><div class="g">${m.e}</div><div class="nm">${m.nm}</div><div class="parts">${m.parts}</div><div class="snd">→ ${m.snd}</div><div class="zh">${m.zh.replace(/^(\S+)/,'<b>$1</b>')}</div><div class="forms">${m.forms}</div></div>`;
+}
+SOUND.forEach((m,i)=>{
+  const b=document.createElement("button");b.type="button";b.style.setProperty("--c",m.c);
+  b.innerHTML=`<span class="e">${m.e}</span><span class="w">${m.say}</span><span class="n">${m.n}</span>`;
+  b.addEventListener("click",()=>{play(m.f);flash(b,300);showSound(m);});
+  srowEl.appendChild(b);sBtns.push(b);
+});
+showSound(SOUND[0]);
 document.getElementById("b-emo").addEventListener("click",()=>run(EMO,520,(m,k)=>{if(m.f)play(m.f);flash(emoBtns[k],460);estat.textContent=EMO.slice(0,k+1).map(x=>x.e[1]).join(" ")}));
 
 /* Diagram 8: the clay before the kiln */
