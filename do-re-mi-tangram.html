@@ -5,7 +5,7 @@
 <style>
 :root{
   --ground:#F6F4FB; --panel:#FFFFFF; --ink:#1F1B3A; --muted:#625C80; --line:#DDD8EC; --soft:#EEEAF8;
-  --n0:#E5484D; --n1:#F07A1A; --n2:#E8B400; --n3:#3DA35D; --n4:#3E63DD; --n5:#3A2E8C; --n6:#8E4EC6; --n7:#E5484D; --mag:#E0339B; --black:#0B0A10; --white:#FFFFFF;
+  --n0:#FF0000; --n1:#FF7B00; --n2:#FFD700; --n3:#00FF00; --n4:#002DFF; --n5:#5A00FF; --n6:#7000FF; --n7:#FF0000; --mag:#E0339B; --black:#0B0A10; --white:#FFFFFF;
   --on-note:#FFFFFF;
   --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,sans-serif;
@@ -16,15 +16,15 @@
   :root:not([data-theme="light"]){
     color-scheme:dark;
     --ground:#15131F; --panel:#1E1B2C; --ink:#EEEAF9; --muted:#A79FC4; --line:#332E47; --soft:#262238;
-    --n0:#F06A6E; --n1:#F5923F; --n2:#F2C530; --n3:#56BF77; --n4:#6A88F0; --n5:#7B6BD6; --n6:#A974DA; --n7:#F06A6E; --mag:#F05FB5; --black:#0B0A10; --white:#FFFFFF;
-    --on-note:#15131F;
+    --n0:#FF0000; --n1:#FF7B00; --n2:#FFD700; --n3:#00FF00; --n4:#002DFF; --n5:#5A00FF; --n6:#7000FF; --n7:#FF0000; --mag:#F05FB5; --black:#0B0A10; --white:#FFFFFF;
+    --on-note:#FFFFFF;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --ground:#15131F; --panel:#1E1B2C; --ink:#EEEAF9; --muted:#A79FC4; --line:#332E47; --soft:#262238;
-  --n0:#F06A6E; --n1:#F5923F; --n2:#F2C530; --n3:#56BF77; --n4:#6A88F0; --n5:#7B6BD6; --n6:#A974DA; --n7:#F06A6E; --mag:#F05FB5; --black:#0B0A10; --white:#FFFFFF;
-  --on-note:#15131F;
+  --n0:#FF0000; --n1:#FF7B00; --n2:#FFD700; --n3:#00FF00; --n4:#002DFF; --n5:#5A00FF; --n6:#7000FF; --n7:#FF0000; --mag:#F05FB5; --black:#0B0A10; --white:#FFFFFF;
+  --on-note:#FFFFFF;
 }
 *{box-sizing:border-box}
 body{background:var(--ground);color:var(--ink);font:16px/1.55 var(--body);padding-inline:16px;padding-block:32px 64px}
@@ -48,14 +48,14 @@ svg text{font-family:var(--body);fill:var(--ink)}
 .step:hover rect,.step:focus-visible rect,.step.on rect{transform:scaleY(1.04)}
 .step:focus-visible rect{stroke:var(--ink);stroke-width:3}
 .step:focus-visible circle{stroke:var(--ink);stroke-width:3}
-.syl{font-family:var(--display)!important;font-weight:800;fill:var(--on-note)!important}
+.syl{font-family:var(--display)!important;font-weight:800;fill:var(--on-note)!important;paint-order:stroke;stroke:rgba(0,0,0,.45);stroke-width:2.5px;stroke-linejoin:round}
 .small{font-size:13px;fill:var(--muted)!important}
 .mono{font-family:var(--mono)!important}
 .hymn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
 .hymn ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
 .hymn li{display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px dashed var(--line)}
 .hymn li:last-child{border-bottom:0}
-.chip{font-family:var(--display);font-weight:800;min-width:3.2em;text-align:center;border-radius:8px;padding:0 8px;color:var(--on-note);flex-shrink:0}
+.chip{font-family:var(--display);font-weight:800;min-width:3.2em;text-align:center;border-radius:8px;padding:0 8px;color:var(--on-note);flex-shrink:0;text-shadow:0 1px 2px rgba(0,0,0,.55)}
 .hymn em{font-style:normal;color:var(--muted)}
 .hymn b{color:var(--ink)}
 .col h3{font-size:1.2rem;margin:0 0 8px}
@@ -63,7 +63,7 @@ svg text{font-family:var(--body);fill:var(--ink)}
 
 /* the equation */
 .chain{display:flex;flex-wrap:wrap;align-items:center;gap:4px 2px;font-family:var(--mono);font-size:1rem}
-.chain .st{width:2.2em;height:2.2em;border-radius:50%;display:grid;place-items:center;color:var(--on-note);font-weight:800;font-family:var(--display);font-size:1.1rem}
+.chain .st{width:2.2em;height:2.2em;border-radius:50%;display:grid;place-items:center;color:var(--on-note);font-weight:800;font-family:var(--display);font-size:1.1rem;text-shadow:0 1px 2px rgba(0,0,0,.55)}
 .chain .st.prime{box-shadow:0 0 0 3px var(--panel),0 0 0 5px var(--ink)}
 .chain .arr{display:inline-flex;flex-direction:column;align-items:center;line-height:1;padding:0 2px;color:var(--muted)}
 .chain .arr small{font-size:.7rem;margin-bottom:-2px}
@@ -129,20 +129,15 @@ td .num{font-family:var(--mono);font-size:.85rem;color:var(--muted);white-space:
 .sw.blk{background:var(--black);border:1px solid var(--line)}
 .sw.wht{background:var(--white);border:1px solid var(--muted)}
 td em{font-style:italic;color:var(--muted)}
-/* basic words and emoji: one dark panel, hot magenta and cyan on violet-black, the same in both themes */
-.miami{background:#140f1e;color:#cfc7e8;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:16px}
+/* basic words and emoji, in the page's own colours */
 .emo{display:grid;grid-template-columns:repeat(9,1fr);gap:6px}
-.emo button{font:inherit;background:transparent;border:1px solid rgba(244,114,182,.28);border-radius:14px;padding:12px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;color:#cfc7e8;transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease}
-.emo .e{font-size:clamp(1.5rem,4.2vw,2.3rem);line-height:1}
+.emo button{font:inherit;border:0;border-radius:14px;padding:12px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--on-note);text-shadow:0 1px 2px rgba(0,0,0,.55);transition:transform .12s ease}
+.emo .e{font-size:clamp(1.5rem,4.2vw,2.3rem);line-height:1;text-shadow:none}
 .emo .w{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em}
-.emo .n{font-family:var(--mono);font-size:.62rem;color:#f472b6}
-.emo button.cy .n{color:#67e8f9}
-.emo button:hover,.emo button.on{transform:translateY(-4px);border-color:#f472b6;box-shadow:0 0 18px rgba(244,114,182,.35)}
-.emo button.cy:hover,.emo button.cy.on{border-color:#67e8f9;box-shadow:0 0 18px rgba(103,232,249,.35)}
-.emo button:focus-visible{outline:3px solid #67e8f9;outline-offset:2px}
-.miami .btn{background:#1e1730;color:#f472b6;border-color:rgba(244,114,182,.4)}
-.miami .btn:hover{background:#261d3a}
-.miami .stat{background:#1e1730;color:#cfc7e8}
+.emo .n{font-family:var(--mono);font-size:.62rem;opacity:.9}
+.emo button:hover,.emo button.on{transform:translateY(-4px)}
+.emo button.prime{box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 5px var(--ink)}
+.emo button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 @media (max-width:560px){.emo{grid-template-columns:repeat(3,1fr)}}
 /* the clay before the kiln: neon on the black of a flatbed scan, the same in both themes */
 .doh{background:#000;border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:12px}
@@ -162,7 +157,7 @@ td em{font-style:italic;color:var(--muted)}
 .gifs figcaption{font-family:var(--display);font-weight:800;font-size:1rem}
 /* sound */
 .keys{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
-.key{font:inherit;font-family:var(--display);font-weight:800;font-size:1rem;border:0;border-radius:12px;color:var(--on-note);padding:14px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1;transition:transform .12s ease}
+.key{font:inherit;font-family:var(--display);font-weight:800;font-size:1rem;border:0;border-radius:12px;color:var(--on-note);text-shadow:0 1px 2px rgba(0,0,0,.55);padding:14px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1;transition:transform .12s ease}
 .key small{font-family:var(--mono);font-weight:500;font-size:.68rem;opacity:.9}
 .key:hover,.key.on{transform:translateY(-4px)}
 .key:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
@@ -339,7 +334,7 @@ td em{font-style:italic;color:var(--muted)}
     <p>Red is the lowest-frequency light we can see, violet the highest; Do is the lowest note, Ti the highest. Walk 0 → 6 and in both light and sound you are climbing in vibration. That rhyme is not an accident. When Isaac Newton split the spectrum in <em>Opticks</em> (1704) he had five colours and added two, orange and indigo, so that the count would match the seven notes of the scale. He then divided the spectrum by the same string lengths that give the notes, and he wrote that violet is red coming round again, the way a note comes round an octave up. Newton's rainbow is Diagram 2 in light.</p>
     <div class="ctl"><button type="button" class="btn" id="b-rainbow">Play the rainbow</button></div>
     <div class="fig spec"><svg id="spectrum" viewBox="0 0 800 300" role="img" aria-label="The spectrum as seven bands, red to violet, each band as wide as Newton made it from the Dorian scale, labelled with its note, Newton's note letter, wavelength and frequency"></svg></div>
-    <p class="hint">Band widths are Newton's: red, yellow and green are the whole tones, orange and indigo the two half tones, which is why the two colours he added are the two narrow ones. Newton started his scale on D. This page starts it on Do. Tap a band to hear its note.</p>
+    <p class="hint">Band widths are Newton's: red, yellow and green are the whole tones, orange and indigo the two half tones, which is why the two colours he added are the two narrow ones. Newton started his scale on D. This page starts it on Do. Tap a band to hear its note. The seven colours on this page are the light itself, not paint: each is the wavelength shown, converted with the CIE 1931 standard observer to sRGB, clipped to what a screen can show and set to full brightness. A screen cannot make 700 nm red or 405 nm violet exactly; these are the nearest it has.</p>
     <div class="ctl"><button type="button" class="btn" id="b-round">Round the wheel</button></div>
     <div class="fig wheel"><svg id="wheel" viewBox="-20 -30 580 600" role="img" aria-label="A colour wheel of seven bands, red to violet, each labelled with its note, its Sanskrit name and its chakra, joined back to red by a narrow dashed magenta wedge labelled zero prime. The centre is black, labelled 0, no light yet. A white ring around the outside is labelled all seven at once."></svg></div>
     <p>Three colours are missing from the rainbow, and between them they are the whole equation. <strong>Black</strong> is no light at all: the centre of the wheel, nothing has happened yet, 0. <strong>White</strong> is all seven at once, the ring around the outside: the octave sounding together, the square with every piece in it. And past violet is ultraviolet, which no eye can see. Red doubled is 860 THz, real and invisible. Yet the wheel closes: violet comes back round to red through <strong>magenta</strong>, a colour with no wavelength that the brain invents to join the two ends. The colour that returns you to red was never in the rainbow at all. Magenta is 0′ ≠ 0.</p>
@@ -352,14 +347,14 @@ td em{font-style:italic;color:var(--muted)}
     <p class="kicker">Diagram 7</p>
     <h2>Basic words and emoji</h2>
     <p>The seven notes as the seven animals the Nāradīya Śikṣā gave them, with two eyes before the first and a melt after the last. Tap one to hear it.</p>
-    <div class="miami">
+    <div class="fig" style="display:flex;flex-direction:column;gap:16px">
       <div class="emo" id="emo" role="group" aria-label="Nine emoji: look, then the seven svara animals, then melt"></div>
       <div class="ctl">
         <button type="button" class="btn" id="b-emo">Play 👀 → 🦚 → 🫠</button>
         <p class="stat" id="estat">👀 🟣 🫠</p>
       </div>
     </div>
-    <p class="hint">Heron has no emoji; the swan stands in. The eyes, the purple circle and the melting face are the three glyphs of The Purple Durian, and the palette is the one you keep asking for and asking not to name.</p>
+    <p class="hint">Heron has no emoji; the swan stands in. The eyes and the melting face are two of the three glyphs of The Purple Durian; the third, 🟣, is the whole set at once.</p>
   </section>
 
   <section>
@@ -397,7 +392,7 @@ td em{font-style:italic;color:var(--muted)}
     </div>
   </section>
 
-  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words. Black as 0 was Joey’s answer to Clue 4. Diagram 7: the animals from the Nāradīya Śikṣā as above; the three glyphs 👀 🟣 🫠 and the rule “just basic words and emoji, more emoji” from Joey’s own house-style notes (<em>Words.md</em>, 2026); the palette from his <em>miami.css</em> theme (2026). Diagram 8: colours and the mirror rule from the Pretty Child archive reading (<em>pretty-child-findings.md</em>, 1 September 2026), which describes the flatbed scans of neon Play-Doh and notes that every frame of the film is bilaterally mirrored.</p>
+  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; the seven colours computed from the CIE 1931 2° colour-matching functions (table values at 700, 590, 575, 530, 470, 445 and 405 nm) through the sRGB D65 matrix, negative channels clipped, then normalised; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words. Black as 0 was Joey’s answer to Clue 4. Diagram 7: the animals from the Nāradīya Śikṣā as above; the three glyphs 👀 🟣 🫠 and the rule “just basic words and emoji, more emoji” from Joey’s own house-style notes (<em>Words.md</em>, 2026). Diagram 8: colours and the mirror rule from the Pretty Child archive reading (<em>pretty-child-findings.md</em>, 1 September 2026), which describes the flatbed scans of neon Play-Doh and notes that every frame of the film is bilaterally mirrored.</p>
 </div>
 
 <script>
@@ -687,10 +682,10 @@ document.getElementById("b-pic").addEventListener("click",()=>{
 /* Diagram 6: seven colours */
 const COL=[
  {c:"Red",newton:"D",lam:700,w:1/9,chakra:"Root · Muladhara",where:"base of the spine",m:"Ground, blood, survival, beginning. In Nepal the colour of sindoor, marriage and <em>tika</em>. The longest wave the eye can catch. In China the colour of luck and a new year."},
- {c:"Orange",newton:"E",lam:610,w:1/18,chakra:"Sacral · Svadhisthana",where:"below the navel",m:"Warmth, appetite, creativity. Saffron: the robe of renunciation and the flag at the temple. Marigolds at Tihar. Newton's first added colour, the narrow band. In Ar Don Go the hero is an orange ping-pong ball."},
- {c:"Yellow",newton:"F",lam:580,w:1/12,chakra:"Solar plexus · Manipura",where:"the stomach",m:"Will, clarity, knowledge. Saraswati's colour; Basant Panchami yellow. The brightest colour to the eye. Imperial yellow in China, once forbidden to all but the emperor."},
+ {c:"Orange",newton:"E",lam:590,w:1/18,chakra:"Sacral · Svadhisthana",where:"below the navel",m:"Warmth, appetite, creativity. Saffron: the robe of renunciation and the flag at the temple. Marigolds at Tihar. Newton's first added colour, the narrow band. In Ar Don Go the hero is an orange ping-pong ball."},
+ {c:"Yellow",newton:"F",lam:575,w:1/12,chakra:"Solar plexus · Manipura",where:"the stomach",m:"Will, clarity, knowledge. Saraswati's colour; Basant Panchami yellow. The brightest colour to the eye. Imperial yellow in China, once forbidden to all but the emperor."},
  {c:"Green",newton:"G",lam:530,w:1/12,chakra:"Heart · Anahata",where:"the chest",m:"Growth and balance: the middle of the scale and the middle of the spectrum. The eye is most sensitive at 555 nm, in green, so it is the colour we see best and tire of least."},
- {c:"Blue",newton:"A",lam:480,w:1/15,chakra:"Throat · Vishuddha",where:"the throat",m:"Voice and sky. Krishna's and Vishnu's skin: the infinite made visible. For most of history the rarest pigment, ground from lapis lazuli and worth more than gold."},
+ {c:"Blue",newton:"A",lam:470,w:1/15,chakra:"Throat · Vishuddha",where:"the throat",m:"Voice and sky. Krishna's and Vishnu's skin: the infinite made visible. For most of history the rarest pigment, ground from lapis lazuli and worth more than gold."},
  {c:"Indigo",newton:"B",lam:445,w:3/80,chakra:"Third eye · Ajna",where:"between the brows",m:"Insight and night. The dye of work clothes and of ink. Newton's second added colour, the one most people cannot pick out of a rainbow. The plant is named for India: Greek <em>indikon</em>, the Indian thing."},
  {c:"Violet",newton:"C",lam:405,w:1/16,chakra:"Crown · Sahasrara",where:"top of the head",m:"The edge of seeing: the last colour before light stops being visible. Beyond it, ultraviolet, which bees see and we do not. Newton thought violet was red coming round again."},
 ];
@@ -772,7 +767,7 @@ const trm=document.createElement("tr");trm.innerHTML=`<td>0′</td><td><span cla
 
 /* Diagram 7: basic words and emoji */
 const EMO=[
-  {e:"👀",w:"look",n:"before",f:0,cy:true},
+  {e:"👀",w:"look",n:"before",f:0,bg:"var(--black)"},
   {e:"🦚",w:"peacock",n:"0 · Sa",f:NOTES[0].f},
   {e:"🐂",w:"bull",n:"1 · Re",f:NOTES[1].f},
   {e:"🐐",w:"goat",n:"2 · Ga",f:NOTES[2].f},
@@ -780,11 +775,11 @@ const EMO=[
   {e:"🐦",w:"koel",n:"4 · Pa",f:NOTES[4].f},
   {e:"🐴",w:"horse",n:"5 · Dha",f:NOTES[5].f},
   {e:"🐘",w:"elephant",n:"6 · Ni",f:NOTES[6].f},
-  {e:"🫠",w:"melt",n:"7 · 0′",f:NOTES[7].f,cy:true}
+  {e:"🫠",w:"melt",n:"7 · 0′",f:NOTES[7].f,bg:"var(--mag)",prime:true}
 ];
 const emoEl=document.getElementById("emo"),emoBtns=[],estat=document.getElementById("estat");
 EMO.forEach((m,i)=>{
-  const b=document.createElement("button");b.type="button";b.className=m.cy?"cy":"";
+  const b=document.createElement("button");b.type="button";b.className=m.prime?"prime":"";b.style.background=m.bg||`var(--n${i-1})`;
   b.innerHTML=`<span class="e" role="img" aria-label="${m.w}">${m.e}</span><span class="w">${m.w}</span><span class="n">${m.n}</span>`;
   b.addEventListener("click",()=>{if(m.f)play(m.f);flash(b,300);estat.textContent=`${m.e} ${m.w}`;});
   emoEl.appendChild(b);emoBtns.push(b);
