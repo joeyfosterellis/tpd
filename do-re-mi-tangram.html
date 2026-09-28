@@ -152,6 +152,18 @@ td em{font-style:italic;color:var(--muted)}
 .doh .stat{background:#111;color:#eee;text-align:center}
 .doh .btn{background:#111;color:#eee;border-color:#333}
 .doh .btn[aria-pressed="true"]{background:#eee;color:#000;border-color:#eee}
+/* the arrows */
+.arrows{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.arrows button{font:inherit;font-family:var(--mono);font-size:.95rem;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);padding:12px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:transform .12s ease,border-color .12s ease}
+.arrows button b{font-family:var(--display);font-size:1.15rem}
+.arrows button small{color:var(--muted);font-size:.72rem}
+.arrows button:hover,.arrows button.on{transform:translateY(-3px);border-color:var(--ink)}
+.arrows button:focus-visible{outline:3px solid var(--n5);outline-offset:2px}
+.chain .arr{cursor:pointer;border-radius:8px;padding:2px 4px;transition:background .12s ease}
+.chain .arr:hover,.chain .arr.on{background:var(--soft);color:var(--ink)}
+.chain .arr:focus-visible{outline:3px solid var(--n5);outline-offset:1px}
+.tarr{cursor:pointer}
+.tarr:hover .hit,.tarr.on .hit{stroke:var(--soft)}
 /* moving pictures */
 .gifs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
 .gifs figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:8px}
@@ -179,7 +191,7 @@ td em{font-style:italic;color:var(--muted)}
   <header>
     <p class="kicker">Scavenger hunt · clue diagrams</p>
     <h1>Sa Re Ga, <span class="twin">Do Re Mi, <span lang="zh-Hant">上尺工</span></span></h1>
-    <p class="lede">Seven svaras, three languages, seven boards, seven colours, and one journey that comes back changed. Tap any step, piece or colour to hear it. Pick a voice, hold a drone, or press the play button under each diagram.</p>
+    <p class="lede">Seven states and the arrows between them. The states have names in three languages, seven boards and seven colours; the arrows are what the theory is about. Tap a state to hear where it is. Tap an arrow to hear what happened.</p>
   </header>
 
   <section>
@@ -223,7 +235,7 @@ td em{font-style:italic;color:var(--muted)}
     <p>Bend the staircase into a ring and the top step lands over the bottom one. High Sa sounds like low Sa, so the journey seems to end where it began. Look closer and it lands one level up. The second zero has climbed seven steps to get there.</p>
     <div class="ctl"><button type="button" class="btn" id="b-walk">Walk the spiral</button></div>
     <div class="fig circle"><svg id="ring" viewBox="0 0 480 480" role="img" aria-label="Seven notes placed along one turn of a spiral. The eighth point, high Sa, sits directly above the first but further out, labelled 7 and zero prime. Each arrow between notes is labelled T1 to T7."></svg></div>
-    <p class="hint">The arrows carry the letter T. Each one is the step that turns one note into the next. Tap a note to hear it, and hear how the last one sounds like the first without being it.</p>
+    <p class="hint">The arrows carry the letter T. Each one is the step that turns one note into the next. Tap an arrow to hear the slide; tap a note to hear where it lands; and hear how the last one sounds like the first without being it.</p>
   </section>
 
   <section>
@@ -231,7 +243,7 @@ td em{font-style:italic;color:var(--muted)}
     <h2>The equation</h2>
     <p>This is the simplest way to explain it to someone seeing it cold.</p>
     <div class="fig">
-      <div class="ctl" style="margin-bottom:14px"><button type="button" class="btn" id="b-chain">Play the chain</button><span class="hint">Tap any state to hear it.</span></div>
+      <div class="ctl" style="margin-bottom:14px"><button type="button" class="btn" id="b-chain">Play the chain</button><span class="hint">Tap a state to hear where it is. Tap an arrow to hear what happened.</span></div>
       <div class="chain" id="chain" aria-label="0 to 1 to 2 to 3 to 4 to 5 to 6 to 7 to zero prime, each arrow labelled T"></div>
       <p class="hint" style="margin-top:14px">with</p>
       <p class="box mono" style="margin-top:6px">0′ ≠ 0</p>
@@ -264,6 +276,28 @@ td em{font-style:italic;color:var(--muted)}
       <div><b>The final zero</b>shows that returning is not the same as never having left.</div>
     </div>
     <p class="hint">The scale is the smallest case. It takes seven arrows to come round, and the note it lands on sounds like Sa because it is Sa, an octave up. The tangram below is the case you can hold in your hands.</p>
+  </section>
+
+  <section>
+    <p class="kicker">The arrows</p>
+    <h2>Hear the change, not the note</h2>
+    <p>A tap on a state plays a note: where something is. A tap on an arrow plays the slide from one note into the next: what happened to it. The theory is in the second sound.</p>
+    <div class="fig" style="display:flex;flex-direction:column;gap:16px">
+      <div class="arrows" id="arrows" role="group" aria-label="Eight arrows, T1 to T7 and T0"></div>
+      <div class="ctl">
+        <div class="row">
+          <button type="button" class="btn" id="b-arrows">Play the arrows only</button>
+          <button type="button" class="btn" id="b-34">3 → 4</button>
+          <button type="button" class="btn" id="b-43">4 → 3</button>
+        </div>
+        <p class="stat" id="astat">T · the arrow is the key element</p>
+      </div>
+    </div>
+    <div class="eq">
+      <div><h3>3 → 4</h3><p>Ma slides into Pa. Something pushed it: heat, breath, pressure, movement, time. What had to happen for state 3 to become state 4?</p></div>
+      <div><h3>4 → 3</h3><p>Pa slides back to Ma. It sounds like the reverse. Whether the thing that was pushed can actually be pushed back is the second question, and the sound does not answer it.</p></div>
+    </div>
+    <p class="hint">Every arrow on this page can be tapped: the labelled arrows on the spiral, the arrows in the chain above, and these eight. "Play the arrows only" plays the seven slides and the return without holding a single note.</p>
   </section>
 
   <section>
@@ -478,6 +512,28 @@ function setDrone(on){
     }
   }catch(e){}
 }
+/* the arrow: a slide from one note into the next, not the notes themselves */
+function slide(f0,f1,dur=0.9){
+  try{
+    const c=ac(),t=c.currentTime,g=c.createGain();g.connect(master);
+    const o=c.createOscillator();o.type=voice==="pluck"?"triangle":"sine";
+    o.frequency.setValueAtTime(f0,t);o.frequency.setValueAtTime(f0,t+dur*0.12);o.frequency.exponentialRampToValueAtTime(f1,t+dur*0.75);
+    const o2=c.createOscillator();o2.type="sine";const g2=c.createGain();g2.gain.value=voice==="bell"?0.25:0.14;
+    o2.frequency.setValueAtTime(f0*2,t);o2.frequency.setValueAtTime(f0*2,t+dur*0.12);o2.frequency.exponentialRampToValueAtTime(f1*2,t+dur*0.75);
+    o.connect(g);o2.connect(g2).connect(g);
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.3,t+0.05);g.gain.setValueAtTime(0.3,t+dur*0.8);g.gain.exponentialRampToValueAtTime(0.0001,t+dur+0.1);
+    o.start(t);o2.start(t);o.stop(t+dur+0.15);o2.stop(t+dur+0.15);
+  }catch(e){}
+}
+/* T0: the return. High Sa held, and the Sa it came from rising underneath it */
+function returnSound(dur=1.6){
+  try{
+    const c=ac(),t=c.currentTime;play(NOTES[7].f,dur);
+    const o=c.createOscillator(),g=c.createGain();o.type="sine";o.frequency.value=NOTES[0].f;
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.16,t+dur*0.7);g.gain.exponentialRampToValueAtTime(0.0001,t+dur+0.2);
+    o.connect(g).connect(master);o.start(t);o.stop(t+dur+0.25);
+  }catch(e){}
+}
 const flash=(g,ms=260)=>{if(!g)return;g.classList.add("on");setTimeout(()=>g.classList.remove("on"),ms)};
 function run(items,ms,fn){
   if(busy)return false;busy=true;
@@ -547,9 +603,13 @@ for(let i=0;i<7;i++){
   const trim0=(NR+3)/rad(i),trim1=(NR+3)/rad(i+1);
   let dd="";const a0=i+trim0/STEP,a1=i+1-trim1/STEP;
   for(let k=0;k<=12;k++){const t=a0+(a1-a0)*k/12,[x,y]=pt(t);dd+=(k?" L":"M")+x.toFixed(1)+" "+y.toFixed(1)}
-  el("path",{d:dd,fill:"none",stroke:"var(--muted)","stroke-width":2,"marker-end":"url(#ah2)"},rg);
+  const ag=el("g",{class:"tarr",tabindex:0,role:"button","aria-label":`T${i+1}, ${NOTES[i].s} to ${NOTES[i+1].s}`},rg);
+  el("path",{d:dd,fill:"none",stroke:"transparent","stroke-width":22,class:"hit"},ag);
+  el("path",{d:dd,fill:"none",stroke:"var(--muted)","stroke-width":2,"marker-end":"url(#ah2)"},ag);
   const mi=i+.5,lr=rad(mi)+40,lx=CX+lr*Math.cos(ang(mi)),ly=CY+lr*Math.sin(ang(mi))+4;
-  txt(rg,lx,ly,"T"+(i+1),"mono small");
+  txt(ag,lx,ly,"T"+(i+1),"mono small");
+  const ahit=()=>{slide(NOTES[i].f,NOTES[i+1].f);flash(ag,700);setTimeout(()=>{if(ringNodes[i+1])flash(ringNodes[i+1],500)},450)};
+  ag.addEventListener("click",ahit);key(ag,ahit);
 }
 const r0=txt(rg,CX,CY-8,"0 → 7 → 0′","mono");r0.setAttribute("font-size",22);
 txt(rg,CX,CY+18,"0′ ≠ 0","mono").setAttribute("font-size",18);
@@ -583,10 +643,30 @@ document.getElementById("b-walk").addEventListener("click",()=>{
 const chain=document.getElementById("chain");
 const chainSt=[];
 const state=(label,i,prime)=>{const s=document.createElement("span");s.className="st"+(prime?" prime":"");s.style.background=`var(--n${i})`;s.textContent=label;s.setAttribute("aria-label",prime?"zero prime":label);s.setAttribute("role","button");s.tabIndex=0;const f=prime?NOTES[7].f:NOTES[i].f;const hit=()=>{play(f);flash(s)};s.addEventListener("click",hit);key(s,hit);chainSt.push(s);return s};
-const arrow=(sub)=>{const a=document.createElement("span");a.className="arr";a.innerHTML=`<small>T<sub>${sub}</sub></small><span>→</span>`;return a};
+const chainArr=[];
+const arrow=(sub)=>{const a=document.createElement("span");a.className="arr";a.innerHTML=`<small>T<sub>${sub}</sub></small><span>→</span>`;a.setAttribute("role","button");a.tabIndex=0;
+  const k=sub;const lab=k===0?"T0, the return, 7 to zero prime":`T${k}, ${NOTES[k-1].s} to ${NOTES[k].s}`;a.setAttribute("aria-label",lab);
+  const hit=()=>{if(k===0){returnSound();flash(chainSt[7],700);flash(chainSt[8],1200)}else{slide(NOTES[k-1].f,NOTES[k].f);flash(chainSt[k-1],300);setTimeout(()=>flash(chainSt[k],500),450)}flash(a,700)};
+  a.addEventListener("click",hit);key(a,hit);chainArr.push(a);return a};
 for(let i=0;i<=7;i++){chain.appendChild(state(String(i),i,false));chain.appendChild(arrow(i<7?i+1:0))}
 chain.appendChild(state("0′",0,true));
 document.getElementById("b-chain").addEventListener("click",()=>run(chainSt,380,(s,k)=>{play(note(k).f);flash(s,300)}));
+
+/* The arrows */
+const arrowsEl=document.getElementById("arrows"),arrBtns=[],astat=document.getElementById("astat");
+const ARR=[1,2,3,4,5,6,7,0];
+ARR.forEach(k=>{
+  const b=document.createElement("button");b.type="button";
+  const from=k===0?"7":String(k-1),to=k===0?"0′":String(k);
+  const fn=k===0?NOTES[7].s+"′":NOTES[k-1].s,tn=k===0?NOTES[0].s+"′":NOTES[k].s;
+  b.innerHTML=`<b>T<sub>${k}</sub></b>${from} → ${to}<small>${fn} → ${tn}</small>`;
+  b.setAttribute("aria-label",k===0?"T0, the return, 7 to zero prime":`T${k}, ${from} to ${to}, ${fn} to ${tn}`);
+  const hit=()=>{if(k===0){returnSound();astat.innerHTML=`<b>T<sub>0</sub></b> · 7 → 0′ · the same Sa, with where it came from underneath`}else{slide(NOTES[k-1].f,NOTES[k].f);astat.innerHTML=`<b>T<sub>${k}</sub></b> · ${k-1} → ${k} · ${NOTES[k-1].s} into ${NOTES[k].s}: what had to happen?`}flash(b,700)};
+  b.addEventListener("click",hit);arrowsEl.appendChild(b);arrBtns.push(b);
+});
+document.getElementById("b-arrows").addEventListener("click",()=>run(ARR,700,(k,i)=>{if(k===0)returnSound();else slide(NOTES[k-1].f,NOTES[k].f,0.65);flash(arrBtns[i],600);flash(chainArr[i],600)}));
+document.getElementById("b-34").addEventListener("click",()=>{slide(NOTES[3].f,NOTES[4].f,1.2);flash(arrBtns[3],900);astat.innerHTML=`<b>3 → 4</b> · Ma into Pa. What had to happen?`});
+document.getElementById("b-43").addEventListener("click",()=>{slide(NOTES[4].f,NOTES[3].f,1.2);flash(arrBtns[3],900);astat.innerHTML=`<b>4 → 3</b> · Pa back to Ma. Can it actually be reversed? Sometimes yes. Sometimes no.`});
 
 /* Diagram 3: tangram */
 const TG=document.getElementById("tangram");

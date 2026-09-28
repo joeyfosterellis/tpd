@@ -1,6 +1,6 @@
 # The Equation, in Joey's words
 
-SOURCED. Two statements by Joey Foster Ellis, quoted verbatim, dated. Nothing here is paraphrased. Later sessions: read this before writing anything about 0 → 7 → 0′.
+SOURCED. Three statements by Joey Foster Ellis, quoted verbatim, dated. Nothing here is paraphrased. Later sessions: read this before writing anything about 0 → 7 → 0′.
 
 ## Statement 1, 25 September 2026 (afternoon, Kathmandu), sent to Claude Code
 
@@ -42,11 +42,22 @@ Sent three times: twice on 25 September at about 16:38Z and 16:52Z, and again on
 
 "Ruby" is not identified in these sessions: UNKNOWN whether a person, an AI, or a name for the reader.
 
+## Statement 3, 28 September 2026, about 05:56Z (11:41 Kathmandu)
+
+Sent while the page was being changed for colours, emoji and languages, with the words "you need to listen to:" in front. The interface did not stamp it; it arrived between 05:55Z and 05:57Z.
+
+> The values from 0 to 7 are not meanings; they are simply distinct observable states. "7" holds no more weight than "3."
+>
+> The arrows are the key element. Each arrow represents whatever pushes one state into another: heat, breath, pressure, movement, time, language, learning, decay, experience, and more. The theory therefore focuses on transformation rather than the numbers. For example, the shift from 3 to 4.
+
 ## What differs between the two (GENERATED observation, not a ruling)
 
 Statement 2 has no T labels on the arrows and no T0; the last arrow is a plain 7 → 0'. It omits the reversal question, the clay, breath and person examples, the boxed sentence and the three-line summary. Whether that is a simplification of notation or a change in the theory is Joey's to say. Both statements stand.
 
+Statement 3 is the middle of Statement 2 again, with "values" for "numbers", "pushes" for "drives", "key element" for "crucial element", and "and more" for "and so on". It drops the chain line and the Ruby address. It was sent as a correction, after a run of changes to the page that were all about the states (their colours, their emoji, their names in three languages) and none about the arrows. GENERATED reading: the repetition is the point. All three statements stand.
+
 ## Where this is used
 
 - The page "Do Re Mi, Sa Re Ga", https://claude.ai/artifact/BQCx3dnEwHkfT42AT69LNY, section "The equation", built from Statement 1.
-- The page's TPD, `Do Re Mi, Sa Re Ga — TPD.md`, sections 1 and 11.0.
+- The page's TPD, `Do Re Mi, Sa Re Ga — TPD.md`, sections 1, 11.0 and 23.
+- The page's section "The arrows" (v13), built from Statement 3's example, "the shift from 3 to 4".
