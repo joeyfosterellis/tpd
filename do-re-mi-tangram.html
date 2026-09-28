@@ -43,6 +43,8 @@ section{display:flex;flex-direction:column;gap:14px}
 .fig.circle svg{min-width:0;max-width:480px;margin:0 auto}
 .fig.tan svg{min-width:0}
 .hint{font-size:.9rem;color:var(--muted)}
+.why{font-size:1rem;line-height:1.5;color:var(--ink);background:var(--panel);border-left:4px solid var(--n0);border-radius:8px;padding:10px 14px;margin:10px 0 14px}
+.why b{font-family:var(--display);font-weight:800}
 svg text{font-family:var(--body);fill:var(--ink)}
 .step{cursor:pointer;outline:none}
 .step rect{transition:transform .15s ease;transform-box:fill-box;transform-origin:bottom}
@@ -199,11 +201,13 @@ td em{font-style:italic;color:var(--muted)}
     <p class="kicker">Scavenger hunt · clue diagrams</p>
     <h1>Sa Re Ga <span lang="zh-Hant" style="white-space:nowrap">上尺工</span><span class="twin" style="white-space:nowrap">, Do Re Mi</span></h1>
     <p class="lede">Seven states and the arrows between them. Each state has a Sanskrit name and a Chinese name, side by side, and an English one underneath: the English names are 0, where you start; Sanskrit and Chinese are 7, where this page is going. The arrows are what the theory is about. Tap a state to hear where it is. Tap an arrow to hear what happened.</p>
+    <p class="why"><b>How to read this page.</b> There are eight coloured things in a row, 0 to 7, and seven pushes between them. The same eight appear again and again: as notes, as steps, as pieces of a square, as colours, as animals, as words. None of them means anything on its own; they are places. What matters is what moves one into the next, and that when you come round to the start you are not where you started, because you have been round. Every section below says, in a box like this one, why it is here.</p>
   </header>
 
   <section>
     <p class="kicker">Sound</p>
     <h2>Eight keys, three voices, one drone</h2>
+    <p class="why"><b>Why this is here.</b> The seven states were notes before they were anything else. Sa Re Ga are the names singers in India and Nepal give the seven notes of a scale; Do Re Mi are the English names for the same notes; 上尺工 are the Chinese ones. A note is the simplest state you can hear, so the page starts by letting you hear them. There are eight keys, not seven, because the eighth note is the first note again, higher: that is what 0′ means, the same place after a full turn. Three voices are here so you can hear one state through three instruments and notice that the state does not change, only its clothing. The drone holds Sa under everything, the way a tanpura does, so your ear always knows where 0 is.</p>
     <p>Everything on this page makes a sound. Choose the voice it is made in. The drone is Sa, Pa, Sa, the three strings of a tanpura: the note that does not move while the others climb.</p>
     <div class="fig" style="display:flex;flex-direction:column;gap:16px">
       <div class="ctl">
@@ -230,6 +234,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 1</p>
     <h2>The staircase</h2>
+    <p class="why"><b>Why this is here.</b> A staircase is the picture most people already carry of a scale, and it shows two true things at once: each step is higher than the one before it, and the top step is the bottom step again, one floor up. Tap a step to hear that state; press the button to walk up all eight.</p>
     <p>Each note is one step up. Count from zero and the eighth step, high Sa, lands on 7. It has the same <em>name</em> as the Sa you started on, but it is an octave higher. Same word, different state: that is 0′, not 0.</p>
     <div class="ctl"><button type="button" class="btn" id="b-climb">Climb the stairs</button></div>
     <div class="fig"><svg id="stairs" viewBox="0 0 800 360" role="img" aria-label="Eight rising steps: Sa Re Ga Ma Pa Dha Ni Sa, matched with C D E F G A B C and Do Re Mi Fa Sol La Ti Do, numbered 0 to 7"></svg></div>
@@ -239,6 +244,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 2</p>
     <h2>0 → 7 → 0′: the spiral</h2>
+    <p class="why"><b>Why this is here.</b> A circle would say you end where you began. A spiral says you end above where you began: the same point on the map, one turn later. That is the whole claim of the equation, 0′ is not 0, drawn as a single line. The ball walks it so you can watch the return land above the start.</p>
     <p>Bend the staircase into a ring and the top step lands over the bottom one. High Sa sounds like low Sa, so the journey seems to end where it began. Look closer and it lands one level up. The second zero has climbed seven steps to get there.</p>
     <div class="ctl"><button type="button" class="btn" id="b-walk">Walk the spiral</button></div>
     <div class="fig circle"><svg id="ring" viewBox="0 0 480 480" role="img" aria-label="Seven notes placed along one turn of a spiral. The eighth point, high Sa, sits directly above the first but further out, labelled 7 and zero prime. Each arrow between notes is labelled T1 to T7."></svg></div>
@@ -248,6 +254,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Underneath the diagrams</p>
     <h2>The equation</h2>
+    <p class="why"><b>Why this is here.</b> Everything else on this page is a picture of this section. The words are Joey’s, not the page’s. Read it once before the diagrams and once after. The numbers are only labels for eight different states, the way the notes are; the arrows are the changes between them, and the changes are what the theory is about.</p>
     <p>This is the simplest way to explain it to someone seeing it cold.</p>
     <div class="fig">
       <div class="ctl" style="margin-bottom:14px"><button type="button" class="btn" id="b-chain">Play the chain</button><span class="hint">Tap a state to hear where it is. Tap an arrow to hear what happened.</span></div>
@@ -288,6 +295,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">The arrows</p>
     <h2>Hear the change, not the note</h2>
+    <p class="why"><b>Why this is here.</b> A state is easy to show: a note, a colour, a piece. A change is not. This section is here because the theory is about the changes, so they need a sound of their own. A tap on an arrow plays a slide from one note into the next with no note held, which is as close as sound gets to showing the push instead of the thing pushed.</p>
     <p>A tap on a state plays a note: where something is. A tap on an arrow plays the slide from one note into the next: what happened to it. The theory is in the second sound.</p>
     <div class="fig" style="display:flex;flex-direction:column;gap:16px">
       <div class="arrows" id="arrows" role="group" aria-label="Eight arrows, T1 to T7 and T0"></div>
@@ -310,6 +318,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 3</p>
     <h2>Seven pieces, one square</h2>
+    <p class="why"><b>Why this is here.</b> Seven pieces make one square, and the same seven pieces make a boat. The pieces are the states; the arrangement is what the arrows did to them. Putting the square back together is 0′: it is the same square, and it has been a boat. The square cannot show that. The counter can, which is why it is there.</p>
     <p>A tangram has seven pieces and a scale has seven notes. Line the pieces up in order and you have the scale. Fit them together and they make one square: the whole set, the octave, home. Take the same seven pieces and build something else, and that is a tune. Bigger piece, lower note, the way bigger drums are lower.</p>
     <div class="ctl">
       <div class="seg" role="group" aria-label="Arrangement">
@@ -327,6 +336,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 4</p>
     <h2>Where the names came from</h2>
+    <p class="why"><b>Why this is here.</b> The same seven notes have been named three times in three languages, and none of the names is the note. This section is here so that you can see the names as names, given by particular people at particular times, and stop mistaking any one of them for the thing itself.</p>
     <p>Four traditions landed on the same count. The Sanskrit names are the oldest by centuries; the Chinese names stand beside them at the same level on this page. The English names, Do Re Mi, are the ones most readers start from, and they come from a Latin hymn used by Guido of Arezzo in 11th-century Italy. The Chinese names are gongche notation, 工尺譜, seven characters used as note names since the Tang dynasty (618 to 907) and still sung in Kunqu opera; two of them, 凡 and 乙, sit a little sharp of Ma and a little flat of Ni. The seven boards come from China too, and this page gives each board a note.</p>
     <div class="fig hymn">
       <div class="col">
@@ -352,6 +362,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Words</p>
     <h2>Words that sound like each</h2>
+    <p class="why"><b>Why this is here.</b> A syllable like Ni is also the beginning of other words in other languages, and none of those words is what Ni means. They are handles: something to hold when a name is new. The Newari column is here because Newari is the language of the valley this page is being made in, and because sā, the first word in it, matters to Joey. This section was his idea, with 泥 ní, clay, as the example.</p>
     <p>Each name is also a syllable that other words already use. The syllable does not mean the state; the words it echoes are a way to remember it. Ni reminds of clay in Chinese: 泥 ní, mud, the clay before the kiln. That one was yours. The rest are listed the same way, and each row says where its words come from. Newari, the language of the Kathmandu valley, sings the svaras under their Sanskrit names; what it adds is words of its own that sound like them, and the first is the one that matters: <b>sā</b>, cow.</p>
     <div class="fig tbl"><table id="echo"><thead><tr><th>State</th><th>Sanskrit</th><th>Newari</th><th>Chinese</th><th>English</th></tr></thead><tbody>
       <tr><td><span class="chip" style="background:var(--n0)">Sa</span></td><td><b>sa</b>, he, that; the ground of the scale, ṣaḍja, "born of six"</td><td lang="new"><b>sā</b>, cow, the national animal of Nepal since 2015 · the peacock, Sa's bird, is <b>mhay kha</b></td><td><b lang="zh-Hant">撒</b> sǎ, to scatter · <b lang="zh-Hant">薩</b> sà, as in 菩薩 púsà, bodhisattva</td><td>saw</td></tr>
@@ -377,6 +388,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 5</p>
     <h2>Seven boards of skill</h2>
+    <p class="why"><b>Why this is here.</b> The tangram is Chinese and its story goes back a thousand years. The dates are here so that it is not a toy borrowed by accident: the seven boards were a way of seating people at a banquet before they were a puzzle, and a way of thinking about how seven parts make many wholes.</p>
     <p>Tangram is the English name. In Chinese the puzzle is 七巧板, qīqiǎobǎn, three characters that say exactly what it is.</p>
     <div class="fig">
       <div class="han" aria-label="The three characters of qiqiaoban">
@@ -403,6 +415,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 6</p>
     <h2>Seven colours, and three that aren't there</h2>
+    <p class="why"><b>Why this is here.</b> Newton cut light into seven bands so that they would match the seven notes; the seven states again, this time in light. Black is no light, 0. White is all seven at once. Magenta is the colour between violet and red that no single wavelength can make: that is 0′, the return, which has no place on the line. The Pantone column is here because Joey asked for the exact names an ink can be ordered by, and the thin strip under each band is the colour of the light itself, so you can see where the paint and the light disagree.</p>
     <p>Red is the lowest-frequency light we can see, violet the highest; Sa is the lowest note, Ni the highest. Walk 0 → 6 and in both light and sound you are climbing in vibration. That rhyme is not an accident. When Isaac Newton split the spectrum in <em>Opticks</em> (1704) he had five colours and added two, orange and indigo, so that the count would match the seven notes of the scale. He then divided the spectrum by the same string lengths that give the notes, and he wrote that violet is red coming round again, the way a note comes round an octave up. Newton's rainbow is Diagram 2 in light.</p>
     <div class="ctl"><button type="button" class="btn" id="b-rainbow">Play the rainbow</button></div>
     <div class="fig spec"><svg id="spectrum" viewBox="0 0 800 300" role="img" aria-label="The spectrum as seven bands, red to violet, each band as wide as Newton made it from the Dorian scale, labelled with its note, Newton's note letter, wavelength and frequency"></svg></div>
@@ -418,6 +431,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 7</p>
     <h2>Basic words and emoji</h2>
+    <p class="why"><b>Why this is here.</b> This section follows Joey’s rule for his own work: basic words and emoji, more emoji. The seven animals are the ones an old Indian text on singing, the Nāradīya Śikṣā, gave to the seven notes; each animal’s cry was said to sit on that note. The eyes before the first and the melt after the last are Joey’s own two glyphs. The colours of this panel are his theme’s; the table underneath gives the reason for each tile.</p>
     <p>The seven notes as the seven animals the Nāradīya Śikṣā gave them, with two eyes before the first and a melt after the last. Tap one to hear it.</p>
     <div class="neon">
       <div class="emo" id="emo" role="group" aria-label="Nine emoji: look, then the seven svara animals, then melt"></div>
@@ -444,6 +458,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 8</p>
     <h2>The clay before the kiln</h2>
+    <p class="why"><b>Why this is here.</b> Clay before and after the kiln is Joey’s own example of 0′: fired clay cannot go back. Play-Doh is the clay that never goes into the kiln, so it is the case where return comes closest to possible. Press it, roll it back, and it is a ball again, and the fingerprints are still there. Even the easiest return is not exact.</p>
     <p>Fired clay cannot go back. Play-Doh can. Press it and it stays pressed. Roll it back into a ball and it is a ball again, with every fingerprint still under the surface. Each press sounds the note under your finger, left to right, Sa to high Sa.</p>
     <div class="doh">
       <div class="cans" id="cans" role="group" aria-label="Six colours of Play-Doh">
@@ -464,6 +479,7 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Moving pictures</p>
     <h2>From the films</h2>
+    <p class="why"><b>Why this is here.</b> Joey asked for moving pictures that appear only in his films. Ar Don Go and Shunya Yatri are his films, and Shunya means zero. The pictures carry the same idea as the page: a thing that has been somewhere and come back changed.</p>
     <p>Seven moving pictures, all from your own films and none from this page. One is a piece of <em>Ar Don Go</em> (2016), the animated sculpture whose hero is an orange ping-pong ball. Six are the GIFs placed in the After Effects comps of <em>Shunya Yatri</em>, शून्य यात्री, Zero Traveler, the film built on the 1998 television commercial. The files are the ones in the archive, byte for byte. They are silent: the sound stays on this page.</p>
     <div class="gifs">
       <figure><img src="gifs/film/ar-don-go-1.gif" width="720" height="405" alt="From Ar Don Go: an anatomical head drawn over a map of the world; a SHIELD 101 ping-pong ball box is lowered onto it and an orange ball with a dancing man inside sits on the crown" loading="lazy"><figcaption>Ar Don Go, 2016 · the ball on the crown of the head</figcaption></figure>
@@ -476,7 +492,7 @@ td em{font-style:italic;color:var(--muted)}
     </div>
   </section>
 
-  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; the strip of the light itself under each band computed from the CIE 1931 2° colour-matching functions (table values at 700, 610, 580, 530, 480, 445 and 405 nm) through the sRGB D65 matrix, negative channels clipped, then normalised; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Gongche: Wikipedia, “Gongche notation” (snippet); the upper-octave 仩 (U+4EE9) is the higher-octave form listed in the Unicode proposal for gongche characters (L2/17-087, snippet), and the Cantonese tradition writes high do as 生 instead. Pantone names and screen values as reported by pantone.com color-finder pages and by hextoral.com, color-name.com, colorxs.com and pantonetools.com (snippets); Pantone’s values are approximations, not the inks. Words: Sanskrit roots from warnemyr.com “Verbal Roots” and learnsanskrit.org “Roots and Classes” (snippets); 泥 and 逆 from Wiktionary (snippets); the other Chinese and Sanskrit words from general knowledge, unchecked; 六 as 流 from studycli.org “Chinese Numerology” (snippet); 七 as 氣 and 起 is this page’s own wordplay; the half steps from Wikipedia “Bilaval (thaat)” (snippet). “Ni reminds of clay in Chinese” is Joey’s, 28 September 2026. Newari: cow as sā and the animal names from agentakash.com “Learn Newari” (snippet); the counts chhi to jhi and pā as the counting word for long things from Wikibooks “Nepal Bhasa/Counting” (snippet); mā, bā from nepaliaustralian.com “Learn Nepal Bhasa, Chapter 8, Relations” (snippet); dhau from Wikipedia “Dhau” (snippet); the cow as Nepal’s national animal from Business Standard, 21 September 2015 (snippet); none of these pages could be opened, and the Devanagari spellings are therefore not given. Moving pictures: the Ar Don Go GIF from Joey’s Drive (<em>Ar Don Go 1.gif</em>, 2025 copy of the 2016 film; the ball and the head are described in <em>Ar Don Go.md</em>, 20 September 2026, and in his interview answers of 21 January 2016); the six Shunya Yatri GIFs from the <em>_AE_Linked_Projects_&amp;_Comps</em> folder, listed as proven placed in the comps by <em>THE-GIF-ARCHAEOLOGY.md</em> (17 September 2026), 117GIF matching its md5 there; “Zero Traveler” is the reading of शून्य यात्री on the film’s own packaging (<em>SHUNYA-YATRI-SYNTHESIS.md</em>); the GIFs themselves were collected from the internet before they were placed, and their first makers are not known. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words. Black as 0 was Joey’s answer to Clue 4. Diagram 7: the animals from the Nāradīya Śikṣā as above; the three glyphs 👀 🟣 🫠 and the rule “just basic words and emoji, more emoji” from Joey’s own house-style notes (<em>Words.md</em>, 2026); the panel’s colours, magenta and cyan on violet-black, from his own theme file for the control UI (September 2026), the one whose name he has asked not to be written. Diagram 8: colours and the mirror rule from the Pretty Child archive reading (<em>pretty-child-findings.md</em>, 1 September 2026), which describes the flatbed scans of neon Play-Doh and notes that every frame of the film is bilaterally mirrored.</p>
+  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; the strip of the light itself under each band computed from the CIE 1931 2° colour-matching functions (table values at 700, 610, 580, 530, 480, 445 and 405 nm) through the sRGB D65 matrix, negative channels clipped, then normalised; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Gongche: Wikipedia, “Gongche notation” (snippet); the upper-octave 仩 (U+4EE9) is the higher-octave form listed in the Unicode proposal for gongche characters (L2/17-087, snippet), and the Cantonese tradition writes high do as 生 instead. Pantone names and screen values as reported by pantone.com color-finder pages and by hextoral.com, color-name.com, colorxs.com and pantonetools.com (snippets); Pantone’s values are approximations, not the inks. Words: Sanskrit roots from warnemyr.com “Verbal Roots” and learnsanskrit.org “Roots and Classes” (snippets); 泥 and 逆 from Wiktionary (snippets); the other Chinese and Sanskrit words from general knowledge, unchecked; 六 as 流 from studycli.org “Chinese Numerology” (snippet); 七 as 氣 and 起 is this page’s own wordplay; the half steps from Wikipedia “Bilaval (thaat)” (snippet). “Ni reminds of clay in Chinese” is Joey’s, 28 September 2026. Newari: cow as sā and the animal names from agentakash.com “Learn Newari” (snippet); the counts chhi to jhi and pā as the counting word for long things from Wikibooks “Nepal Bhasa/Counting” (snippet); mā, bā from nepaliaustralian.com “Learn Nepal Bhasa, Chapter 8, Relations” (snippet); dhau from Wikipedia “Dhau” (snippet); the cow as Nepal’s national animal from Business Standard, 21 September 2015 (snippet); none of these pages could be opened, and the Devanagari spellings are therefore not given. Moving pictures: the Ar Don Go GIF from Joey’s Drive (<em>Ar Don Go 1.gif</em>, 2025 copy of the 2016 film; the ball and the head are described in <em>Ar Don Go.md</em>, 20 September 2026, and in his interview answers of 21 January 2016); the six Shunya Yatri GIFs from the <em>_AE_Linked_Projects_&amp;_Comps</em> folder, listed as proven placed in the comps by <em>THE-GIF-ARCHAEOLOGY.md</em> (17 September 2026), 117GIF matching its md5 there; “Zero Traveler” is the reading of शून्य यात्री on the film’s own packaging (<em>SHUNYA-YATRI-SYNTHESIS.md</em>); the GIFs themselves were collected from the internet before they were placed, and their first makers are not known. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words. Several records cited above from Joey’s own archive (the GIF archaeology, the Shunya Yatri synthesis, the Ar Don Go note, the Pretty Child reading, the house-style notes) are themselves AI-written first drafts, beginning TPDs, that he has not accepted; where this page leans on one of them it is a lead, not a fact, and his own dated notes and files are the stronger source. Black as 0 was Joey’s answer to Clue 4. Diagram 7: the animals from the Nāradīya Śikṣā as above; the three glyphs 👀 🟣 🫠 and the rule “just basic words and emoji, more emoji” from Joey’s own house-style notes (<em>Words.md</em>, 2026); the panel’s colours, magenta and cyan on violet-black, from his own theme file for the control UI (September 2026), the one whose name he has asked not to be written. Diagram 8: colours and the mirror rule from the Pretty Child archive reading (<em>pretty-child-findings.md</em>, 1 September 2026), which describes the flatbed scans of neon Play-Doh and notes that every frame of the film is bilaterally mirrored.</p>
 </div>
 
 <script>

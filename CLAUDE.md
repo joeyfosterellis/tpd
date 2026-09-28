@@ -19,3 +19,15 @@ Every factual claim on a page or in a TPD names where it came from: a named reco
 Joey's instruction, 26 September 2026: "remember:" followed by his statement of the equation.
 
 Before writing anything about 0 → 7 → 0′, read `The Equation — Joey's words.md`. Quote from it; do not paraphrase it into a definition. Where a page or TPD explains the equation, the words are his and are credited as his.
+
+## His notes are beginning TPDs
+
+Joey's instruction, 28 September 2026: "do not trust my notes for everything, they themselves are beginning tpds."
+
+A record in Joey's archive that was written by an AI (a findings file, a synthesis, an archaeology, a house-style extraction) is a beginning TPD: a lead, not a fact, and unaccepted unless he has said so. Cite it as "SOURCED to a beginning TPD" and say what in it has been checked against his own dated notes, files or words. His own notes and files (Apple Notes exports, lyrics, interview answers, the files themselves) are the stronger source, and even those are his words at a date, not settled facts.
+
+## Explain why
+
+Joey's instruction, 28 September 2026: "you are not explainging things well enough. i dont understand why anything is what, the reader needs to be helped."
+
+Every section of a page says, in plain words, why it is there and why each thing in it is what it is. Chat replies do the same: no term without its reason.
