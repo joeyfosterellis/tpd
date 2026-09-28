@@ -1,11 +1,12 @@
-<title>Do Re Mi, Sa Re Ga</title>
+<title>Sa Re Ga, Do Re Mi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&family=Noto+Serif+SC:wght@600&display=swap">
 <style>
 :root{
   --ground:#F6F4FB; --panel:#FFFFFF; --ink:#1F1B3A; --muted:#625C80; --line:#DDD8EC; --soft:#EEEAF8;
-  --n0:#FF0000; --n1:#FF7B00; --n2:#FFD700; --n3:#00FF00; --n4:#002DFF; --n5:#5A00FF; --n6:#7000FF; --n7:#FF0000; --mag:#E0339B; --black:#0B0A10; --white:#FFFFFF;
+  --n0:#E5484D; --n1:#F07A1A; --n2:#E8B400; --n3:#3DA35D; --n4:#3E63DD; --n5:#3A2E8C; --n6:#8E4EC6; --n7:#E5484D; --mag:#E0339B; --black:#0B0A10; --white:#FFFFFF;
+  --s0:#FF0000; --s1:#FF1500; --s2:#FFBB00; --s3:#00FF00; --s4:#00B2FF; --s5:#5A00FF; --s6:#7000FF;
   --on-note:#FFFFFF;
   --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",system-ui,-apple-system,sans-serif;
@@ -16,15 +17,15 @@
   :root:not([data-theme="light"]){
     color-scheme:dark;
     --ground:#15131F; --panel:#1E1B2C; --ink:#EEEAF9; --muted:#A79FC4; --line:#332E47; --soft:#262238;
-    --n0:#FF0000; --n1:#FF7B00; --n2:#FFD700; --n3:#00FF00; --n4:#002DFF; --n5:#5A00FF; --n6:#7000FF; --n7:#FF0000; --mag:#F05FB5; --black:#0B0A10; --white:#FFFFFF;
-    --on-note:#FFFFFF;
+    --n0:#F06A6E; --n1:#F5923F; --n2:#F2C530; --n3:#56BF77; --n4:#6A88F0; --n5:#7B6BD6; --n6:#A974DA; --n7:#F06A6E; --mag:#F05FB5; --black:#0B0A10; --white:#FFFFFF;
+    --on-note:#15131F;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --ground:#15131F; --panel:#1E1B2C; --ink:#EEEAF9; --muted:#A79FC4; --line:#332E47; --soft:#262238;
-  --n0:#FF0000; --n1:#FF7B00; --n2:#FFD700; --n3:#00FF00; --n4:#002DFF; --n5:#5A00FF; --n6:#7000FF; --n7:#FF0000; --mag:#F05FB5; --black:#0B0A10; --white:#FFFFFF;
-  --on-note:#FFFFFF;
+  --n0:#F06A6E; --n1:#F5923F; --n2:#F2C530; --n3:#56BF77; --n4:#6A88F0; --n5:#7B6BD6; --n6:#A974DA; --n7:#F06A6E; --mag:#F05FB5; --black:#0B0A10; --white:#FFFFFF;
+  --on-note:#15131F;
 }
 *{box-sizing:border-box}
 body{background:var(--ground);color:var(--ink);font:16px/1.55 var(--body);padding-inline:16px;padding-block:32px 64px}
@@ -48,14 +49,15 @@ svg text{font-family:var(--body);fill:var(--ink)}
 .step:hover rect,.step:focus-visible rect,.step.on rect{transform:scaleY(1.04)}
 .step:focus-visible rect{stroke:var(--ink);stroke-width:3}
 .step:focus-visible circle{stroke:var(--ink);stroke-width:3}
-.syl{font-family:var(--display)!important;font-weight:800;fill:var(--on-note)!important;paint-order:stroke;stroke:rgba(0,0,0,.45);stroke-width:2.5px;stroke-linejoin:round}
+.syl{font-family:var(--display)!important;font-weight:800;fill:var(--on-note)!important}
 .small{font-size:13px;fill:var(--muted)!important}
 .mono{font-family:var(--mono)!important}
-.hymn{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.han{font-family:var(--han)!important}
+.hymn{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
 .hymn ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
 .hymn li{display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px dashed var(--line)}
 .hymn li:last-child{border-bottom:0}
-.chip{font-family:var(--display);font-weight:800;min-width:3.2em;text-align:center;border-radius:8px;padding:0 8px;color:var(--on-note);flex-shrink:0;text-shadow:0 1px 2px rgba(0,0,0,.55)}
+.chip{font-family:var(--display);font-weight:800;min-width:3.2em;text-align:center;border-radius:8px;padding:0 8px;color:var(--on-note);flex-shrink:0}
 .hymn em{font-style:normal;color:var(--muted)}
 .hymn b{color:var(--ink)}
 .col h3{font-size:1.2rem;margin:0 0 8px}
@@ -63,7 +65,7 @@ svg text{font-family:var(--body);fill:var(--ink)}
 
 /* the equation */
 .chain{display:flex;flex-wrap:wrap;align-items:center;gap:4px 2px;font-family:var(--mono);font-size:1rem}
-.chain .st{width:2.2em;height:2.2em;border-radius:50%;display:grid;place-items:center;color:var(--on-note);font-weight:800;font-family:var(--display);font-size:1.1rem;text-shadow:0 1px 2px rgba(0,0,0,.55)}
+.chain .st{width:2.2em;height:2.2em;border-radius:50%;display:grid;place-items:center;color:var(--on-note);font-weight:800;font-family:var(--display);font-size:1.1rem}
 .chain .st.prime{box-shadow:0 0 0 3px var(--panel),0 0 0 5px var(--ink)}
 .chain .arr{display:inline-flex;flex-direction:column;align-items:center;line-height:1;padding:0 2px;color:var(--muted)}
 .chain .arr small{font-size:.7rem;margin-bottom:-2px}
@@ -131,7 +133,7 @@ td .num{font-family:var(--mono);font-size:.85rem;color:var(--muted);white-space:
 td em{font-style:italic;color:var(--muted)}
 /* basic words and emoji, in the page's own colours */
 .emo{display:grid;grid-template-columns:repeat(9,1fr);gap:6px}
-.emo button{font:inherit;border:0;border-radius:14px;padding:12px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--on-note);text-shadow:0 1px 2px rgba(0,0,0,.55);transition:transform .12s ease}
+.emo button{font:inherit;border:0;border-radius:14px;padding:12px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--on-note);transition:transform .12s ease}
 .emo .e{font-size:clamp(1.5rem,4.2vw,2.3rem);line-height:1;text-shadow:none}
 .emo .w{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em}
 .emo .n{font-family:var(--mono);font-size:.62rem;opacity:.9}
@@ -157,7 +159,7 @@ td em{font-style:italic;color:var(--muted)}
 .gifs figcaption{font-family:var(--display);font-weight:800;font-size:1rem}
 /* sound */
 .keys{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
-.key{font:inherit;font-family:var(--display);font-weight:800;font-size:1rem;border:0;border-radius:12px;color:var(--on-note);text-shadow:0 1px 2px rgba(0,0,0,.55);padding:14px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1;transition:transform .12s ease}
+.key{font:inherit;font-family:var(--display);font-weight:800;font-size:1rem;border:0;border-radius:12px;color:var(--on-note);padding:14px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1;transition:transform .12s ease}
 .key small{font-family:var(--mono);font-weight:500;font-size:.68rem;opacity:.9}
 .key:hover,.key.on{transform:translateY(-4px)}
 .key:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
@@ -176,8 +178,8 @@ td em{font-style:italic;color:var(--muted)}
 <div class="wrap">
   <header>
     <p class="kicker">Scavenger hunt · clue diagrams</p>
-    <h1>Do Re Mi, <span class="twin">Sa Re Ga</span></h1>
-    <p class="lede">Seven notes, two languages, seven boards, seven colours, and one journey that comes back changed. Tap any step, piece or colour to hear it. Pick a voice, hold a drone, or press the play button under each diagram.</p>
+    <h1>Sa Re Ga, <span class="twin">Do Re Mi, <span lang="zh-Hant">上尺工</span></span></h1>
+    <p class="lede">Seven svaras, three languages, seven boards, seven colours, and one journey that comes back changed. Tap any step, piece or colour to hear it. Pick a voice, hold a drone, or press the play button under each diagram.</p>
   </header>
 
   <section>
@@ -195,7 +197,7 @@ td em{font-style:italic;color:var(--muted)}
         </div>
         <button type="button" class="btn" id="b-drone" aria-pressed="false">Sa drone</button>
       </div>
-      <div class="keys" id="keys" role="group" aria-label="Eight keys, Do to high Do"></div>
+      <div class="keys" id="keys" role="group" aria-label="Eight keys, Sa to high Sa"></div>
       <div class="row">
         <button type="button" class="btn" id="b-up">Up, 0 → 7</button>
         <button type="button" class="btn" id="b-down">Down, 7 → 0</button>
@@ -209,18 +211,18 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 1</p>
     <h2>The staircase</h2>
-    <p>Each note is one step up. Count from zero and the eighth step, high Do, lands on 7. It has the same <em>name</em> as the Do you started on, but it is an octave higher. Same word, different state: that is 0′, not 0.</p>
+    <p>Each note is one step up. Count from zero and the eighth step, high Sa, lands on 7. It has the same <em>name</em> as the Sa you started on, but it is an octave higher. Same word, different state: that is 0′, not 0.</p>
     <div class="ctl"><button type="button" class="btn" id="b-climb">Climb the stairs</button></div>
-    <div class="fig"><svg id="stairs" viewBox="0 0 800 360" role="img" aria-label="Eight rising steps: Do Re Mi Fa Sol La Ti Do, matched with C D E F G A B C and Sa Re Ga Ma Pa Dha Ni Sa, numbered 0 to 7"></svg></div>
-    <p class="hint">Row by row, under each step: its number counting from 0, the letter in C major, and its Sanskrit twin.</p>
+    <div class="fig"><svg id="stairs" viewBox="0 0 800 380" role="img" aria-label="Eight rising steps: Sa Re Ga Ma Pa Dha Ni Sa, matched with C D E F G A B C and Do Re Mi Fa Sol La Ti Do, numbered 0 to 7"></svg></div>
+    <p class="hint">Row by row, under each step: its number counting from 0, the letter in C major, its European twin, and its Chinese name in gongche notation.</p>
   </section>
 
   <section>
     <p class="kicker">Diagram 2</p>
     <h2>0 → 7 → 0′: the spiral</h2>
-    <p>Bend the staircase into a ring and the top step lands over the bottom one. High Do sounds like low Do, so the journey seems to end where it began. Look closer and it lands one level up. The second zero has climbed seven steps to get there.</p>
+    <p>Bend the staircase into a ring and the top step lands over the bottom one. High Sa sounds like low Sa, so the journey seems to end where it began. Look closer and it lands one level up. The second zero has climbed seven steps to get there.</p>
     <div class="ctl"><button type="button" class="btn" id="b-walk">Walk the spiral</button></div>
-    <div class="fig circle"><svg id="ring" viewBox="0 0 480 480" role="img" aria-label="Seven notes placed along one turn of a spiral. The eighth point, high Do, sits directly above the first but further out, labelled 7 and zero prime. Each arrow between notes is labelled T1 to T7."></svg></div>
+    <div class="fig circle"><svg id="ring" viewBox="0 0 480 480" role="img" aria-label="Seven notes placed along one turn of a spiral. The eighth point, high Sa, sits directly above the first but further out, labelled 7 and zero prime. Each arrow between notes is labelled T1 to T7."></svg></div>
     <p class="hint">The arrows carry the letter T. Each one is the step that turns one note into the next. Tap a note to hear it, and hear how the last one sounds like the first without being it.</p>
   </section>
 
@@ -261,7 +263,7 @@ td em{font-style:italic;color:var(--muted)}
       <div><b>The arrows</b>show what happened to it.</div>
       <div><b>The final zero</b>shows that returning is not the same as never having left.</div>
     </div>
-    <p class="hint">The scale is the smallest case. It takes seven arrows to come round, and the note it lands on sounds like Do because it is Do, an octave up. The tangram below is the case you can hold in your hands.</p>
+    <p class="hint">The scale is the smallest case. It takes seven arrows to come round, and the note it lands on sounds like Sa because it is Sa, an octave up. The tangram below is the case you can hold in your hands.</p>
   </section>
 
   <section>
@@ -276,7 +278,7 @@ td em{font-style:italic;color:var(--muted)}
       </div>
       <div class="row"><button type="button" class="btn" id="b-play">Play the scale</button><button type="button" class="btn" id="b-pic">Play the picture</button></div>
     </div>
-    <div class="fig tan"><svg id="tangram" viewBox="0 0 800 460" role="img" aria-label="Seven tangram pieces coloured by note. Do and Re are the two large triangles, Mi the medium triangle, Fa the square, Sol the parallelogram, La and Ti the small triangles. They can be shown lined up in a row, fitted into one square, or rearranged into a boat."></svg></div>
+    <div class="fig tan"><svg id="tangram" viewBox="0 0 800 460" role="img" aria-label="Seven tangram pieces coloured by note. Sa and Re are the two large triangles, Ga the medium triangle, Ma the square, Pa the parallelogram, Dha and Ni the small triangles. They can be shown lined up in a row, fitted into one square, or rearranged into a boat."></svg></div>
     <p class="stat" id="tstat"></p>
     <p class="hint">Tap any piece to hear its note and see its name. Every time the pieces go out and come back, the square gets another prime. It is the same square. It has also been a boat. Play the picture reads the pieces where they lie, left to right and top to bottom, so the square, the row and the boat are three tunes from one set of notes.</p>
   </section>
@@ -284,15 +286,19 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 4</p>
     <h2>Where the names came from</h2>
-    <p>Three separate traditions landed on the same count. The Sanskrit names are centuries older. The European ones come from a Latin hymn used by Guido of Arezzo in 11th-century Italy. The seven boards come from China, and this page gives each board a note.</p>
+    <p>Four traditions landed on the same count. The Sanskrit names are the oldest by centuries. The European ones come from a Latin hymn used by Guido of Arezzo in 11th-century Italy. The Chinese names are gongche notation, 工尺譜, seven characters used as note names since the Tang dynasty (618 to 907) and still sung in Kunqu opera; two of them, 凡 and 乙, sit a little sharp of Ma and a little flat of Ni. The seven boards come from China too, and this page gives each board a note.</p>
     <div class="fig hymn">
+      <div class="col">
+        <h3>Sanskrit svaras</h3>
+        <ol id="sanskrit"></ol>
+      </div>
       <div class="col">
         <h3>Latin hymn, <em>Ut queant laxis</em></h3>
         <ol id="latin"></ol>
       </div>
       <div class="col">
-        <h3>Sanskrit svaras</h3>
-        <ol id="sanskrit"></ol>
+        <h3>Gongche, <em lang="zh-Hant">工尺譜</em></h3>
+        <ol id="gongche"></ol>
       </div>
       <div class="col">
         <h3>Seven boards, <em>七巧板</em></h3>
@@ -331,16 +337,16 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 6</p>
     <h2>Seven colours, and three that aren't there</h2>
-    <p>Red is the lowest-frequency light we can see, violet the highest; Do is the lowest note, Ti the highest. Walk 0 → 6 and in both light and sound you are climbing in vibration. That rhyme is not an accident. When Isaac Newton split the spectrum in <em>Opticks</em> (1704) he had five colours and added two, orange and indigo, so that the count would match the seven notes of the scale. He then divided the spectrum by the same string lengths that give the notes, and he wrote that violet is red coming round again, the way a note comes round an octave up. Newton's rainbow is Diagram 2 in light.</p>
+    <p>Red is the lowest-frequency light we can see, violet the highest; Sa is the lowest note, Ni the highest. Walk 0 → 6 and in both light and sound you are climbing in vibration. That rhyme is not an accident. When Isaac Newton split the spectrum in <em>Opticks</em> (1704) he had five colours and added two, orange and indigo, so that the count would match the seven notes of the scale. He then divided the spectrum by the same string lengths that give the notes, and he wrote that violet is red coming round again, the way a note comes round an octave up. Newton's rainbow is Diagram 2 in light.</p>
     <div class="ctl"><button type="button" class="btn" id="b-rainbow">Play the rainbow</button></div>
     <div class="fig spec"><svg id="spectrum" viewBox="0 0 800 300" role="img" aria-label="The spectrum as seven bands, red to violet, each band as wide as Newton made it from the Dorian scale, labelled with its note, Newton's note letter, wavelength and frequency"></svg></div>
-    <p class="hint">Band widths are Newton's: red, yellow and green are the whole tones, orange and indigo the two half tones, which is why the two colours he added are the two narrow ones. Newton started his scale on D. This page starts it on Do. Tap a band to hear its note. The seven colours on this page are the light itself, not paint: each is the wavelength shown, converted with the CIE 1931 standard observer to sRGB, clipped to what a screen can show and set to full brightness. A screen cannot make 700 nm red or 405 nm violet exactly; these are the nearest it has.</p>
+    <p class="hint">Band widths are Newton's: red, yellow and green are the whole tones, orange and indigo the two half tones, which is why the two colours he added are the two narrow ones. Newton started his scale on D. This page starts it on Sa. Tap a band to hear its note. The page's seven colours are paint, chosen to read well on a screen. The thin strip along the bottom of each band is the light itself: the wavelength shown, converted with the CIE 1931 standard observer to sRGB, clipped to what a screen can show and set to full brightness. A screen cannot make 700 nm red or 405 nm violet exactly; the strip is the nearest it has. Where the strip and the paint differ, the paint is the choice and the strip is the fact: at 610 nm the light is already the screen's own red, and 480 nm is a sky blue.</p>
     <div class="ctl"><button type="button" class="btn" id="b-round">Round the wheel</button></div>
     <div class="fig wheel"><svg id="wheel" viewBox="-20 -30 580 600" role="img" aria-label="A colour wheel of seven bands, red to violet, each labelled with its note, its Sanskrit name and its chakra, joined back to red by a narrow dashed magenta wedge labelled zero prime. The centre is black, labelled 0, no light yet. A white ring around the outside is labelled all seven at once."></svg></div>
     <p>Three colours are missing from the rainbow, and between them they are the whole equation. <strong>Black</strong> is no light at all: the centre of the wheel, nothing has happened yet, 0. <strong>White</strong> is all seven at once, the ring around the outside: the octave sounding together, the square with every piece in it. And past violet is ultraviolet, which no eye can see. Red doubled is 860 THz, real and invisible. Yet the wheel closes: violet comes back round to red through <strong>magenta</strong>, a colour with no wavelength that the brain invents to join the two ends. The colour that returns you to red was never in the rainbow at all. Magenta is 0′ ≠ 0.</p>
     <p class="hint">The whole visible spectrum, 380 to 750 nm, is a frequency ratio of just under 2 to 1. The eye sees about one octave. The ear hears ten.</p>
-    <div class="fig tbl"><table id="meanings"><thead><tr><th>#</th><th>Colour</th><th>Note</th><th>Light</th><th>Chakra</th><th>What it carries</th></tr></thead><tbody></tbody></table></div>
-    <p class="hint">Tap a band or a wedge to hear its note; tap the black centre for silence and the white ring for all eight notes at once. The chakra pairings follow the common seven-chakra convention; the meanings are the ones the colours carry in Nepal and India, where the notes are Sa Re Ga. The rainbow on the chakras, red at the root and violet at the crown, is younger than it looks: it was set out in California in 1977 in Christopher Hills's <em>Nuclear Evolution</em> and spread from there. The older Indian text on the notes, the Nāradīya Śikṣā, gives each svara an animal rather than a colour: Sa the peacock, Re the bull, Ga the goat, Ma the heron, Pa the koel, Dha the horse, Ni the elephant. And China's oldest colour system counts five, not seven: 青 qīng blue-green, 赤 chì red, 黄 huáng yellow, 白 bái white, 黑 hēi black, one for each element. Seven notes, seven boards, seven colours, five colours. The count is a choice, and Newton made his to fit the music.</p>
+    <div class="fig tbl"><table id="meanings"><thead><tr><th>#</th><th>Colour</th><th>Pantone</th><th>Note</th><th>Light</th><th>Chakra</th><th>What it carries</th></tr></thead><tbody></tbody></table></div>
+    <p class="hint">The Pantone column gives the nearest named Pantone for each of the nine, with Pantone's own published screen value beside it: the six basic inks of the coated graphics system (Red 032 C, Orange 021 C, Yellow C, Green C, Blue 072 C, Violet C), Black C, and, because the graphics system has no indigo and no white ink, the two from the fashion and textile system, 19-3215 TCX Indigo and 11-0601 TCX Bright White. Pantone colours are inks and dyes; the hex values are Pantone's approximations for a screen, and Pantone's indigo is a good deal duller than the light. Magenta 0′ has no ink because it has no wavelength. Tap a band or a wedge to hear its note; tap the black centre for silence and the white ring for all eight notes at once. The chakra pairings follow the common seven-chakra convention; the meanings are the ones the colours carry in Nepal and India, where these notes were first named. The rainbow on the chakras, red at the root and violet at the crown, is younger than it looks: it was set out in California in 1977 in Christopher Hills's <em>Nuclear Evolution</em> and spread from there. The older Indian text on the notes, the Nāradīya Śikṣā, gives each svara an animal rather than a colour: Sa the peacock, Re the bull, Ga the goat, Ma the heron, Pa the koel, Dha the horse, Ni the elephant. And China's oldest colour system counts five, not seven: 青 qīng blue-green, 赤 chì red, 黄 huáng yellow, 白 bái white, 黑 hēi black, one for each element. Seven notes, seven boards, seven colours, five colours. The count is a choice, and Newton made his to fit the music.</p>
   </section>
 
   <section>
@@ -354,18 +360,30 @@ td em{font-style:italic;color:var(--muted)}
         <p class="stat" id="estat">👀 🟣 🫠</p>
       </div>
     </div>
-    <p class="hint">Heron has no emoji; the swan stands in. The eyes and the melting face are two of the three glyphs of The Purple Durian; the third, 🟣, is the whole set at once.</p>
+    <div class="fig tbl"><table id="why"><thead><tr><th></th><th>Word</th><th>Why this one</th><th>From</th></tr></thead><tbody>
+      <tr><td>👀</td><td>look</td><td>Before the first note nothing has happened yet: black, no light. The first act is to look. One of your three glyphs, the one you glossed as attention, noticing.</td><td>Your house-style notes on 👀 🟣 🫠; the black centre of the wheel</td></tr>
+      <tr><td>🦚</td><td>peacock, Sa</td><td>The Nāradīya Śikṣā hears Sa in the peacock's cry. It is also the bird that opens into every colour at once, which is what Sa does for the scale.</td><td>Nāradīya Śikṣā, via sreenivasarao's blog (snippet)</td></tr>
+      <tr><td>🐂</td><td>bull, Re</td><td>The śikṣā gives Re the bull's bellow: the first step up, heavy and low.</td><td>Same</td></tr>
+      <tr><td>🐐</td><td>goat, Ga</td><td>The śikṣā gives Ga the goat's bleat. A smaller animal for the third step; the pitch climbs as the beasts shrink.</td><td>Same</td></tr>
+      <tr><td>🦢</td><td>heron, Ma</td><td>The śikṣā gives Ma the heron (krauñca). There is no heron emoji, so the nearest long-necked water bird stands in. If you would rather have the goose 🪿, say so.</td><td>Same; Unicode has no heron</td></tr>
+      <tr><td>🐦</td><td>koel, Pa</td><td>The śikṣā gives Pa the koel, the Indian cuckoo whose call rises through the hot season. No koel emoji exists, so the plain bird, the one that only sings.</td><td>Same; Unicode has no koel</td></tr>
+      <tr><td>🐴</td><td>horse, Dha</td><td>The śikṣā gives Dha the horse's neigh: the sixth step, fast and high.</td><td>Same</td></tr>
+      <tr><td>🐘</td><td>elephant, Ni</td><td>The śikṣā gives Ni the elephant's trumpet: the last note before the return, the largest animal on the smallest step.</td><td>Same</td></tr>
+      <tr><td>🫠</td><td>melt, 7 · 0′</td><td>Your third glyph, the one you glossed as collapse, softening. The return is a face that has been through heat and come back changed: the same Sa, an octave up, on the magenta that has no wavelength.</td><td>Your house-style notes; the magenta 0′ on the wheel</td></tr>
+      <tr><td>🟣</td><td>the whole</td><td>Not a tile. Your middle glyph, purple, the colour you chose because everyone was going to look anyway. It stands here for all seven at once, the white ring, and sits in the status line between the eyes and the melt.</td><td>Your house-style notes on the name</td></tr>
+    </tbody></table></div>
+    <p class="hint">One emoji, one basic word, one reason each. The seven animals are the śikṣā's, not mine; the two glyphs at the ends and the purple are yours; the pairing of the two is the only thing I added.</p>
   </section>
 
   <section>
     <p class="kicker">Diagram 8</p>
     <h2>The clay before the kiln</h2>
-    <p>Fired clay cannot go back. Play-Doh can. Press it and it stays pressed. Roll it back into a ball and it is a ball again, with every fingerprint still under the surface. Each press sounds the note under your finger, left to right, Do to high Do.</p>
+    <p>Fired clay cannot go back. Play-Doh can. Press it and it stays pressed. Roll it back into a ball and it is a ball again, with every fingerprint still under the surface. Each press sounds the note under your finger, left to right, Sa to high Sa.</p>
     <div class="doh">
       <div class="cans" id="cans" role="group" aria-label="Six colours of Play-Doh">
         <span class="lab" style="font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#888">Can</span>
       </div>
-      <svg id="doh" viewBox="0 0 560 400" role="img" tabindex="0" aria-label="A ball of neon Play-Doh on black. Press it to dent it and hear a note. Roll it back to make it a ball again with the marks kept."></svg>
+      <svg id="doh" viewBox="0 0 560 400" role="img" tabindex="0" aria-label="A ball of neon Play-Doh on black. Press it to dent it and hear a note, Sa to high Sa. Roll it back to make it a ball again with the marks kept."></svg>
       <div class="ctl">
         <div class="row">
           <button type="button" class="btn" id="b-roll">Roll it back</button>
@@ -382,9 +400,9 @@ td em{font-style:italic;color:var(--muted)}
     <h2>Take a diagram with you</h2>
     <p>Seven of the diagrams, recorded as they move, for the post and the hunt. Press and hold one on a phone to save it. They are silent: the sound stays on this page.</p>
     <div class="gifs">
-      <figure><img src="gifs/walk-the-spiral.gif" width="640" height="459" alt="The spiral: a ball travels from Do round seven notes and lands on the dashed node above where it began, labelled 7 and zero prime" loading="lazy"><figcaption>Walk the spiral</figcaption></figure>
+      <figure><img src="gifs/walk-the-spiral.gif" width="640" height="459" alt="The spiral: a ball travels from Sa round seven notes and lands on the dashed node above where it began, labelled 7 and zero prime" loading="lazy"><figcaption>Walk the spiral</figcaption></figure>
       <figure><img src="gifs/seven-pieces.gif" width="640" height="383" alt="The seven tangram pieces move from a square to a boat, to a row in scale order, and back to the square" loading="lazy"><figcaption>Seven pieces: square, boat, row, square</figcaption></figure>
-      <figure><img src="gifs/climb-the-stairs.gif" width="640" height="287" alt="Eight coloured steps light up in turn from Do to high Do" loading="lazy"><figcaption>Climb the stairs</figcaption></figure>
+      <figure><img src="gifs/climb-the-stairs.gif" width="640" height="287" alt="Eight coloured steps light up in turn from Sa to high Sa" loading="lazy"><figcaption>Climb the stairs</figcaption></figure>
       <figure><img src="gifs/play-the-rainbow.gif" width="640" height="240" alt="The seven colour bands of Newton's spectrum light in turn from red to violet, then red again" loading="lazy"><figcaption>Play the rainbow</figcaption></figure>
       <figure><img src="gifs/round-the-wheel.gif" width="640" height="564" alt="The colour wheel's seven wedges light in turn, ending on the dashed magenta wedge labelled zero prime" loading="lazy"><figcaption>Round the wheel</figcaption></figure>
       <figure><img src="gifs/basic-words-and-emoji.gif" width="640" height="176" alt="Nine emoji tiles on violet-black light up in turn: eyes, peacock, bull, goat, swan, bird, horse, elephant, melting face" loading="lazy"><figcaption>Basic words and emoji</figcaption></figure>
@@ -392,19 +410,19 @@ td em{font-style:italic;color:var(--muted)}
     </div>
   </section>
 
-  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; the seven colours computed from the CIE 1931 2° colour-matching functions (table values at 700, 590, 575, 530, 470, 445 and 405 nm) through the sRGB D65 matrix, negative channels clipped, then normalised; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words. Black as 0 was Joey’s answer to Clue 4. Diagram 7: the animals from the Nāradīya Śikṣā as above; the three glyphs 👀 🟣 🫠 and the rule “just basic words and emoji, more emoji” from Joey’s own house-style notes (<em>Words.md</em>, 2026). Diagram 8: colours and the mirror rule from the Pretty Child archive reading (<em>pretty-child-findings.md</em>, 1 September 2026), which describes the flatbed scans of neon Play-Doh and notes that every frame of the film is bilaterally mirrored.</p>
+  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; the strip of the light itself under each band computed from the CIE 1931 2° colour-matching functions (table values at 700, 610, 580, 530, 480, 445 and 405 nm) through the sRGB D65 matrix, negative channels clipped, then normalised; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Gongche: Wikipedia, “Gongche notation” (snippet); the upper-octave 仩 follows the common written form, and the Cantonese tradition writes high do as 生 instead. Pantone names and screen values as reported by pantone.com color-finder pages and by hextoral.com, color-name.com, colorxs.com and pantonetools.com (snippets); Pantone’s values are approximations, not the inks. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words. Black as 0 was Joey’s answer to Clue 4. Diagram 7: the animals from the Nāradīya Śikṣā as above; the three glyphs 👀 🟣 🫠 and the rule “just basic words and emoji, more emoji” from Joey’s own house-style notes (<em>Words.md</em>, 2026). Diagram 8: colours and the mirror rule from the Pretty Child archive reading (<em>pretty-child-findings.md</em>, 1 September 2026), which describes the flatbed scans of neon Play-Doh and notes that every frame of the film is bilaterally mirrored.</p>
 </div>
 
 <script>
 const NOTES=[
-  {s:"Do",l:"C",g:"Sa",sk:"Shadja",f:261.63,latin:"Ut queant laxis",syl:"Ut → Do",board:"Large triangle",frac:"¼"},
-  {s:"Re",l:"D",g:"Re",sk:"Rishabha",f:293.66,latin:"Resonare fibris",syl:"Re",board:"Large triangle",frac:"¼"},
-  {s:"Mi",l:"E",g:"Ga",sk:"Gandhara",f:329.63,latin:"Mira gestorum",syl:"Mi",board:"Medium triangle",frac:"⅛"},
-  {s:"Fa",l:"F",g:"Ma",sk:"Madhyama",f:349.23,latin:"Famuli tuorum",syl:"Fa",board:"Square",frac:"⅛"},
-  {s:"Sol",l:"G",g:"Pa",sk:"Panchama",f:392.00,latin:"Solve polluti",syl:"Sol",board:"Parallelogram",frac:"⅛"},
-  {s:"La",l:"A",g:"Dha",sk:"Dhaivata",f:440.00,latin:"Labii reatum",syl:"La",board:"Small triangle",frac:"1⁄16"},
-  {s:"Ti",l:"B",g:"Ni",sk:"Nishada",f:493.88,latin:"Sancte Iohannes",syl:"Si → Ti",board:"Small triangle",frac:"1⁄16"},
-  {s:"Do",l:"C",g:"Sa",sk:"",f:523.25}
+  {s:"Sa",z:"上",zp:"shàng",l:"C",g:"Do",sk:"Shadja",f:261.63,latin:"Ut queant laxis",syl:"Ut → Do",board:"Large triangle",frac:"¼"},
+  {s:"Re",z:"尺",zp:"chě",l:"D",g:"Re",sk:"Rishabha",f:293.66,latin:"Resonare fibris",syl:"Re",board:"Large triangle",frac:"¼"},
+  {s:"Ga",z:"工",zp:"gōng",l:"E",g:"Mi",sk:"Gandhara",f:329.63,latin:"Mira gestorum",syl:"Mi",board:"Medium triangle",frac:"⅛"},
+  {s:"Ma",z:"凡",zp:"fán",l:"F",g:"Fa",sk:"Madhyama",f:349.23,latin:"Famuli tuorum",syl:"Fa",board:"Square",frac:"⅛"},
+  {s:"Pa",z:"六",zp:"liù",l:"G",g:"Sol",sk:"Panchama",f:392.00,latin:"Solve polluti",syl:"Sol",board:"Parallelogram",frac:"⅛"},
+  {s:"Dha",z:"五",zp:"wǔ",l:"A",g:"La",sk:"Dhaivata",f:440.00,latin:"Labii reatum",syl:"La",board:"Small triangle",frac:"1⁄16"},
+  {s:"Ni",z:"乙",zp:"yǐ",l:"B",g:"Ti",sk:"Nishada",f:493.88,latin:"Sancte Iohannes",syl:"Si → Ti",board:"Small triangle",frac:"1⁄16"},
+  {s:"Sa",z:"仩",zp:"shàng",l:"C",g:"Do",sk:"",f:523.25}
 ];
 const NS="http://www.w3.org/2000/svg";
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -477,7 +495,7 @@ bd.addEventListener("click",()=>{const on=bd.getAttribute("aria-pressed")!=="tru
 const keysEl=document.getElementById("keys"),keyEls=[];
 NOTES.forEach((n,i)=>{
   const b=document.createElement("button");b.type="button";b.className="key"+(i===7?" prime":"");b.style.background=`var(--n${i})`;
-  b.innerHTML=`${n.s}<small>${i===7?"7 · 0′":i}</small><small>${n.g}</small>`;b.setAttribute("aria-label",`${n.s}, ${n.g}, ${i===7?"high Do, zero prime":"step "+i}`);
+  b.innerHTML=`${n.s}<small>${i===7?"7 · 0′":i}</small><small>${n.g} · <span lang="zh-Hant">${n.z}</span></small>`;b.setAttribute("aria-label",`${n.s}, ${n.g}, ${i===7?"high Sa, zero prime":"step "+i}`);
   b.addEventListener("click",()=>{play(n.f);flash(b)});keysEl.appendChild(b);keyEls.push(b);
 });
 document.addEventListener("keydown",e=>{
@@ -503,6 +521,7 @@ NOTES.forEach((n,i)=>{
   txt(st,x+W/2,BASE+30,i===7?"7 · 0′":String(i),"mono").setAttribute("font-size",18);
   txt(st,x+W/2,BASE+56,n.l,"small");
   const sg=txt(st,x+W/2,BASE+84,n.g,"");sg.setAttribute("font-size",18);sg.setAttribute("font-weight",700);sg.style.fill=c;
+  const zh=txt(st,x+W/2,BASE+106,n.z,"han");zh.setAttribute("font-size",18);zh.setAttribute("lang","zh-Hant");
 });
 el("line",{x1:X0-6,x2:X0+8*(W+GAP)-GAP+6,y1:BASE,y2:BASE,stroke:"var(--line)","stroke-width":2},st);
 txt(st,X0-14,BASE+30,"#","small","end");
@@ -538,7 +557,7 @@ txt(rg,CX,CY+42,"returning ≠ never leaving","small");
 const ringNodes=[];
 NOTES.forEach((n,i)=>{
   const [x,y]=pt(i);
-  const g=el("g",{class:"step",tabindex:0,role:"button","aria-label":i===7?`High Do / Sa, step 7, zero prime`:`${n.s} / ${n.g}, step ${i}`},rg);ringNodes.push(g);
+  const g=el("g",{class:"step",tabindex:0,role:"button","aria-label":i===7?`High Sa / Do, step 7, zero prime`:`${n.s} / ${n.g}, step ${i}`},rg);ringNodes.push(g);
   if(i===7)el("circle",{cx:x,cy:y,r:NR+6,fill:"none",stroke:"var(--ink)","stroke-width":2,"stroke-dasharray":"4 4"},g);
   el("circle",{cx:x,cy:y,r:NR,fill:`var(--n${i})`},g);
   const t=txt(g,x,y+1,n.s,"syl");t.setAttribute("font-size",17);
@@ -659,7 +678,7 @@ function status(){
       ?`<b>0</b> · The square, as it came out of the box. Seven pieces, nothing moved yet.`
       :`<b>${primes(returns)}</b> · The same square, rebuilt ${returns===1?"once":returns+" times"}. It went out ${returns===1?"once":returns+" times"} and came back.`;
   }else if(current==="scale"){
-    sEl.innerHTML=`<b>0 → 6</b> · The seven pieces in order, Do to Ti. Bigger piece, lower note. This is the scale laid flat.`;
+    sEl.innerHTML=`<b>0 → 6</b> · The seven pieces in order, Sa to Ni. Bigger piece, lower note. This is the scale laid flat.`;
   }else{
     sEl.innerHTML=`<b>a tune</b> · The same seven pieces, nothing added, nothing missing, sailing. Press Square to bring them home.`;
   }
@@ -681,13 +700,13 @@ document.getElementById("b-pic").addEventListener("click",()=>{
 
 /* Diagram 6: seven colours */
 const COL=[
- {c:"Red",newton:"D",lam:700,w:1/9,chakra:"Root · Muladhara",where:"base of the spine",m:"Ground, blood, survival, beginning. In Nepal the colour of sindoor, marriage and <em>tika</em>. The longest wave the eye can catch. In China the colour of luck and a new year."},
- {c:"Orange",newton:"E",lam:590,w:1/18,chakra:"Sacral · Svadhisthana",where:"below the navel",m:"Warmth, appetite, creativity. Saffron: the robe of renunciation and the flag at the temple. Marigolds at Tihar. Newton's first added colour, the narrow band. In Ar Don Go the hero is an orange ping-pong ball."},
- {c:"Yellow",newton:"F",lam:575,w:1/12,chakra:"Solar plexus · Manipura",where:"the stomach",m:"Will, clarity, knowledge. Saraswati's colour; Basant Panchami yellow. The brightest colour to the eye. Imperial yellow in China, once forbidden to all but the emperor."},
- {c:"Green",newton:"G",lam:530,w:1/12,chakra:"Heart · Anahata",where:"the chest",m:"Growth and balance: the middle of the scale and the middle of the spectrum. The eye is most sensitive at 555 nm, in green, so it is the colour we see best and tire of least."},
- {c:"Blue",newton:"A",lam:470,w:1/15,chakra:"Throat · Vishuddha",where:"the throat",m:"Voice and sky. Krishna's and Vishnu's skin: the infinite made visible. For most of history the rarest pigment, ground from lapis lazuli and worth more than gold."},
- {c:"Indigo",newton:"B",lam:445,w:3/80,chakra:"Third eye · Ajna",where:"between the brows",m:"Insight and night. The dye of work clothes and of ink. Newton's second added colour, the one most people cannot pick out of a rainbow. The plant is named for India: Greek <em>indikon</em>, the Indian thing."},
- {c:"Violet",newton:"C",lam:405,w:1/16,chakra:"Crown · Sahasrara",where:"top of the head",m:"The edge of seeing: the last colour before light stops being visible. Beyond it, ultraviolet, which bees see and we do not. Newton thought violet was red coming round again."},
+ {c:"Red",pms:["Red 032 C","#EF3340"],newton:"D",lam:700,w:1/9,chakra:"Root · Muladhara",where:"base of the spine",m:"Ground, blood, survival, beginning. In Nepal the colour of sindoor, marriage and <em>tika</em>. The longest wave the eye can catch. In China the colour of luck and a new year."},
+ {c:"Orange",pms:["Orange 021 C","#FE5000"],newton:"E",lam:610,w:1/18,chakra:"Sacral · Svadhisthana",where:"below the navel",m:"Warmth, appetite, creativity. Saffron: the robe of renunciation and the flag at the temple. Marigolds at Tihar. Newton's first added colour, the narrow band. In Ar Don Go the hero is an orange ping-pong ball."},
+ {c:"Yellow",pms:["Yellow C","#FEDD00"],newton:"F",lam:580,w:1/12,chakra:"Solar plexus · Manipura",where:"the stomach",m:"Will, clarity, knowledge. Saraswati's colour; Basant Panchami yellow. The brightest colour to the eye. Imperial yellow in China, once forbidden to all but the emperor."},
+ {c:"Green",pms:["Green C","#00AB84"],newton:"G",lam:530,w:1/12,chakra:"Heart · Anahata",where:"the chest",m:"Growth and balance: the middle of the scale and the middle of the spectrum. The eye is most sensitive at 555 nm, in green, so it is the colour we see best and tire of least."},
+ {c:"Blue",pms:["Blue 072 C","#10069F"],newton:"A",lam:480,w:1/15,chakra:"Throat · Vishuddha",where:"the throat",m:"Voice and sky. Krishna's and Vishnu's skin: the infinite made visible. For most of history the rarest pigment, ground from lapis lazuli and worth more than gold."},
+ {c:"Indigo",pms:["19-3215 TCX Indigo","#4C3957"],newton:"B",lam:445,w:3/80,chakra:"Third eye · Ajna",where:"between the brows",m:"Insight and night. The dye of work clothes and of ink. Newton's second added colour, the one most people cannot pick out of a rainbow. The plant is named for India: Greek <em>indikon</em>, the Indian thing."},
+ {c:"Violet",pms:["Violet C","#42119C"],newton:"C",lam:405,w:1/16,chakra:"Crown · Sahasrara",where:"top of the head",m:"The edge of seeing: the last colour before light stops being visible. Beyond it, ultraviolet, which bees see and we do not. Newton thought violet was red coming round again."},
 ];
 const THz=lam=>Math.round(299792.458/lam);
 /* the spectrum, in Newton's widths */
@@ -700,6 +719,7 @@ const SP=document.getElementById("spectrum");
     const w=c.w/tot*Wt,n=NOTES[i];
     const g=el("g",{class:"band",tabindex:0,role:"button","aria-label":`${c.c}, ${n.s}, ${c.lam} nanometres, ${THz(c.lam)} terahertz`},SP);
     el("rect",{x,y:Y,width:w,height:H,fill:`var(--n${i})`,stroke:"var(--panel)","stroke-width":2},g);
+    el("rect",{x:x+1,y:Y+H-14,width:Math.max(0,w-2),height:12,fill:`var(--s${i})`},g);
     const t=txt(g,x+w/2,Y+H/2+8,n.s,"syl");t.setAttribute("font-size",w<70?16:22);
     const hit=()=>{play(n.f);g.classList.add("on");setTimeout(()=>g.classList.remove("on"),220)};
     g.addEventListener("click",hit);key(g,hit);bandEls.push(g);
@@ -760,10 +780,10 @@ const c2=txt(gb,WC,WC+34,"one octave of light around it","small");c2.setAttribut
 gb.addEventListener("click",()=>{});key(gb,()=>{});
 /* meanings table */
 const tb=document.querySelector("#meanings tbody");
-const trb=document.createElement("tr");trb.innerHTML=`<td>0</td><td><span class="sw blk"></span>Black</td><td>silence</td><td><span class="num">no light</span></td><td>—</td><td>No light at all. The centre of the wheel, before the first colour: nothing has happened yet. Joey's answer to Clue 4.</td>`;tb.appendChild(trb);
-COL.forEach((k,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i}</td><td><span class="sw" style="background:var(--n${i})"></span>${k.c}</td><td>${NOTES[i].s} / ${NOTES[i].g}<br><span class="num">Newton ${k.newton}</span></td><td><span class="num">${k.lam} nm<br>${THz(k.lam)} THz</span></td><td>${k.chakra}<br><em>${k.where}</em></td><td>${k.m}</td>`;tb.appendChild(tr)});
-const trw=document.createElement("tr");trw.innerHTML=`<td>0–6</td><td><span class="sw wht"></span>White</td><td>the chord</td><td><span class="num">all of it</span></td><td>—</td><td>All seven at once. The octave sounding together; the square with every piece in it. Not a colour of the rainbow, but the rainbow before the prism.</td>`;tb.appendChild(trw);
-const trm=document.createElement("tr");trm.innerHTML=`<td>0′</td><td><span class="sw mag"></span>Magenta</td><td>Do′ / Sa′</td><td><span class="num">none</span></td><td>—</td><td>Not in the spectrum. The brain's bridge from violet back to red: the return that is not the start.</td>`;tb.appendChild(trm);
+const trb=document.createElement("tr");trb.innerHTML=`<td>0</td><td><span class="sw blk"></span>Black</td><td><span class="sw" style="background:#2D2926"></span>Black C</td><td>silence</td><td><span class="num">no light</span></td><td>—</td><td>No light at all. The centre of the wheel, before the first colour: nothing has happened yet. Joey's answer to Clue 4.</td>`;tb.appendChild(trb);
+COL.forEach((k,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i}</td><td><span class="sw" style="background:var(--n${i})"></span>${k.c}</td><td><span class="sw" style="background:${k.pms[1]}"></span>${k.pms[0]}</td><td>${NOTES[i].s} / ${NOTES[i].g} / <span lang="zh-Hant">${NOTES[i].z}</span><br><span class="num">Newton ${k.newton}</span></td><td><span class="sw" style="background:var(--s${i})" title="the light itself"></span><span class="num">${k.lam} nm<br>${THz(k.lam)} THz</span></td><td>${k.chakra}<br><em>${k.where}</em></td><td>${k.m}</td>`;tb.appendChild(tr)});
+const trw=document.createElement("tr");trw.innerHTML=`<td>0–6</td><td><span class="sw wht"></span>White</td><td><span class="sw" style="background:#F4F5F0;border:1px solid var(--line)"></span>11-0601 TCX Bright White</td><td>the chord</td><td><span class="num">all of it</span></td><td>—</td><td>All seven at once. The octave sounding together; the square with every piece in it. Not a colour of the rainbow, but the rainbow before the prism.</td>`;tb.appendChild(trw);
+const trm=document.createElement("tr");trm.innerHTML=`<td>0′</td><td><span class="sw mag"></span>Magenta</td><td>—</td><td>Sa′ / Do′ / <span lang="zh-Hant">仩</span></td><td><span class="num">none</span></td><td>—</td><td>Not in the spectrum. The brain's bridge from violet back to red: the return that is not the start.</td>`;tb.appendChild(trm);
 
 /* Diagram 7: basic words and emoji */
 const EMO=[
@@ -855,7 +875,7 @@ drawDoh();dohStatus();
 
 /* Diagram 4: the three lists */
 const SK=[3,2,2,2,2,3,2];
-const lat=document.getElementById("latin"),san=document.getElementById("sanskrit"),brd=document.getElementById("boards");
+const lat=document.getElementById("latin"),san=document.getElementById("sanskrit"),brd=document.getElementById("boards"),gch=document.getElementById("gongche");
 NOTES.slice(0,7).forEach((n,i)=>{
   const c=`var(--n${i})`;
   const first=n.latin.slice(0,i===6?1:2), rest=n.latin.slice(i===6?1:2);
@@ -863,8 +883,11 @@ NOTES.slice(0,7).forEach((n,i)=>{
   li.innerHTML=`<span class="chip" style="background:${c}">${n.syl}</span><span><b>${first}</b>${rest}</span>`;
   lat.appendChild(li);
   const li2=document.createElement("li");
-  li2.innerHTML=`<span class="chip" style="background:${c}">${n.g}</span><span><b>${n.sk.slice(0,SK[i])}</b>${n.sk.slice(SK[i])}</span>`;
+  li2.innerHTML=`<span class="chip" style="background:${c}">${n.s}</span><span><b>${n.sk.slice(0,SK[i])}</b>${n.sk.slice(SK[i])}</span>`;
   san.appendChild(li2);
+  const li4=document.createElement("li");
+  li4.innerHTML=`<span class="chip han" style="background:${c}" lang="zh-Hant">${n.z}</span><span><b>${n.zp}</b> <em>${n.s} · ${n.g}</em></span>`;
+  gch.appendChild(li4);
   const li3=document.createElement("li");
   li3.innerHTML=`<span class="chip" style="background:${c}">${n.s}</span><span><b>${n.board}</b> <em>${n.frac}</em></span>`;
   brd.appendChild(li3);
