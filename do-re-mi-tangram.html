@@ -135,21 +135,20 @@ td .num{font-family:var(--mono);font-size:.85rem;color:var(--muted);white-space:
 .sw.wht{background:var(--white);border:1px solid var(--muted)}
 td em{font-style:italic;color:var(--muted)}
 /* basic words and emoji, in the page's own colours */
-/* basic words and emoji: one dark panel, hot magenta and cyan on violet-black, the same in both themes; the rest of the page keeps its own colours */
-.neon{background:#140f1e;color:#cfc7e8;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:16px}
-.emo{display:grid;grid-template-columns:repeat(9,1fr);gap:6px}
-.emo button{font:inherit;background:transparent;border:1px solid rgba(244,114,182,.28);border-radius:14px;padding:12px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;color:#cfc7e8;transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease}
-.emo .e{font-size:clamp(1.5rem,4.2vw,2.3rem);line-height:1;text-shadow:none}
-.emo .w{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em}
-.emo .n{font-family:var(--mono);font-size:.62rem;color:#f472b6}
-.emo button.cy .n{color:#67e8f9}
-.emo button:hover,.emo button.on{transform:translateY(-4px);border-color:#f472b6;box-shadow:0 0 18px rgba(244,114,182,.35)}
-.emo button.cy:hover,.emo button.cy.on{border-color:#67e8f9;box-shadow:0 0 18px rgba(103,232,249,.35)}
-.emo button:focus-visible{outline:3px solid #67e8f9;outline-offset:2px}
-.neon .btn{background:#1e1730;color:#f472b6;border-color:rgba(244,114,182,.4)}
-.neon .btn:hover{background:#261d3a}
-.neon .stat{background:#1e1730;color:#cfc7e8}
-@media (max-width:560px){.emo{grid-template-columns:repeat(3,1fr)}}
+/* basic words and emoji: the cards of Joey's vibe app, three emoji, a pronunciation, a part of speech, a definition; in the page's own colours */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.vc{font:inherit;text-align:left;border:0;padding:3px;border-radius:16px;background:var(--c,var(--n0));cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;color:var(--ink)}
+.vc:hover,.vc.on{transform:translateY(-4px) scale(1.02);box-shadow:0 10px 30px -14px var(--c,var(--n0))}
+.vc:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.vc .in{background:var(--panel);border-radius:13px;padding:10px 10px 12px;display:flex;flex-direction:column;gap:6px;height:100%}
+.vc .top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase}
+.vc .top .tag{background:var(--c,var(--n0));color:var(--on-note);padding:2px 7px;border-radius:999px;font-weight:700}
+.vc .top .num{color:var(--muted)}
+.vc .art{display:flex;justify-content:center;gap:4px;font-size:clamp(1.6rem,4vw,2.2rem);line-height:1;padding:12px 0;background:color-mix(in srgb,var(--c,var(--n0)) 12%,var(--panel));border-radius:10px}
+.vc .pron{font-family:var(--mono);font-weight:700;font-size:.78rem;text-align:center}
+.vc .part{font-style:italic;font-size:.7rem;color:var(--muted);text-align:center}
+.vc .def{font-size:.78rem;line-height:1.35;text-align:center}
+.vc.prime .in{box-shadow:inset 0 0 0 2px var(--ink)}
 /* the clay before the kiln: neon on the black of a flatbed scan, the same in both themes */
 .doh{background:#000;border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:12px}
 .doh svg{display:block;width:100%;height:auto;max-width:560px;margin:0 auto;touch-action:none;cursor:pointer;outline:none}
@@ -431,14 +430,12 @@ td em{font-style:italic;color:var(--muted)}
   <section>
     <p class="kicker">Diagram 7</p>
     <h2>Basic words and emoji</h2>
-    <p class="why"><b>Why this is here.</b> This section follows Joey’s rule for his own work: basic words and emoji, more emoji. The seven animals are the ones an old Indian text on singing, the Nāradīya Śikṣā, gave to the seven notes; each animal’s cry was said to sit on that note. The eyes before the first and the melt after the last are Joey’s own two glyphs. The colours of this panel are his theme’s; the table underneath gives the reason for each tile.</p>
-    <p>The seven notes as the seven animals the Nāradīya Śikṣā gave them, with two eyes before the first and a melt after the last. Tap one to hear it.</p>
-    <div class="neon">
-      <div class="emo" id="emo" role="group" aria-label="Nine emoji: look, then the seven svara animals, then melt"></div>
-      <div class="ctl">
-        <button type="button" class="btn" id="b-emo">Play 👀 → 🦚 → 🫠</button>
-        <p class="stat" id="estat">👀 🟣 🫠</p>
-      </div>
+    <p class="why"><b>Why this is here.</b> The cards are the ones from Joey’s own app, Vibe Check (2026): a mood is three emoji, written out as a word you can say, with a part of speech and a dictionary definition, and you collect the cards by finding the three in a grid. Here each state gets a card of that kind, in the page’s own colours. The middle emoji is the animal an old Indian text on singing, the Nāradīya Śikṣā, gave to that note. The eyes on the first card and the melt on the last are Joey’s two glyphs, and his app’s dictionary gives them their meanings: eyes, watching closely; melting, overwhelmed. The table underneath gives the reason for each animal.</p>
+    <p>Eight cards, one per state, in the form of the cards in your vibe app: three emoji, a pronunciation, a part of speech, a definition. The middle emoji is the animal the Nāradīya Śikṣā gave the note. Tap a card to hear its note.</p>
+    <div class="cards" id="emo" role="group" aria-label="Eight emoji cards, one per state"></div>
+    <div class="ctl">
+      <button type="button" class="btn" id="b-emo">Play 👀 → 🦚 → 🫠</button>
+      <p class="stat" id="estat">👀 🟣 🫠</p>
     </div>
     <div class="fig tbl"><table id="why"><thead><tr><th></th><th>Word</th><th>Why this one</th><th>From</th></tr></thead><tbody>
       <tr><td>👀</td><td>look</td><td>Before the first note nothing has happened yet: black, no light. The first act is to look. One of your three glyphs, the one you glossed as attention, noticing.</td><td>Your house-style notes on 👀 🟣 🫠; the black centre of the wheel</td></tr>
@@ -452,7 +449,7 @@ td em{font-style:italic;color:var(--muted)}
       <tr><td>🫠</td><td>melt, 7 · 0′</td><td>Your third glyph, the one you glossed as collapse, softening. The return is a face that has been through heat and come back changed: the same Sa, an octave up, on the magenta that has no wavelength.</td><td>Your house-style notes; the magenta 0′ on the wheel</td></tr>
       <tr><td>🟣</td><td>the whole</td><td>Not a tile. Your middle glyph, purple, the colour you chose because everyone was going to look anyway. It stands here for all seven at once, the white ring, and sits in the status line between the eyes and the melt.</td><td>Your house-style notes on the name</td></tr>
     </tbody></table></div>
-    <p class="hint">One emoji, one basic word, one reason each. The seven animals are the śikṣā's, not mine; the two glyphs at the ends and the purple are yours; the pairing of the two is the only thing I added.</p>
+    <p class="hint">Three emoji, one word you can say, one definition, one reason each. The card form is your app's; the seven animals are the śikṣā's; the two glyphs at the ends and the purple are yours; the pronunciations and definitions are this page's, written in the voice of your app's cards, and they are the part most open to correction.</p>
   </section>
 
   <section>
@@ -492,7 +489,7 @@ td em{font-style:italic;color:var(--muted)}
     </div>
   </section>
 
-  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; the strip of the light itself under each band computed from the CIE 1931 2° colour-matching functions (table values at 700, 610, 580, 530, 480, 445 and 405 nm) through the sRGB D65 matrix, negative channels clipped, then normalised; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Gongche: Wikipedia, “Gongche notation” (snippet); the upper-octave 仩 (U+4EE9) is the higher-octave form listed in the Unicode proposal for gongche characters (L2/17-087, snippet), and the Cantonese tradition writes high do as 生 instead. Pantone names and screen values as reported by pantone.com color-finder pages and by hextoral.com, color-name.com, colorxs.com and pantonetools.com (snippets); Pantone’s values are approximations, not the inks. Words: Sanskrit roots from warnemyr.com “Verbal Roots” and learnsanskrit.org “Roots and Classes” (snippets); 泥 and 逆 from Wiktionary (snippets); the other Chinese and Sanskrit words from general knowledge, unchecked; 六 as 流 from studycli.org “Chinese Numerology” (snippet); 七 as 氣 and 起 is this page’s own wordplay; the half steps from Wikipedia “Bilaval (thaat)” (snippet). “Ni reminds of clay in Chinese” is Joey’s, 28 September 2026. Newari: cow as sā and the animal names from agentakash.com “Learn Newari” (snippet); the counts chhi to jhi and pā as the counting word for long things from Wikibooks “Nepal Bhasa/Counting” (snippet); mā, bā from nepaliaustralian.com “Learn Nepal Bhasa, Chapter 8, Relations” (snippet); dhau from Wikipedia “Dhau” (snippet); the cow as Nepal’s national animal from Business Standard, 21 September 2015 (snippet); none of these pages could be opened, and the Devanagari spellings are therefore not given. Moving pictures: the Ar Don Go GIF from Joey’s Drive (<em>Ar Don Go 1.gif</em>, 2025 copy of the 2016 film; the ball and the head are described in <em>Ar Don Go.md</em>, 20 September 2026, and in his interview answers of 21 January 2016); the six Shunya Yatri GIFs from the <em>_AE_Linked_Projects_&amp;_Comps</em> folder, listed as proven placed in the comps by <em>THE-GIF-ARCHAEOLOGY.md</em> (17 September 2026), 117GIF matching its md5 there; “Zero Traveler” is the reading of शून्य यात्री on the film’s own packaging (<em>SHUNYA-YATRI-SYNTHESIS.md</em>); the GIFs themselves were collected from the internet before they were placed, and their first makers are not known. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words. Several records cited above from Joey’s own archive (the GIF archaeology, the Shunya Yatri synthesis, the Ar Don Go note, the Pretty Child reading, the house-style notes) are themselves AI-written first drafts, beginning TPDs, that he has not accepted; where this page leans on one of them it is a lead, not a fact, and his own dated notes and files are the stronger source. Black as 0 was Joey’s answer to Clue 4. Diagram 7: the animals from the Nāradīya Śikṣā as above; the three glyphs 👀 🟣 🫠 and the rule “just basic words and emoji, more emoji” from Joey’s own house-style notes (<em>Words.md</em>, 2026); the panel’s colours, magenta and cyan on violet-black, from his own theme file for the control UI (September 2026), the one whose name he has asked not to be written. Diagram 8: colours and the mirror rule from the Pretty Child archive reading (<em>pretty-child-findings.md</em>, 1 September 2026), which describes the flatbed scans of neon Play-Doh and notes that every frame of the film is bilaterally mirrored.</p>
+  <p class="foot">Sources: Wikipedia, “Solfège” and “Tangram”; chinesepuzzles.org, “Tangram Puzzle”; British Library, Asian and African studies blog, “A popular Chinese game: the Qi Qiao Tu, or Tangram” (2014); Wang and Hsiung, “A Theorem on the Tangram,” American Mathematical Monthly 49 (1942); Let’s Play Kids Music, “Do Re Mi – Fun Introduction to Musical Theory for Kids”; Isaac Newton, <em>Opticks</em> (1704), Book I, and Wikipedia, “Color wheel” and “Spectral color”; Science Notes, “Visible Light Spectrum Wavelengths and Colors”; the strip of the light itself under each band computed from the CIE 1931 2° colour-matching functions (table values at 700, 610, 580, 530, 480, 445 and 405 nm) through the sRGB D65 matrix, negative channels clipped, then normalised; Christopher Hills, <em>Nuclear Evolution</em> (1977), as reported by Subtle Yoga and chakratraining.com; Nāradīya Śikṣā, via sreenivasarao’s blogs. Gongche: Wikipedia, “Gongche notation” (snippet); the upper-octave 仩 (U+4EE9) is the higher-octave form listed in the Unicode proposal for gongche characters (L2/17-087, snippet), and the Cantonese tradition writes high do as 生 instead. Pantone names and screen values as reported by pantone.com color-finder pages and by hextoral.com, color-name.com, colorxs.com and pantonetools.com (snippets); Pantone’s values are approximations, not the inks. Words: Sanskrit roots from warnemyr.com “Verbal Roots” and learnsanskrit.org “Roots and Classes” (snippets); 泥 and 逆 from Wiktionary (snippets); the other Chinese and Sanskrit words from general knowledge, unchecked; 六 as 流 from studycli.org “Chinese Numerology” (snippet); 七 as 氣 and 起 is this page’s own wordplay; the half steps from Wikipedia “Bilaval (thaat)” (snippet). “Ni reminds of clay in Chinese” is Joey’s, 28 September 2026. Newari: cow as sā and the animal names from agentakash.com “Learn Newari” (snippet); the counts chhi to jhi and pā as the counting word for long things from Wikibooks “Nepal Bhasa/Counting” (snippet); mā, bā from nepaliaustralian.com “Learn Nepal Bhasa, Chapter 8, Relations” (snippet); dhau from Wikipedia “Dhau” (snippet); the cow as Nepal’s national animal from Business Standard, 21 September 2015 (snippet); none of these pages could be opened, and the Devanagari spellings are therefore not given. Moving pictures: the Ar Don Go GIF from Joey’s Drive (<em>Ar Don Go 1.gif</em>, 2025 copy of the 2016 film; the ball and the head are described in <em>Ar Don Go.md</em>, 20 September 2026, and in his interview answers of 21 January 2016); the six Shunya Yatri GIFs from the <em>_AE_Linked_Projects_&amp;_Comps</em> folder, listed as proven placed in the comps by <em>THE-GIF-ARCHAEOLOGY.md</em> (17 September 2026), 117GIF matching its md5 there; “Zero Traveler” is the reading of शून्य यात्री on the film’s own packaging (<em>SHUNYA-YATRI-SYNTHESIS.md</em>); the GIFs themselves were collected from the internet before they were placed, and their first makers are not known. Sargam shown in its natural (shuddha) form, which lines up with the major scale. The equation is Joey’s, in his words. Several records cited above from Joey’s own archive (the GIF archaeology, the Shunya Yatri synthesis, the Ar Don Go note, the Pretty Child reading, the house-style notes) are themselves AI-written first drafts, beginning TPDs, that he has not accepted; where this page leans on one of them it is a lead, not a fact, and his own dated notes and files are the stronger source. Black as 0 was Joey’s answer to Clue 4. Diagram 7: the animals from the Nāradīya Śikṣā as above; the three glyphs 👀 🟣 🫠 and the rule “just basic words and emoji, more emoji” from Joey’s own house-style notes (<em>Words.md</em>, 2026); the card form (three emoji, a pronunciation, a part of speech, a definition) and the glosses of 👀 and 🫠 from his own Replit app <em>Vibe Check</em> (2026): its <em>replit.md</em>, <em>shared/emoji-phrases.ts</em>, <em>shared/emoji-dictionary.ts</em> and <em>client/src/pages/vibe-crush.tsx</em>, read on 28 September 2026; the app’s design philosophy is named there by a two-word name he has asked not to be written on this page. Diagram 8: colours and the mirror rule from the Pretty Child archive reading (<em>pretty-child-findings.md</em>, 1 September 2026), which describes the flatbed scans of neon Play-Doh and notes that every frame of the film is bilaterally mirrored.</p>
 </div>
 
 <script>
@@ -917,26 +914,25 @@ COL.forEach((k,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i}
 const trw=document.createElement("tr");trw.innerHTML=`<td>0–6</td><td><span class="sw wht"></span>White</td><td><span class="sw" style="background:#F4F5F0;border:1px solid var(--line)"></span>11-0601 TCX Bright White</td><td>the chord</td><td><span class="num">all of it</span></td><td>—</td><td>All seven at once. The octave sounding together; the square with every piece in it. Not a colour of the rainbow, but the rainbow before the prism.</td>`;tb.appendChild(trw);
 const trm=document.createElement("tr");trm.innerHTML=`<td>0′</td><td><span class="sw mag"></span>Magenta</td><td>—</td><td>Sa′ <span lang="zh-Hant">仩</span><br><span class="num">Do′</span></td><td><span class="num">none</span></td><td>—</td><td>Not in the spectrum. The brain's bridge from violet back to red: the return that is not the start.</td>`;tb.appendChild(trm);
 
-/* Diagram 7: basic words and emoji */
+/* Diagram 7: basic words and emoji, as the cards of Joey's vibe app */
 const EMO=[
-  {e:"👀",w:"look",n:"before",f:0,bg:"var(--black)"},
-  {e:"🦚",w:"peacock",n:"0 · Sa 上",f:NOTES[0].f},
-  {e:"🐂",w:"bull",n:"1 · Re 尺",f:NOTES[1].f},
-  {e:"🐐",w:"goat",n:"2 · Ga 工",f:NOTES[2].f},
-  {e:"🦢",w:"heron",n:"3 · Ma 凡",f:NOTES[3].f},
-  {e:"🐦",w:"koel",n:"4 · Pa 六",f:NOTES[4].f},
-  {e:"🐴",w:"horse",n:"5 · Dha 五",f:NOTES[5].f},
-  {e:"🐘",w:"elephant",n:"6 · Ni 乙",f:NOTES[6].f},
-  {e:"🫠",w:"melt",n:"7 · 0′",f:NOTES[7].f,bg:"var(--mag)",prime:true}
+  {e:["👀","🦚","🌱"],w:"eyes-on-sa",part:"state of being",def:"nothing has happened yet. the peacock is looking. so are you.",n:"0 · Sa 上",f:NOTES[0].f,c:"var(--n0)"},
+  {e:["🐂","🔥","☀️"],w:"bull-heat-arc",part:"first push",def:"heat is the first word on your list of arrows. the bull moves because the day got warm.",n:"1 · Re 尺",f:NOTES[1].f,c:"var(--n1)"},
+  {e:["🐐","🧗","⛰️"],w:"goat-gonna-go",part:"verb",def:"ga is go. the goat's whole personality is the next ledge up.",n:"2 · Ga 工",f:NOTES[2].f,c:"var(--n2)"},
+  {e:["🦢","📏","🤱"],w:"ma-measures-mother",part:"noun",def:"the middle of the scale. mā is measure and mother in three languages. the halfway point that holds.",n:"3 · Ma 凡",f:NOTES[3].f,c:"var(--n3)"},
+  {e:["🐦","💨","🎶"],w:"koel-breath-core",part:"the shift from 3 to 4",def:"what had to happen for 3 to become 4? air. breath pushed a call out of a bird.",n:"4 · Pa 六",f:NOTES[4].f,c:"var(--n4)"},
+  {e:["🐴","🫙","🏇"],w:"dha-holds-the-jar",part:"verb",def:"dhā is to put and to hold. dhau is yoghurt set in a clay pot. the horse carries it without spilling.",n:"5 · Dha 五",f:NOTES[5].f,c:"var(--n5)"},
+  {e:["🐘","🟤","👣"],w:"elephant-in-clay",part:"state before the return",def:"ni: clay in chinese, two in newari. the biggest animal leaves a print on the smallest step.",n:"6 · Ni 乙",f:NOTES[6].f,c:"var(--n6)"},
+  {e:["🫠","🦚","🔁"],w:"same-bird-one-floor-up",part:"return, with history",def:"melting: overwhelmed. the same peacock an octave up, and it has been round. 0′ is not 0.",n:"7 · 0′",f:NOTES[7].f,c:"var(--mag)",prime:true}
 ];
 const emoEl=document.getElementById("emo"),emoBtns=[],estat=document.getElementById("estat");
 EMO.forEach((m,i)=>{
-  const b=document.createElement("button");b.type="button";b.className=(i===0||m.prime)?"cy":"";
-  b.innerHTML=`<span class="e" role="img" aria-label="${m.w}">${m.e}</span><span class="w">${m.w}</span><span class="n">${m.n}</span>`;
-  b.addEventListener("click",()=>{if(m.f)play(m.f);flash(b,300);estat.textContent=`${m.e} ${m.w}`;});
+  const b=document.createElement("button");b.type="button";b.className="vc"+(m.prime?" prime":"");b.style.setProperty("--c",m.c);
+  b.innerHTML=`<div class="in"><div class="top"><span class="tag">${m.n}</span><span class="num">#${String(i+1).padStart(3,"0")}/008</span></div><div class="art" role="img" aria-label="${m.w}">${m.e.map(x=>`<span>${x}</span>`).join("")}</div><div class="pron">/${m.w}/</div><div class="part">${m.part}</div><div class="def">${m.def}</div></div>`;
+  b.addEventListener("click",()=>{if(m.f)play(m.f);flash(b,300);estat.textContent=`${m.e.join("")} /${m.w}/`;});
   emoEl.appendChild(b);emoBtns.push(b);
 });
-document.getElementById("b-emo").addEventListener("click",()=>run(EMO,380,(m,k)=>{if(m.f)play(m.f);flash(emoBtns[k],320);estat.textContent=EMO.slice(0,k+1).map(x=>x.e).join(" ")}));
+document.getElementById("b-emo").addEventListener("click",()=>run(EMO,520,(m,k)=>{if(m.f)play(m.f);flash(emoBtns[k],460);estat.textContent=EMO.slice(0,k+1).map(x=>x.e[1]).join(" ")}));
 
 /* Diagram 8: the clay before the kiln */
 const CANS=[["magenta","#ff2fa8"],["acid yellow","#e8ff3a"],["blue","#2f6bff"],["mint","#4dffb8"],["violet","#9b5cff"],["red","#ff3b3b"]];
