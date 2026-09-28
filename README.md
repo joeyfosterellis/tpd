@@ -6,4 +6,4 @@
 - `The Equation — Joey's words.md`: both statements of the equation, verbatim and dated. Read before writing about 0 → 7 → 0′.
 - `Bhakti and the Egyptian signs — TPD.md`: chain record of the 26 September questions (bhakti, its translations, Egyptian signs to check against the page) and the replies, labelled and sourced.
 - `Post — a clue to find your own meaning.md`: a draft post, a clue rather than a meaning. GENERATED, unaccepted.
-- `gifs/`: five silent GIFs recorded from the page (spiral, tangram, stairs, rainbow, wheel), 27 September 2026. Also published beside the page.
+- `gifs/`: seven silent GIFs recorded from the page (spiral, tangram, stairs, rainbow, wheel, emoji strip, Play-Doh), 27 to 28 September 2026. Also published beside the page.
