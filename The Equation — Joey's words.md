@@ -58,6 +58,6 @@ Statement 3 is the middle of Statement 2 again, with "values" for "numbers", "pu
 
 ## Where this is used
 
-- The page "Do Re Mi, Sa Re Ga", https://claude.ai/artifact/BQCx3dnEwHkfT42AT69LNY, section "The equation", built from Statement 1.
+- The page https://claude.ai/artifact/BQCx3dnEwHkfT42AT69LNY (titled "Do Re Mi, Sa Re Ga" until v11, "Sa Re Ga, Do Re Mi" from v12), section "The equation", built from Statement 1.
 - The page's TPD, `Do Re Mi, Sa Re Ga — TPD.md`, sections 1, 11.0 and 23.
 - The page's section "The arrows" (v13), built from Statement 3's example, "the shift from 3 to 4".
