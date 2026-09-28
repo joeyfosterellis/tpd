@@ -56,8 +56,58 @@ Statement 2 has no T labels on the arrows and no T0; the last arrow is a plain 7
 
 Statement 3 is the middle of Statement 2 again, with "values" for "numbers", "pushes" for "drives", "key element" for "crucial element", and "and more" for "and so on". It drops the chain line and the Ruby address. It was sent as a correction, after a run of changes to the page that were all about the states (their colours, their emoji, their names in three languages) and none about the arrows. GENERATED reading: the repetition is the point. All three statements stand.
 
+## The equation applied to translation, 28 September 2026, about 10:45Z (16:30 Kathmandu)
+
+Sent as "add this:" after v22 of the page. Not a fourth statement of the equation but its first application by Joey to a field, language. His arrows were written in LaTeX (`\to`, `\xrightarrow{}`, `\not\xrightarrow{}`, `T_{\text{trans}}`); they are set here as arrows and subscripts, nothing else is changed. His three-column table is kept as a table.
+
+> In linguistics and translation theory, my equation formalizes what Walter Benjamin described in The Task of the Translator: translation is not a mirror image of an original, but a transformation that grants an idea its "afterlife."
+>
+> Applying the equation across language and semantics reveals why perfect equivalence is mathematically and culturally impossible.
+>
+> 1. Semantic Drift: Words Carry Their Etymological Arrows
+>
+> A word at any moment is state n. Its definition is not merely a dictionary snapshot; it is the sum of every cultural collision it has survived.
+>
+>  * State 0: The Latin persona originally designated an actor’s physical mask in Greco-Roman theater (literally, sound passing through: per-sonare).
+>
+>  * The Arrows (T₁ → T₆): Roman legal systems appropriated the term to denote legal status or citizenship. Christian theological debates over the Trinity during the Council of Nicaea redefined it as hypostasis/individual substance. Enlightenment philosophers linked it to self-conscious agency.
+>
+>  * State 0': The modern English word "person."
+>
+> When you say "person" today, you aren't invoking a theater mask. Yet the term cannot shed the legal, philosophical, and theological pressures that sculpted its modern legal boundaries. A word's present semantic field is always 0'—a living archive of every context it passed through.
+>
+> 2. The Back-Translation Paradox: Why 4 ↛ 3
+> In translation theory, the test of reversibility (4 → 3) consistently breaks down because language is non-Euclidean; semantic space has curvature.
+>
+> Take the Portuguese concept of Saudade:
+>
+>  * State 0 (Saudade): A specific emotional ecology—a melancholic longing for an absent person, place, or time that is loved, mixed with the quiet knowledge that it may never return, often flavored with transatlantic maritime history and Portuguese fado.
+>
+>  * Transformation (T_trans): Translated into English as "longing" or "nostalgia" (State 1).
+>
+>  * Transformation (T_reverse): Translated back into Portuguese.
+> State 1 ("nostalgia") translated back does not return to pure Saudade (0); it lands on nostalgia in Portuguese (0'), a clinical, Greek-rooted medicalization of homesickness (nostos + algos). The specific historical maritime weight is lost. The arrow was non-invertible:
+>
+> 3. Untranslatables as "Missing Arrows"
+> Every culture constructs vocabulary around the transformations (T) its environment demands. When a language has an "untranslatable" word, it is usually because that culture recognized a specific state transition that another culture never codified:
+>
+> | Concept | Language | The Specific Transformation Arrow (T_n) | Why Literal Translation Fails |
+> |---|---|---|---|
+> | Kintsugi (金継ぎ) | Japanese | Material breakage → T_{lacquer + gold} → Visible aesthetic history | English lacks a single word for "repair that honors rather than conceals damage." |
+> | Waldeinsamkeit | German | Entering forest → T_{solitude} → Quiet, connected communion | Translating as "loneliness in the woods" strips the positive, restorative vector. |
+> | Ilunga | Tshiluba | Offense 1 (forgive) → T_{tolerate} → Offense 2 (tolerate) → T_{limit} → Offense 3 (strike back) | Captures a highly specific dynamic threshold of social patience across repeated events. |
+>
+> 4. Gain in Translation: The Surpluses of 0'
+> Tradition often laments what is "lost in translation" (the Italian pun traduttore, traditore—translator, traitor). But the equation demonstrates that transformation is generative:
+>
+> When Gabriel García Márquez read Gregory Rabassa's English translation of One Hundred Years of Solitude, he famously declared it superior to his original Spanish text. Why? Because Rabassa introduced a fresh set of rhythmic and syntactic possibilities inherent to English prose that did not exist in Spanish.
+> The translated work (0') did not match the original (0), but its differences were not deficits; they were an accumulation of new tonal resonances.
+
+GENERATED observation, not a ruling: this text answers, for language, the question section 8 of the page's TPD left open, whether the arrows can be reversed. His answer here is that translation's arrow is "non-invertible" and that the return lands on 0′, a different word in the same language. It also gives the theory a new claim, that 0′ can carry a surplus ("gain in translation"), which the clay and breath examples of Statement 1 do not say. Both are his; neither is checked here beyond the snippet checks recorded on the page and in the page's TPD, addendum 43.
+
 ## Where this is used
 
 - The page https://claude.ai/artifact/BQCx3dnEwHkfT42AT69LNY (titled "Do Re Mi, Sa Re Ga" until v11, "Sa Re Ga, Do Re Mi" from v12), section "The equation", built from Statement 1.
 - The page's TPD, `Do Re Mi, Sa Re Ga — TPD.md`, sections 1, 11.0 and 23.
 - The page's section "The arrows" (v13), built from Statement 3's example, "the shift from 3 to 4".
+- The page's section "Translation: the afterlife of a word" (v23), his text of 28 September 2026 verbatim.
