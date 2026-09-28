@@ -8,3 +8,4 @@
 - `Post — a clue to find your own meaning.md`: a draft post, a clue rather than a meaning. GENERATED, unaccepted.
 - `gifs/`: seven silent GIFs recorded from the page (spiral, tangram, stairs, rainbow, wheel, emoji strip, Play-Doh), 27 to 28 September 2026. Still published beside the page; no longer shown on it from v17.
 - `gifs/film/`: seven GIFs from Joey's films, byte for byte from his Drive archive: one from Ar Don Go (2016), six from the After Effects comps of Shunya Yatri. Shown on the page from v17 (28 September 2026).
+- `Emoji rebuses and conjugations — TPD.md`: the twenty-four emoji of the page's cards taken apart into pictograms, with the forms each can take. Asked for by Joey on 28 September 2026 as a record of its own.

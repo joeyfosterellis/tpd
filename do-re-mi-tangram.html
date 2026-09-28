@@ -149,6 +149,17 @@ td em{font-style:italic;color:var(--muted)}
 .vc .part{font-style:italic;font-size:.7rem;color:var(--muted);text-align:center}
 .vc .def{font-size:.78rem;line-height:1.35;text-align:center}
 .vc.prime .in{box-shadow:inset 0 0 0 2px var(--ink)}
+.rebus{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.rebus .pic{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.rebus .g{font-size:2.4rem;line-height:1}
+.rebus .nm{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rebus .parts{font-size:.85rem;line-height:1.4}
+.rebus .snd{font-family:var(--mono);font-weight:700;font-size:.85rem}
+.rebus .zh{font-size:.85rem;color:var(--muted)}
+.rebus .zh b{font-size:1.2rem;color:var(--ink)}
+.rebus .forms{font-size:.8rem;color:var(--muted);line-height:1.5}
+.rebus .forms span{font-size:1.1rem;color:var(--ink)}
+.eqn{font-family:var(--mono);font-weight:700;font-size:1rem;text-align:center;padding:10px;background:var(--panel);border-radius:12px;margin-top:12px}
 /* the clay before the kiln: neon on the black of a flatbed scan, the same in both themes */
 .doh{background:#000;border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:12px}
 .doh svg{display:block;width:100%;height:auto;max-width:560px;margin:0 auto;touch-action:none;cursor:pointer;outline:none}
@@ -437,6 +448,11 @@ td em{font-style:italic;color:var(--muted)}
       <button type="button" class="btn" id="b-emo">Play 👀 → 🦚 → 🫠</button>
       <p class="stat" id="estat">👀 🟣 🫠</p>
     </div>
+    <h3 style="font-size:1.3rem;margin-top:18px">Read the card as a rebus</h3>
+    <p class="why"><b>Why this is here.</b> A rebus is a puzzle in which pictures stand for sounds: a bee and a leaf read as "belief". Every emoji is a small picture, and every picture is made of parts, so a card of three emoji can be taken apart into its pictograms and then read aloud. Joey wrote in 2015 that a Chinese character works the same way: "The structure of a Chinese character is made up of other characters … A house + a bird + the sea = Beach … A Chinese character is a GIF." Tap a card above and it is taken apart here: each emoji's official name, the parts of its drawing, the sound it lends to the card's word, a Chinese character built the same way where one exists, and the other forms the emoji can take, which is what this page calls its conjugation.</p>
+    <div class="eqn" id="req">👀 + 🦚 + 🌱 = /eyes-on-sa/</div>
+    <div class="rebus" id="rebus"></div>
+    <p class="hint">The official names are from the Unicode Character Database (version 14.0, as shipped in Python 3.11), so they are the names the pictures were given when they were standardised, and they sometimes surprise: 🐴 is HORSE FACE, 💨 is DASH SYMBOL, ☀ is BLACK SUN WITH RAYS. The parts and the sounds are this page's readings. A conjugation here means the forms one emoji takes: a plain text form and an emoji form (☀ and ☀️ differ by one invisible character, U+FE0F), five skin tones, a gender, a black-bird variant joined with an invisible joiner, or a whole family of coloured circles. Two more conjugations come from Joey's own app: each card there has a second, after-dark set of emoji, and the mascot grows 🥚 → 🐣 → 🦘 as cards are learned.</p>
     <div class="fig tbl"><table id="why"><thead><tr><th></th><th>Word</th><th>Why this one</th><th>From</th></tr></thead><tbody>
       <tr><td>👀</td><td>look</td><td>Before the first note nothing has happened yet: black, no light. The first act is to look. One of your three glyphs, the one you glossed as attention, noticing.</td><td>Your house-style notes on 👀 🟣 🫠; the black centre of the wheel</td></tr>
       <tr><td>🦚</td><td>peacock, Sa</td><td>The Nāradīya Śikṣā hears Sa in the peacock's cry. It is also the bird that opens into every colour at once, which is what Sa does for the scale.</td><td>Nāradīya Śikṣā, via sreenivasarao's blog (snippet)</td></tr>
@@ -932,6 +948,39 @@ EMO.forEach((m,i)=>{
   b.addEventListener("click",()=>{if(m.f)play(m.f);flash(b,300);estat.textContent=`${m.e.join("")} /${m.w}/`;});
   emoEl.appendChild(b);emoBtns.push(b);
 });
+const PIC={
+ "👀":{nm:"EYES · U+1F440",parts:"two eyes, side by side, looking to the left",snd:"eyes",zh:"看 kàn, to look: 手 a hand held over 目 an eye",forms:"one eye <span>👁️</span> (U+1F441 + FE0F, a text sign made emoji); an eye in a speech bubble <span>👁️‍🗨️</span> (joined by U+200D); in Joey’s app, watching closely; its after-dark form there is <span>🫦</span>"},
+ "🦚":{nm:"PEACOCK · U+1F99A",parts:"a bird, head left, tail fanned open behind it, each feather ending in an eye",snd:"pea + cock",zh:"鳥 niǎo, bird: a pictogram, head, wing, feet",forms:"no skin, no gender, no joiner: one form only; the Nāradīya Śikṣā's animal for Sa"},
+ "🌱":{nm:"SEEDLING · U+1F331",parts:"a stem in soil with two first leaves",snd:"seed, said as sa",zh:"生 shēng, to be born: a plant coming out of the ground",forms:"grows into <span>🌿</span> herb and <span>🍃</span> leaf; no modifiers"},
+ "🐂":{nm:"OX · U+1F402",parts:"the whole animal, side on, two horns, four legs",snd:"bull",zh:"牛 niú, ox: a head with two horns, seen from the front",forms:"a family: <span>🐮</span> cow face, <span>🐄</span> cow, <span>🐃</span> water buffalo, <span>🐂</span> ox; the Śikṣā's animal for Re"},
+ "🔥":{nm:"FIRE · U+1F525",parts:"one flame, wider at the base, a lighter tongue inside",snd:"heat",zh:"火 huǒ, fire: a pictogram of a flame with sparks",forms:"one form; in Joey’s app, hot take, looking good, lit; the first word in his list of arrows"},
+ "☀️":{nm:"BLACK SUN WITH RAYS · U+2600 + FE0F",parts:"a disc with rays all round",snd:"sun, and the arc it makes",zh:"日 rì, sun: a circle with a dot, squared by the brush",forms:"two forms of one character: ☀ plain text (U+2600, in Unicode since 1993) and ☀️ emoji, the difference being one invisible selector, U+FE0F"},
+ "🐐":{nm:"GOAT · U+1F410",parts:"the whole animal, horns curved back, a beard",snd:"goat; ga",zh:"羊 yáng, goat or sheep: a head with two horns from the front",forms:"one form; the Śikṣā's animal for Ga"},
+ "🧗":{nm:"PERSON CLIMBING · U+1F9D7",parts:"a figure on a rock face, one arm up, one leg bent",snd:"gonna go",zh:"登 dēng, to climb: two feet 癶 over a vessel 豆",forms:"five skin tones by a following modifier (U+1F3FB to U+1F3FF); a woman <span>🧗‍♀️</span> or a man <span>🧗‍♂️</span> by joining ♀ or ♂ with U+200D: twelve forms of one verb"},
+ "⛰️":{nm:"MOUNTAIN · U+26F0 + FE0F",parts:"two peaks, the taller behind",snd:"the ledge up",zh:"山 shān, mountain: three peaks in a row, the oldest pictogram on this page",forms:"plain ⛰ and emoji ⛰️, again one selector apart; cousins <span>🏔️</span> snow-capped and <span>🌋</span> volcano"},
+ "🦢":{nm:"SWAN · U+1F9A2",parts:"a long-necked water bird, neck curved, bill forward",snd:"ma, standing in for the heron",zh:"隹 zhuī, short-tailed bird, the part inside 雀 and 集",forms:"one form; stands for the Śikṣā's krauñca, which has no emoji"},
+ "📏":{nm:"STRAIGHT RULER · U+1F4CF",parts:"a ruler on the diagonal, ticks along one edge",snd:"measure, √mā",zh:"尺 chǐ, a foot-rule, and the second gongche name",forms:"its sibling <span>📐</span> triangular ruler; no modifiers"},
+ "🤱":{nm:"BREAST-FEEDING · U+1F931",parts:"a person holding a baby to the breast",snd:"mother, mā",zh:"母 mǔ, mother: 女 a woman with two dots for the breasts",forms:"five skin tones; a person feeding from a bottle <span>🧑‍🍼</span> is the gender-neutral cousin, joined with U+200D"},
+ "🐦":{nm:"BIRD · U+1F426",parts:"a small perching bird, side on, in blue",snd:"koel, standing in",zh:"鳥 niǎo again; the koel has no character of its own in common use",forms:"a black bird <span>🐦‍⬛</span> by joining a black square with U+200D (Unicode 15.0, 2022); the Śikṣā's bird for Pa"},
+ "💨":{nm:"DASH SYMBOL · U+1F4A8",parts:"three lines of speed trailing off to the left, a puff at the end",snd:"breath",zh:"气 qì, breath, air: three rising lines of vapour",forms:"one form; in Joey’s app the after-dark set spells chaos-and-flee with it"},
+ "🎶":{nm:"MULTIPLE MUSICAL NOTES · U+1F3B6",parts:"three quavers beamed together",snd:"core: the call itself",zh:"樂 yuè, music: drums 幺 on a stand 木",forms:"its singular <span>🎵</span> one note; no modifiers"},
+ "🐴":{nm:"HORSE FACE · U+1F434",parts:"the head only, mane, two ears, looking left",snd:"dha, the horse",zh:"馬 mǎ, horse: a pictogram with four legs and a flying mane",forms:"the whole animal <span>🐎</span> horse, and the sport <span>🏇</span>; the Śikṣā's animal for Dha"},
+ "🫙":{nm:"JAR · U+1FAD9",parts:"a glass jar with a lid, something set inside",snd:"holds: √dhā",zh:"皿 mǐn, a dish, the part under 盆 and 盛",forms:"one form, new in Unicode 14.0 (2021); the clay pot dhau is set in, one step before the kiln"},
+ "🏇":{nm:"HORSE RACING · U+1F3C7",parts:"a rider crouched on a galloping horse",snd:"the jar carried without spilling",zh:"馳 chí, to gallop: 馬 horse beside 也",forms:"five skin tones for the rider; the horse has none"},
+ "🐘":{nm:"ELEPHANT · U+1F418",parts:"the whole animal, trunk down, big ears",snd:"elephant",zh:"象 xiàng, elephant: trunk at the top, legs below; also the word for image and likeness",forms:"one form; the Śikṣā's animal for Ni; in Joey’s app the after-dark form of 🐘 does not exist, it is not in the game"},
+ "🟤":{nm:"LARGE BROWN CIRCLE · U+1F7E4",parts:"a flat brown disc",snd:"clay",zh:"土 tǔ, earth: a mound on the ground",forms:"one of a family of nine discs, <span>🔴🟠🟡🟢🔵🟣🟤⚫⚪</span>, which are this page's colours in order, red to violet, then brown, black and white"},
+ "👣":{nm:"FOOTPRINTS · U+1F463",parts:"two bare footprints, one ahead of the other",snd:"print",zh:"止 zhǐ, a foot: the oldest form is a footprint; it means to stop",forms:"one form; the dent the ball keeps in Diagram 8"},
+ "🫠":{nm:"MELTING FACE · U+1FAE0",parts:"a smiling face whose lower half is running down",snd:"melt",zh:"化 huà, to change, to melt: a person 亻and a person upside down 匕",forms:"one form, new in Unicode 14.0 (2021); Joey’s third glyph; in his app: overwhelmed, embarrassed, socially exhausted; its after-dark form there is <span>🥴</span>"},
+ "🔁":{nm:"CLOCKWISE RIGHTWARDS AND LEFTWARDS OPEN CIRCLE ARROWS · U+1F501",parts:"two arrows chasing each other in a loop",snd:"again, one floor up",zh:"回 huí, to return: a spiral, squared",forms:"its siblings <span>🔂</span> repeat once, <span>🔃</span> vertical, <span>🔄</span> anticlockwise; the loop that lands on 0′"},
+ "🟣":{nm:"LARGE PURPLE CIRCLE · U+1F7E3",parts:"a flat purple disc",snd:"the whole",zh:"○, the empty circle; 零 líng, zero",forms:"one of the nine discs; Joey’s middle glyph"}
+};
+const reqEl=document.getElementById("req"),rebEl=document.getElementById("rebus");
+function showRebus(m){
+  reqEl.textContent=`${m.e.join(" + ")} = /${m.w}/`;
+  rebEl.innerHTML=m.e.map(g=>{const d=PIC[g]||{nm:"",parts:"",snd:"",zh:"",forms:""};return `<div class="pic"><div class="g">${g}</div><div class="nm">${d.nm}</div><div class="parts">${d.parts}</div><div class="snd">→ ${d.snd}</div><div class="zh">${d.zh.replace(/^(\S+)/,'<b>$1</b>')}</div><div class="forms">${d.forms}</div></div>`}).join("");
+}
+showRebus(EMO[0]);
+emoBtns.forEach((b,i)=>b.addEventListener("click",()=>showRebus(EMO[i])));
 document.getElementById("b-emo").addEventListener("click",()=>run(EMO,520,(m,k)=>{if(m.f)play(m.f);flash(emoBtns[k],460);estat.textContent=EMO.slice(0,k+1).map(x=>x.e[1]).join(" ")}));
 
 /* Diagram 8: the clay before the kiln */
