@@ -86,6 +86,20 @@ input, select {
 input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--kiln); outline-offset: 2px; }
 .check { display: flex; align-items: center; gap: 8px; }
 .check input { width: auto; }
+.timepick { display: flex; align-items: center; gap: 6px; }
+.timepick input { width: 4.2em; text-align: center; font-family: var(--f-mono); }
+.timepick select { width: auto; }
+.flabel { font-size: .8rem; font-weight: 600; color: var(--muted); }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; align-self: flex-start; }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.seg label { padding: 6px 12px; font-size: .85rem; cursor: pointer; color: var(--muted); background: var(--bg); }
+.seg label + input + label { border-left: 1px solid var(--rule); }
+.seg input:checked + label { background: var(--ink); color: var(--paper); font-weight: 700; }
+.seg input:focus-visible + label { outline: 2px solid var(--kiln); outline-offset: -2px; }
+.seg label .mono { font-size: .78rem; opacity: .8; }
+.hint { font-size: .78rem; color: var(--muted); }
+.hint.ok { color: var(--you); }
+.hint.warn { color: var(--kiln); }
 .example-note { font-size: .8rem; color: var(--kiln); }
 .error { color: var(--kiln); font-weight: 600; }
 
@@ -155,6 +169,7 @@ td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; font-si
   display: flex; flex-direction: column; gap: 14px; max-width: 76ch;
 }
 .reading p { font-size: 1.02rem; }
+.reading a, .trade a { color: var(--you); overflow-wrap: anywhere; }
 .reading .formula { font-family: var(--f-mono); font-size: .9rem; color: var(--kiln); }
 .actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .btn {
@@ -162,6 +177,31 @@ td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; font-si
   border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
 }
 .btn.ghost { background: transparent; color: var(--ink); }
+
+/* Barter */
+.barter { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (max-width: 800px) { .barter { grid-template-columns: 1fr; } }
+.panel { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.step { display: flex; flex-direction: column; gap: 8px; }
+.step .eyebrow b { color: var(--kiln); font-weight: 600; }
+.their-q { font-family: var(--f-display); font-size: 1.25rem; line-height: 1.3; }
+textarea {
+  font: inherit; font-size: .95rem; color: var(--ink); background: var(--bg); border: 1px solid var(--rule);
+  border-radius: 6px; padding: 10px; width: 100%; min-height: 84px; resize: vertical;
+}
+textarea:focus-visible { outline: 2px solid var(--kiln); outline-offset: 2px; }
+textarea:disabled { opacity: .5; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.trade { border-top: 1px solid var(--rule); padding-top: 12px; display: flex; flex-direction: column; gap: 6px; font-size: .92rem; }
+.trade .who { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.trade .who img { width: 22px; height: 22px; border-radius: 50%; }
+.trade dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; }
+.trade dt { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); padding-top: 3px; }
+.trade dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.pill { font-family: var(--f-mono); font-size: .7rem; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--rule); color: var(--muted); }
+.pill.open { border-color: var(--kiln); color: var(--kiln); }
+.pill.done { border-color: var(--you); color: var(--you); }
+.notice { font-size: .9rem; color: var(--muted); }
 
 /* Theory */
 details.theory { border-top: 1px solid var(--rule); padding-top: 18px; }
@@ -198,17 +238,25 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
         <div><div class="eyebrow">State 0 · the one who left</div><h2>Nana</h2></div>
         <span class="state-tag">0</span>
       </div>
-      <div class="field"><label for="nana-name">Name</label><input id="nana-name" type="text" placeholder="Nana's name"></div>
+      <div class="row">
+        <div class="field"><label for="nana-name">Name</label><input id="nana-name" type="text" placeholder="Nana's name"></div>
+        <div class="field"><label for="nana-fb">Facebook profile</label><input id="nana-fb" type="text" inputmode="url" spellcheck="false" autocapitalize="off" placeholder="facebook.com/name"><span class="hint" id="nana-fb-hint"></span></div>
+      </div>
       <div class="row">
         <div class="field"><label for="nana-date">Birth date</label><input id="nana-date" type="date"></div>
-        <div class="field"><label for="nana-time">Birth time</label><input id="nana-time" type="time"></div>
+        <div class="field"><label for="nana-hour">Birth time</label><div class="timepick"><input id="nana-hour" type="number" inputmode="numeric" placeholder="hh" aria-label="Hour"><span>:</span><input id="nana-min" type="number" min="0" max="59" inputmode="numeric" placeholder="mm" aria-label="Minute"><select id="nana-ampm" aria-label="a.m. or p.m."><option value="am">a.m.</option><option value="pm">p.m.</option></select></div></div>
       </div>
+      <div class="field"><span class="flabel" id="nana-clock-label">How the time was told</span><div class="seg" role="radiogroup" aria-labelledby="nana-clock-label"><input type="radio" name="nana-clock" id="nana-clock12" value="12"><label for="nana-clock12">12-hour <span class="mono">9:15 p.m.</span></label><input type="radio" name="nana-clock" id="nana-clock24" value="24"><label for="nana-clock24">24-hour <span class="mono">21:15</span></label></div></div>
       <div class="check"><input id="nana-notime" type="checkbox"><label for="nana-notime">Time unknown (uses noon, no Rising sign)</label></div>
-      <div class="field"><label for="nana-place">Birthplace</label><select id="nana-place"></select></div>
-      <div class="row3" id="nana-custom" hidden>
-        <div class="field"><label for="nana-lat">Latitude</label><input id="nana-lat" type="number" step="0.0001" placeholder="53.35"></div>
-        <div class="field"><label for="nana-lon">Longitude</label><input id="nana-lon" type="number" step="0.0001" placeholder="-6.26"></div>
-        <div class="field"><label for="nana-tz">Time zone</label><input id="nana-tz" type="text" list="tz-list" placeholder="Europe/Dublin"></div>
+      <div class="field"><label for="nana-room">Room born in</label><input id="nana-room" type="text" placeholder="Front bedroom, 12 Harold's Cross Road"></div>
+      <div class="field"><label for="nana-gps">GPS of that room</label><input id="nana-gps" type="text" inputmode="text" spellcheck="false" placeholder="53.32571, -6.27812"><span class="hint" id="nana-gps-hint"></span></div>
+      <div class="row">
+        <div class="field"><label for="nana-place">Town or city</label><select id="nana-place"></select></div>
+        <div class="field"><label for="nana-tz">Time zone</label><input id="nana-tz" type="text" list="tz-list" spellcheck="false" placeholder="Europe/Dublin"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="nana-mage">Mother's age at the birth</label><input id="nana-mage" type="number" min="10" max="75" inputmode="numeric" placeholder="e.g. 28"></div>
+        <div class="field"><label for="nana-fage">Father's age at the birth</label><input id="nana-fage" type="number" min="10" max="99" inputmode="numeric" placeholder="e.g. 31"></div>
       </div>
       <p class="example-note" id="nana-example">Example chart filled in. Replace it with your nana's.</p>
     </form>
@@ -218,17 +266,25 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
         <div><div class="eyebrow">State 0′ · the one who returned</div><h2>You</h2></div>
         <span class="state-tag">0′</span>
       </div>
-      <div class="field"><label for="you-name">Name</label><input id="you-name" type="text" placeholder="Your name"></div>
+      <div class="row">
+        <div class="field"><label for="you-name">Name</label><input id="you-name" type="text" placeholder="Your name"></div>
+        <div class="field"><label for="you-fb">Facebook profile</label><input id="you-fb" type="text" inputmode="url" spellcheck="false" autocapitalize="off" placeholder="facebook.com/name"><span class="hint" id="you-fb-hint"></span></div>
+      </div>
       <div class="row">
         <div class="field"><label for="you-date">Birth date</label><input id="you-date" type="date"></div>
-        <div class="field"><label for="you-time">Birth time</label><input id="you-time" type="time"></div>
+        <div class="field"><label for="you-hour">Birth time</label><div class="timepick"><input id="you-hour" type="number" inputmode="numeric" placeholder="hh" aria-label="Hour"><span>:</span><input id="you-min" type="number" min="0" max="59" inputmode="numeric" placeholder="mm" aria-label="Minute"><select id="you-ampm" aria-label="a.m. or p.m."><option value="am">a.m.</option><option value="pm">p.m.</option></select></div></div>
       </div>
+      <div class="field"><span class="flabel" id="you-clock-label">How the time was told</span><div class="seg" role="radiogroup" aria-labelledby="you-clock-label"><input type="radio" name="you-clock" id="you-clock12" value="12"><label for="you-clock12">12-hour <span class="mono">9:15 p.m.</span></label><input type="radio" name="you-clock" id="you-clock24" value="24"><label for="you-clock24">24-hour <span class="mono">21:15</span></label></div></div>
       <div class="check"><input id="you-notime" type="checkbox"><label for="you-notime">Time unknown (uses noon, no Rising sign)</label></div>
-      <div class="field"><label for="you-place">Birthplace</label><select id="you-place"></select></div>
-      <div class="row3" id="you-custom" hidden>
-        <div class="field"><label for="you-lat">Latitude</label><input id="you-lat" type="number" step="0.0001" placeholder="51.51"></div>
-        <div class="field"><label for="you-lon">Longitude</label><input id="you-lon" type="number" step="0.0001" placeholder="-0.13"></div>
-        <div class="field"><label for="you-tz">Time zone</label><input id="you-tz" type="text" list="tz-list" placeholder="Europe/London"></div>
+      <div class="field"><label for="you-room">Room born in</label><input id="you-room" type="text" placeholder="Room 4, labour ward, UCH"></div>
+      <div class="field"><label for="you-gps">GPS of that room</label><input id="you-gps" type="text" inputmode="text" spellcheck="false" placeholder="51.52465, -0.13571"><span class="hint" id="you-gps-hint"></span></div>
+      <div class="row">
+        <div class="field"><label for="you-place">Town or city</label><select id="you-place"></select></div>
+        <div class="field"><label for="you-tz">Time zone</label><input id="you-tz" type="text" list="tz-list" spellcheck="false" placeholder="Europe/London"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="you-mage">Mother's age at the birth</label><input id="you-mage" type="number" min="10" max="75" inputmode="numeric" placeholder="e.g. 28"></div>
+        <div class="field"><label for="you-fage">Father's age at the birth</label><input id="you-fage" type="number" min="10" max="99" inputmode="numeric" placeholder="e.g. 31"></div>
       </div>
       <p class="example-note" id="you-example">Example chart filled in. Replace it with yours.</p>
     </form>
@@ -274,6 +330,23 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
     <div class="reading" id="reading"></div>
   </section>
 
+  <section id="barter-section" style="display:flex;flex-direction:column;gap:20px">
+    <div class="section-head">
+      <div class="eyebrow">Barter</div>
+      <h2>A question for a question</h2>
+      <p class="muted">You can ask <span id="owner-name">the author</span> one question about your reading or the theory. The trade runs one way first: you answer their question, then you ask yours. Every new question costs one answer.</p>
+    </div>
+    <div class="barter">
+      <div class="panel" id="barter-trade">
+        <p class="notice" id="barter-status">Connecting to the barter table…</p>
+      </div>
+      <div class="panel" id="barter-side">
+        <h3 id="side-title">Your trades</h3>
+        <div id="side-list"><p class="notice">Your trades will appear here after your first one.</p></div>
+      </div>
+    </div>
+  </section>
+
   <details class="theory" id="theory">
     <summary>The theory, in full</summary>
     <div class="theory-body">
@@ -290,12 +363,12 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
           <li>The musical scale: the eighth note, Sa, has the same name as the first and twice the frequency.</li>
           <li>A name said in a new country.</li>
         </ul>
-        <p><b>How this page applies it.</b> States: Nana's chart is 0, yours is 0′. Arrows: T₁ breath (Moon), T₂ language (Mercury), T₃ attachment (Venus), T₄ experience (Sun), T₅ heat (Mars), T₆ learning (Jupiter), T₇ decay (Saturn), and T₀ time and place, the years and distance between the two births. Reversibility is marked per arrow. The return 0′ is described below the chart.</p>
+        <p><b>How this page applies it.</b> States: Nana's chart is 0, yours is 0′. Arrows: T₁ breath (Moon), T₂ language (Mercury), T₃ attachment (Venus), T₄ experience (Sun), T₅ heat (Mars), T₆ learning (Jupiter), T₇ decay (Saturn), T₇ also carries the parents' ages at each birth, as positive decay; and T₀ time and place: the years between the two births and the distance between the two rooms, measured from their GPS. Reversibility is marked per arrow. The return 0′ is described below the chart.</p>
       </div>
     </div>
   </details>
 
-  <p class="fine">Positions are computed in your browser with standard low-precision orbital formulas (tropical zodiac, geocentric), accurate to within about a degree for the planets and a little more for the Moon. With the birth time unknown, the Moon can be off by up to 7°. Nothing you type leaves this page; it is remembered only in this browser.</p>
+  <p class="fine">Positions are computed in your browser with standard low-precision orbital formulas (tropical zodiac, geocentric), accurate to within about a degree for the planets and a little more for the Moon. With the birth time unknown, the Moon can be off by up to 7°. The room's GPS sets the distance and bearing between births and, with the birth time, the Rising sign. The chart fields never leave this page and are remembered only in this browser. The barter sends only what you write there, plus your reading if you tick the box.</p>
 </div>
 
 <script>
@@ -359,7 +432,7 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
       byCountry[country].forEach(([name, i]) => { const o = document.createElement("option"); o.value = String(i); o.textContent = name; g.appendChild(o); });
       sel.appendChild(g);
     });
-    const o = document.createElement("option"); o.value = OTHER; o.textContent = "Somewhere else (enter coordinates)"; sel.appendChild(o);
+    const o = document.createElement("option"); o.value = OTHER; o.textContent = "Somewhere else (GPS required)"; sel.appendChild(o);
   }
   try {
     const tzs = Intl.supportedValuesOf ? Intl.supportedValuesOf("timeZone") : [];
@@ -447,6 +520,88 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
     return norm(Math.atan2(Math.cos(ramc), -(Math.sin(ramc) * Math.cos(eps) + Math.tan(lat * rad) * Math.sin(eps))) * deg);
   }
 
+  /* ---------- GPS ---------- */
+  // Accepts "53.32571, -6.27812", "53.32571° N, 6.27812° W" or "53°19'32.6\"N 6°16'41.2\"W".
+  function parseGps(str) {
+    const t = (str || "").trim();
+    if (!t) return null;
+    const dec = t.match(/^([+-]?\d+(?:\.(\d+))?)\s*[,;\s]\s*([+-]?\d+(?:\.(\d+))?)$/);
+    if (dec) {
+      const lat = +dec[1], lon = +dec[3];
+      if (Math.abs(lat) > 90 || Math.abs(lon) > 180) return { bad: true };
+      const places = Math.min((dec[2] || "").length, (dec[4] || "").length);
+      return { lat, lon, precisionM: 111000 / Math.pow(10, places) };
+    }
+    const re = /(\d+(?:\.\d+)?)\s*°?\s*(?:(\d+(?:\.\d+)?)\s*['′’]\s*)?(?:(\d+(?:\.(\d+))?)\s*(?:["″”]|'')\s*)?([NSEW])/gi;
+    const parts = []; let m;
+    while ((m = re.exec(t))) parts.push(m);
+    if (parts.length !== 2) return { bad: true };
+    let lat = null, lon = null, prec = 111000;
+    parts.forEach((q) => {
+      let v = +q[1] + (q[2] ? +q[2] / 60 : 0) + (q[3] ? +q[3] / 3600 : 0);
+      const h = q[5].toUpperCase();
+      if (h === "S" || h === "W") v = -v;
+      if (h === "N" || h === "S") lat = v; else lon = v;
+      const p = q[3] ? 31 / Math.pow(10, (q[4] || "").length) : q[2] ? 1850 : 111000;
+      prec = Math.min(prec, p);
+    });
+    if (lat === null || lon === null || Math.abs(lat) > 90 || Math.abs(lon) > 180) return { bad: true };
+    return { lat, lon, precisionM: prec };
+  }
+  const fmtCoord = (lat, lon) => `${Math.abs(lat).toFixed(5)}° ${lat >= 0 ? "N" : "S"}, ${Math.abs(lon).toFixed(5)}° ${lon >= 0 ? "E" : "W"}`;
+  const fmtPrecision = (m) => (m < 1 ? "under a metre" : m < 1000 ? `about ${Math.round(m)} m` : `about ${Math.round(m / 1000)} km`);
+  function fmtDist(km) {
+    if (km < 1) return `${Math.round(km * 1000)} m`;
+    if (km < 100) return `${km.toFixed(1)} km`;
+    return `${Math.round(km).toLocaleString()} km`;
+  }
+  function bearing(a, b) {
+    const y = Math.sin((b.lon - a.lon) * rad) * Math.cos(b.lat * rad);
+    const x = Math.cos(a.lat * rad) * Math.sin(b.lat * rad) - Math.sin(a.lat * rad) * Math.cos(b.lat * rad) * Math.cos((b.lon - a.lon) * rad);
+    const deg16 = ["north", "north-north-east", "north-east", "east-north-east", "east", "east-south-east", "south-east", "south-south-east", "south", "south-south-west", "south-west", "west-south-west", "west", "west-north-west", "north-west", "north-north-west"];
+    return deg16[Math.round(norm(Math.atan2(y, x) * deg) / 22.5) % 16];
+  }
+
+  /* ---------- Social links ---------- */
+  // Keyed by network so others (e.g. WeChat, VK) can be added beside Facebook later.
+  function parseFacebook(str) {
+    let t = (str || "").trim();
+    if (!t) return null;
+    if (/^[A-Za-z0-9.]{5,50}$/.test(t)) return { url: "https://www.facebook.com/" + t, label: "facebook.com/" + t };
+    if (!/^https?:\/\//i.test(t)) t = "https://" + t;
+    let u;
+    try { u = new URL(t); } catch (e) { return { bad: true }; }
+    if (!/^((www|m|web)\.)?(facebook\.com|fb\.com)$/i.test(u.hostname)) return { bad: true };
+    const path = u.pathname.replace(/\/+$/, "");
+    if (/^\/profile\.php$/i.test(path)) {
+      const id = u.searchParams.get("id");
+      if (!id || !/^\d+$/.test(id)) return { bad: true };
+      return { url: "https://www.facebook.com/profile.php?id=" + id, label: "facebook.com/profile.php?id=" + id };
+    }
+    const m = /^\/(?:people\/[^/]+\/(\d+)|([A-Za-z0-9.]{2,50}))$/.exec(path);
+    if (!m) return { bad: true };
+    const tail = m[1] ? path.slice(1) : m[2];
+    return { url: "https://www.facebook.com/" + tail, label: "facebook.com/" + tail };
+  }
+  const fbLink = (fb) => (fb && !fb.bad ? ` <a href="${esc(fb.url)}" target="_blank" rel="noopener noreferrer">${esc(fb.label)}</a>` : "");
+
+  /* ---------- Clock and parents ---------- */
+  function tellTime(hhmm, clock) {
+    const [H, M] = hhmm.split(":").map(Number), mm = String(M).padStart(2, "0");
+    if (clock === "24") return `${String(H).padStart(2, "0")}:${mm}`;
+    const t = `${H % 12 || 12}:${mm} ${H < 12 ? "a.m." : "p.m."}`;
+    return H === 0 && M === 0 ? t + " (midnight)" : H === 12 && M === 0 ? t + " (noon)" : t;
+  }
+  const clockName = (c) => (c === "24" ? "24-hour" : "12-hour");
+  // Saturn, the decay arrow, returns to its birth place about every 29.46 years.
+  const SATURN_YEARS = 29.46;
+  function saturnPhase(age) {
+    const n = Math.floor(age / SATURN_YEARS);
+    return n === 0 ? "before their first Saturn return" : n === 1 ? "after their first Saturn return" : "after their second Saturn return";
+  }
+  const parentList = (P) => P.parents.map(([who, age]) => `${who} ${age}`).join(", ");
+  const parentYears = (P) => P.parents.reduce((a, x) => a + x[1], 0);
+
   /* ---------- Theory mapping ---------- */
   const SIGNS = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
   const SIGN_GLYPH = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"].map((g) => g + VS);
@@ -496,9 +651,10 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
 
   /* ---------- State ---------- */
   const STORE = "nana-calc-v1";
+  const FIELDS = ["name", "fb", "date", "room", "gps", "place", "tz", "mage", "fage"];
   const EXAMPLE = {
-    nana: { name: "Margaret", date: "1941-03-14", time: "06:30", notime: false, place: "10", lat: "", lon: "", tz: "" },
-    you: { name: "Aoife", date: "1998-11-02", time: "21:15", notime: false, place: "0", lat: "", lon: "", tz: "" },
+    nana: { name: "Margaret", date: "1941-03-14", time: "06:30", clock: "12", notime: false, mage: "31", fage: "36", room: "Front bedroom, 12 Harold's Cross Road", gps: "53.32571, -6.27812", place: "10", tz: "Europe/Dublin" },
+    you: { name: "Aoife", date: "1998-11-02", time: "21:15", clock: "24", notime: false, mage: "24", fage: "27", room: "Room 4, labour ward, UCH", gps: "51.52465, -0.13571", place: "0", tz: "Europe/London" },
     rev: {}
   };
   let state;
@@ -508,25 +664,59 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
   state.rev = state.rev || {};
   const save = () => { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { /* not available */ } };
 
+  function fillForm(who) {
+    const s = state[who];
+    FIELDS.forEach((f) => { $(who + "-" + f).value = s[f] || ""; });
+    if (!s.tz && s.place !== OTHER) $(who + "-tz").value = (CITIES[+s.place] || CITIES[0])[4];
+    $(who + "-notime").checked = !!s.notime;
+    fillTime(who);
+  }
+  // The birth instant is stored as 24-hour "HH:MM"; the fields show it on the clock the person knew it by.
+  function fillTime(who) {
+    const s = state[who], c12 = s.clock !== "24";
+    $(who + "-clock12").checked = c12; $(who + "-clock24").checked = !c12;
+    const h = $(who + "-hour"), mi = $(who + "-min"), ap = $(who + "-ampm");
+    h.min = c12 ? 1 : 0; h.max = c12 ? 12 : 23; ap.hidden = !c12;
+    const m = /^(\d{2}):(\d{2})/.exec(s.time || "");
+    if (m) {
+      const H = +m[1];
+      h.value = c12 ? (H % 12 || 12) : String(H).padStart(2, "0"); mi.value = m[2]; ap.value = H < 12 ? "am" : "pm";
+    } else if (s.timeErr === undefined) { h.value = ""; mi.value = ""; }
+    [h, mi, ap].forEach((el) => { el.disabled = !!s.notime; });
+  }
+  function readTime(who, clock) {
+    const hs = $(who + "-hour").value.trim(), ms = $(who + "-min").value.trim();
+    if (hs === "" && ms === "") return { time: "" };
+    const H = Number(hs), M = ms === "" ? 0 : Number(ms);
+    const c12 = clock !== "24";
+    if (!Number.isInteger(H) || !Number.isInteger(M) || M < 0 || M > 59 || (c12 ? H < 1 || H > 12 : H < 0 || H > 23))
+      return { time: "", err: c12 ? "Enter the hour as 1 to 12 and minutes as 0 to 59, then choose a.m. or p.m." : "Enter the hour as 0 to 23 and minutes as 0 to 59." };
+    const H24 = c12 ? (H % 12) + ($(who + "-ampm").value === "pm" ? 12 : 0) : H;
+    return { time: String(H24).padStart(2, "0") + ":" + String(M).padStart(2, "0") };
+  }
   ["nana", "you"].forEach((who) => {
     fillPlaces($(who + "-place"));
-    const s = state[who];
-    $(who + "-name").value = s.name; $(who + "-date").value = s.date; $(who + "-time").value = s.time;
-    $(who + "-notime").checked = !!s.notime; $(who + "-place").value = s.place;
-    $(who + "-lat").value = s.lat; $(who + "-lon").value = s.lon; $(who + "-tz").value = s.tz;
+    fillForm(who);
     $(who + "-example").hidden = !isExample;
-    $(who + "-custom").hidden = s.place !== OTHER;
-    $(who + "-time").disabled = !!s.notime;
     const form = $("form-" + who);
     form.addEventListener("submit", (e) => e.preventDefault());
-    form.addEventListener("input", () => {
-      state[who] = {
-        name: $(who + "-name").value, date: $(who + "-date").value, time: $(who + "-time").value,
-        notime: $(who + "-notime").checked, place: $(who + "-place").value,
-        lat: $(who + "-lat").value, lon: $(who + "-lon").value, tz: $(who + "-tz").value
-      };
-      $(who + "-custom").hidden = state[who].place !== OTHER;
-      $(who + "-time").disabled = state[who].notime;
+    $(who + "-place").addEventListener("change", () => {
+      const v = $(who + "-place").value;
+      if (v !== OTHER) $(who + "-tz").value = CITIES[+v][4];
+    });
+    form.addEventListener("input", (e) => {
+      if (e.target.name === who + "-clock") {
+        state[who].clock = e.target.value; fillTime(who);
+        $("nana-example").hidden = true; $("you-example").hidden = true;
+        save(); render(); return;
+      }
+      const next = { notime: $(who + "-notime").checked, clock: state[who].clock || "12" };
+      const t = readTime(who, next.clock);
+      next.time = t.time; next.timeErr = t.err;
+      FIELDS.forEach((f) => { next[f] = $(who + "-" + f).value; });
+      if (next.place !== OTHER && next.place !== state[who].place) next.tz = CITIES[+next.place][4];
+      state[who] = next;
+      [$(who + "-hour"), $(who + "-min"), $(who + "-ampm")].forEach((el) => { el.disabled = next.notime; });
       $("nana-example").hidden = true; $("you-example").hidden = true;
       save(); render();
     });
@@ -536,16 +726,34 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
     const s = state[who];
     const name = (s.name || "").trim() || fallback;
     if (!/^\d{4}-\d{2}-\d{2}$/.test(s.date || "")) return { error: `Add ${who === "nana" ? "Nana's" : "your"} birth date.` };
-    let place;
-    if (s.place === OTHER) {
-      const lat = parseFloat(s.lat), lon = parseFloat(s.lon), tz = (s.tz || "").trim();
-      if (!isFinite(lat) || !isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) return { error: `Enter a latitude (−90 to 90) and longitude (−180 to 180) for ${name}'s birthplace.` };
-      try { new Intl.DateTimeFormat("en-US", { timeZone: tz || "x" }); } catch (e) { return { error: `Enter a time zone for ${name}'s birthplace, such as Europe/London.` }; }
-      place = { name: `${lat.toFixed(2)}, ${lon.toFixed(2)}`, country: tz, lat, lon, tz };
+    const fb = parseFacebook(s.fb);
+    const fh = $(who + "-fb-hint");
+    fh.className = fb && fb.bad ? "hint warn" : fb ? "hint ok" : "hint";
+    fh.textContent = fb && fb.bad ? "That isn't a Facebook profile link. Paste the address from the profile page." : fb ? "Linked to " + fb.label : "";
+    if (s.timeErr && !s.notime) return { error: `${name}'s birth time: ${s.timeErr}` };
+    const city = s.place === OTHER ? null : (CITIES[+s.place] || CITIES[0]);
+    const tz = (s.tz || "").trim() || (city ? city[4] : "");
+    try { new Intl.DateTimeFormat("en-US", { timeZone: tz || "x" }); } catch (e) { return { error: `Enter a time zone for ${name}'s birthplace, such as Europe/London.` }; }
+    const gps = parseGps(s.gps);
+    const hint = $(who + "-gps-hint");
+    if (gps && !gps.bad) {
+      hint.className = "hint ok";
+      hint.textContent = `Pinned to ${fmtCoord(gps.lat, gps.lon)}, accurate to ${fmtPrecision(gps.precisionM)}.`;
     } else {
-      const c = CITIES[+s.place] || CITIES[0];
-      place = { name: c[0], country: c[1], lat: c[2], lon: c[3], tz: c[4] };
+      hint.className = gps && gps.bad ? "hint warn" : "hint";
+      hint.textContent = (gps && gps.bad ? "Can't read that. Use decimals like 53.32571, -6.27812 or 53°19'32.6\"N 6°16'41.2\"W. " : "")
+        + (city ? `Until then the centre of ${city[0]} is used. ` : "")
+        + "In Google Maps, press and hold the exact spot of the room, then copy the numbers that appear.";
+      if (!city) return { error: `Add the GPS of the room ${name} was born in. “Somewhere else” needs it.` };
     }
+    const precise = !!(gps && !gps.bad);
+    const room = (s.room || "").trim();
+    const place = {
+      lat: precise ? gps.lat : city[2], lon: precise ? gps.lon : city[3], tz, precise,
+      precisionM: precise ? gps.precisionM : 10000,
+      room, city: city ? city[0] : "", country: city ? city[1] : tz
+    };
+    place.name = [room, place.city].filter(Boolean).join(", ") || fmtCoord(place.lat, place.lon);
     const [y, m, d] = s.date.split("-").map(Number);
     const hasTime = !s.notime && /^\d{2}:\d{2}/.test(s.time || "");
     const [hh, mm] = hasTime ? s.time.split(":").map(Number) : [12, 0];
@@ -554,7 +762,9 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
     const jd = jdFromMs(ms);
     const pos = positions(jd);
     const asc = hasTime ? ascendant(jd, place.lat, place.lon) : null;
-    return { name, place, ms, jd, pos, asc, hasTime };
+    const ageOf = (v) => { const n = parseFloat(v); return isFinite(n) && n >= 10 && n <= 99 ? n : null; };
+    const parents = [["mother", ageOf(s.mage)], ["father", ageOf(s.fage)]].filter((x) => x[1] !== null);
+    return { name, place, ms, jd, pos, asc, hasTime, clock: s.clock === "24" ? "24" : "12", time: hasTime ? s.time : "", parents, links: fb && !fb.bad ? { facebook: fb } : {} };
   }
 
   /* ---------- Render ---------- */
@@ -570,6 +780,9 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
 
     const gap = ymd(N.ms, Y.ms);
     const km = haversineKm(N.place, Y.place);
+    const bothPrecise = N.place.precise && Y.place.precise;
+    const sameRoom = bothPrecise && km * 1000 <= Math.max(15, N.place.precisionM + Y.place.precisionM);
+    const distTxt = sameRoom ? "same room" : !bothPrecise && km < 20 ? "same town" : fmtDist(km);
     const newCountry = N.place.country !== Y.place.country;
     const rows = BODIES.map((b) => {
       const a = N.pos[b.key], z = Y.pos[b.key];
@@ -602,15 +815,15 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
         <td class="num pos-y">${pz.glyph} ${pz.txt}</td>
         <td class="num">${r.shift.toFixed(0)}°<span class="sub">${ASPECT[Math.min(r.signs, 12 - r.signs)]}</span></td>
         <td><button type="button" class="toggle ${r.rev ? "rev" : ""}" data-key="${r.b.key}" aria-pressed="${r.rev}">${r.rev ? "T" + SUB[r.b.n] + "⁻¹ exists" : "no inverse"}</button>
-          <span class="sub">${r.rev ? "Sky echo " + (echo ? fmtDate(echo) : "none in 40 yrs") : r.b.why}</span></td>
+          <span class="sub">${r.rev ? "Sky echo " + (echo ? fmtDate(echo) : "none in 40 yrs") : r.b.key === "saturn" && (N.parents.length || Y.parents.length) ? "Parents' years carried in: " + (N.parents.length ? parentYears(N) : "?") + " → " + (Y.parents.length ? parentYears(Y) : "?") : r.b.why}</span></td>
       </tr>`;
     });
     const ascRow = N.asc !== null && Y.asc !== null;
     tb += `<tr>
       <td><span class="tn">T₀</span> time &amp; place<span class="sub">the years between</span></td>
-      <td class="num pos-n">${fmtDate(N.ms)}<span class="sub">${esc(N.place.name)}${ascRow ? " · rising " + fmtPos(N.asc).txt : ""}</span></td>
-      <td class="num pos-y">${fmtDate(Y.ms)}<span class="sub">${esc(Y.place.name)}${ascRow ? " · rising " + fmtPos(Y.asc).txt : ""}</span></td>
-      <td class="num">${gap.y} y ${gap.m} m<span class="sub">${km < 25 ? "same place" : Math.round(km).toLocaleString() + " km"}</span></td>
+      <td class="num pos-n">${fmtDate(N.ms)}<span class="sub">${N.time ? tellTime(N.time, N.clock) : "time unknown"}<br>${esc(N.place.name)}<br>${N.place.precise ? fmtCoord(N.place.lat, N.place.lon) : "city centre, no GPS"}${ascRow ? " · rising " + fmtPos(N.asc).txt : ""}</span></td>
+      <td class="num pos-y">${fmtDate(Y.ms)}<span class="sub">${Y.time ? tellTime(Y.time, Y.clock) : "time unknown"}<br>${esc(Y.place.name)}<br>${Y.place.precise ? fmtCoord(Y.place.lat, Y.place.lon) : "city centre, no GPS"}${ascRow ? " · rising " + fmtPos(Y.asc).txt : ""}</span></td>
+      <td class="num">${gap.y} y ${gap.m} m<span class="sub">${distTxt}</span></td>
       <td><span class="toggle" style="cursor:default">no inverse</span><span class="sub">Time only runs forward.</span></td>
     </tr>`;
     $("arrows").innerHTML = tb;
@@ -632,15 +845,40 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
     /* Reading */
     const nAge = ymd(N.ms, Y.ms);
     const paras = [];
-    paras.push(`<p><b>The states.</b> ${esc(N.name)} is 0, born ${fmtDate(N.ms)} in ${esc(N.place.name)}. ${esc(Y.name)} is 0′, born ${fmtDate(Y.ms)} in ${esc(Y.place.name)}. ${esc(N.name)} was ${plural(nAge.y, "year")} and ${plural(nAge.m, "month")} old when ${esc(Y.name)} arrived. That span is T₀, and it is never zero.</p>`);
+    paras.push(`<p><b>The states.</b> ${esc(N.name)}${fbLink(N.links.facebook) ? " (" + fbLink(N.links.facebook).trim() + ")" : ""} is 0, born ${fmtDate(N.ms)}${N.time ? " at " + tellTime(N.time, N.clock) : ""} in ${esc(N.place.name)}. ${esc(Y.name)}${fbLink(Y.links.facebook) ? " (" + fbLink(Y.links.facebook).trim() + ")" : ""} is 0′, born ${fmtDate(Y.ms)}${Y.time ? " at " + tellTime(Y.time, Y.clock) : ""} in ${esc(Y.place.name)}. ${esc(N.name)} was ${plural(nAge.y, "year")} and ${plural(nAge.m, "month")} old when ${esc(Y.name)} arrived. That span is T₀, and it is never zero.</p>`);
     let placeTxt;
-    if (km < 25) placeTxt = `Both were born in the same place. The horizon is shared; the time is not.`;
-    else placeTxt = `The birthplace moved ${Math.round(km).toLocaleString()} km${newCountry ? `, from ${esc(N.place.country)} to ${esc(Y.place.country)}. This is a name said in a new country: the same family, heard differently` : ""}.`;
+    const at = (P) => (P.place.precise ? `${P.place.room ? esc(P.place.room) + " (" : ""}${fmtCoord(P.place.lat, P.place.lon)}${P.place.room ? ")" : ""}` : esc(P.place.name));
+    if (sameRoom) placeTxt = `${esc(N.name)} and ${esc(Y.name)} were born in the same room, ${at(Y)}. The horizon is shared to the metre; the time is not.`;
+    else {
+      placeTxt = `${esc(N.name)} was born at ${at(N)}. ${esc(Y.name)} was born at ${at(Y)}, ${fmtDist(km)} ${bearing(N.place, Y.place)} of that ${N.place.precise ? "room" : "town"}.`;
+      if (newCountry) placeTxt += ` The move crossed from ${esc(N.place.country)} to ${esc(Y.place.country)}. This is a name said in a new country: the same family, heard differently.`;
+    }
+    const missing = [N, Y].filter((P) => !P.place.precise).map((P) => esc(P.name));
+    if (missing.length) placeTxt += ` Add the GPS of ${missing.join(" and ")}'s birth room to measure this to the metre.`;
     if (ascRow) placeTxt += ` The rising sign moved from ${fmtPos(N.asc).txt} to ${fmtPos(Y.asc).txt}.`;
     paras.push(`<p><b>Place.</b> ${placeTxt}</p>`);
+
+    let clockTxt;
+    if (!N.time || !Y.time) clockTxt = `${esc(N.name)} told time on a ${clockName(N.clock)} clock and ${esc(Y.name)} on a ${clockName(Y.clock)} clock. Add both birth times to compare how each moment was heard.`;
+    else if (N.clock === Y.clock) clockTxt = `Both told time on a ${clockName(N.clock)} clock: ${tellTime(N.time, N.clock)} and ${tellTime(Y.time, Y.clock)}. The way of counting the day carried over unchanged in form.`;
+    else {
+      const day = (c) => (c === "24" ? "a day counted as one run of twenty-four hours" : "a day counted in two halves of twelve");
+      clockTxt = `${esc(N.name)} knew that birth as ${tellTime(N.time, N.clock)}, ${day(N.clock)}. ${esc(Y.name)} knows theirs as ${tellTime(Y.time, Y.clock)}, ${day(Y.clock)}. On ${esc(Y.name)}'s clock, ${esc(N.name)}'s birth reads ${tellTime(N.time, Y.clock)}; on ${esc(N.name)}'s, ${esc(Y.name)}'s reads ${tellTime(Y.time, N.clock)}. The clock is language (T₂): the reading translates both ways, but the habit of counting that way was learned, and belongs to habitus.`;
+    }
+    paras.push(`<p><b>Time, as it was told.</b> ${clockTxt}</p>`);
     const revRows = rows.filter((r) => r.rev);
     if (revRows.length) paras.push(`<p><b>Arrows that can be undone.</b> ${revRows.map((r) => `${r.b.arrow} (${r.b.name}, ${r.shift.toFixed(0)}°)`).join(", ")}. These have an inverse. The sky will put each of these bodies back where it stood for ${esc(N.name)}, and ${esc(Y.name)} can breathe, speak and bond the way ${esc(N.name)} did. Undoing them restores the position, not the path.</p>`);
     if (irr.length) paras.push(`<p><b>Arrows that cannot be undone.</b> ${irr.map((r) => `${r.b.arrow} (${r.b.name}, ${fmtPos(r.a).txt.replace(/^\S+ /, "")} → ${fmtPos(r.z).txt.replace(/^\S+ /, "")})`).join(", ")}, and time. These are the firing of the clay. They are what 0′ carries that 0 did not.</p>`);
+    if (N.parents.length || Y.parents.length) {
+      const desc = (P) => P.parents.length ? `${esc(P.name)}'s parents were ${P.parents.map(([w, a]) => `${w} ${a}, ${saturnPhase(a)}`).join("; ")}` : `${esc(P.name)}'s parents' ages are not filled in`;
+      let t = `${desc(N)}. ${desc(Y)}.`;
+      if (N.parents.length && Y.parents.length && N.parents.length === Y.parents.length) {
+        const dN = parentYears(N), dY = parentYears(Y), diff = dY - dN;
+        t += ` Together that is ${dN} parent-years before ${esc(N.name)} and ${dY} before ${esc(Y.name)}${diff === 0 ? ", the same amount" : `, ${Math.abs(diff)} ${diff > 0 ? "more" : "fewer"} for ${esc(Y.name)}`}.`;
+      }
+      t += ` A parent's age at the birth is decay (T₇, Saturn) working as an input: the years a parent has worn through, their energy, patience, money and what they already know, are handed into the child at that point and shape how the child turns out. This is positive decay. Like the kiln's heat, it cannot be undone.`;
+      paras.push(`<p><b>Parents, and positive decay.</b> ${t}</p>`);
+    }
     if (echoes.length) paras.push(`<p><b>What looks like a return.</b> ${echoes.map((r) => `${esc(Y.name)}'s ${r.b.name} is in ${SIGNS[fmtPos(r.z).sign]}, as ${esc(N.name)}'s was`).join("; ")}. Written without the prime this would read 070, a palindrome that looks reversible. It is 070′: same sign, reached ${plural(gap.y, "year")} later by a different route.</p>`);
     else paras.push(`<p><b>What looks like a return.</b> None of the seven bodies sits in the same sign for both of you. The octave still closes: ${esc(Y.name)} is the eighth note with the first note's name, not a copy of it.</p>`);
     paras.push(`<p class="formula">${esc(Y.name)} (0′) = ${esc(N.name)} (0) + T₁ ${rows.map((r) => r.b.arrow).slice(0, 1)} + … + T₇ ${rows[6].b.arrow} + T₀ time &nbsp;·&nbsp; H ≠ 0 &nbsp;·&nbsp; 0′ ≠ 0</p>`);
@@ -657,10 +895,7 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
       try { localStorage.removeItem(STORE); } catch (e) { /* ignore */ }
       state = JSON.parse(JSON.stringify(EXAMPLE));
       ["nana", "you"].forEach((who) => {
-        const s = state[who];
-        $(who + "-name").value = s.name; $(who + "-date").value = s.date; $(who + "-time").value = s.time;
-        $(who + "-notime").checked = s.notime; $(who + "-place").value = s.place; $(who + "-custom").hidden = true;
-        $(who + "-time").disabled = false; $(who + "-example").hidden = false;
+        fillForm(who); $(who + "-example").hidden = false;
       });
       render();
     });
@@ -712,5 +947,214 @@ details.theory summary { cursor: pointer; font-family: var(--f-display); font-si
   }
 
   render();
+
+  /* ---------- Barter: a question for a question ---------- */
+  const MAXLEN = 2000;
+  const DEFAULT_QS = [
+    "What did your nana carry that you still carry?",
+    "Name one thing that happened to you that cannot be undone.",
+    "What does your family call something that nobody else calls it?"
+  ];
+  const el = (tag, attrs, ...kids) => {
+    const n = document.createElement(tag);
+    for (const k in attrs || {}) {
+      if (k === "text") n.textContent = attrs[k];
+      else if (k === "class") n.className = attrs[k];
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), attrs[k]);
+      else if (attrs[k] !== false && attrs[k] != null) n.setAttribute(k, attrs[k] === true ? "" : attrs[k]);
+    }
+    kids.flat().forEach((c) => c != null && n.append(c));
+    return n;
+  };
+  const when = (iso) => { try { return new Date(iso).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" }); } catch (e) { return ""; } };
+  const readingText = () => Array.from($("reading").querySelectorAll("p")).map((p) => p.innerText).join("\n\n");
+
+  (async function barter() {
+    const box = $("barter-trade"), side = $("side-list");
+    const status = (msg) => { box.replaceChildren(el("p", { class: "notice", text: msg })); };
+    let db = null, user = null;
+    try { [db, user] = await Promise.all([window.claude?.use?.("db"), window.claude?.use?.("user")]); } catch (e) { /* unavailable */ }
+    if (!db || !user) {
+      status("The barter table works when this page is opened on claude.ai while signed in.");
+      side.replaceChildren(el("p", { class: "notice", text: "No trades to show here." }));
+      return;
+    }
+    const [me, isOwner] = await Promise.all([user.me(), user.isOwner()]);
+    const cfgRef = db.doc("config/barter");
+    let cfg = { questions: [], ownerId: null };
+    let mine = { items: {} };
+    let all = [];
+
+    async function showOwnerName() {
+      if (!cfg.ownerId) return;
+      const ps = await user.profiles([cfg.ownerId]);
+      const n = ps[cfg.ownerId].name;
+      $("owner-name").textContent = n || "the author";
+    }
+
+    cfgRef.onSnapshot((snap) => {
+      cfg = snap.exists ? { questions: [], ...snap.data() } : { questions: [], ownerId: null };
+      showOwnerName();
+      isOwner ? renderOwner() : renderVisitor();
+    }, () => status("The barter table could not be reached. Reload the page to try again."));
+
+    /* ----- Owner: question deck + inbox ----- */
+    if (isOwner) {
+      $("side-title").textContent = "Inbox";
+      db.collection("trades").onSnapshot((snap) => {
+        all = [];
+        snap.docs.forEach((d) => {
+          const items = (d.data() || {}).items || {};
+          Object.keys(items).forEach((k) => all.push({ uid: d.id, id: k, ...items[k] }));
+        });
+        all.sort((a, b) => (!!a.reply - !!b.reply) || String(b.createdAt).localeCompare(String(a.createdAt)));
+        renderInbox();
+      }, () => side.replaceChildren(el("p", { class: "notice", text: "The inbox could not be loaded. Reload to try again." })));
+    } else if (me.id) {
+      db.doc("trades/" + me.id).onSnapshot((snap) => {
+        mine = snap.exists ? { items: {}, ...snap.data() } : { items: {} };
+        renderVisitor(); renderMine();
+      }, () => {});
+    }
+
+    function renderOwner() {
+      const qs = cfg.questions.length ? cfg.questions : DEFAULT_QS;
+      const ta = el("textarea", { id: "owner-questions", rows: 6, "aria-label": "Your questions, one per line" });
+      ta.value = qs.join("\n");
+      const msg = el("span", { class: "muted", "aria-live": "polite" });
+      const saveBtn = el("button", { type: "button", class: "btn", text: "Save questions", onclick: async () => {
+        const list = ta.value.split("\n").map((q) => q.trim()).filter(Boolean).slice(0, 50).map((q) => q.slice(0, 500));
+        if (!list.length) { msg.textContent = "Add at least one question."; return; }
+        saveBtn.disabled = true;
+        try { await cfgRef.set({ questions: list, ownerId: me.id, updatedAt: new Date().toISOString() }); msg.textContent = "Saved. Visitors now answer these first."; }
+        catch (e) { msg.textContent = e && e.code === "quota_exceeded" ? "The barter table is full. Delete old trades to make room." : "Couldn't save. Try again."; }
+        saveBtn.disabled = false;
+      } });
+      box.replaceChildren(
+        el("div", { class: "step" },
+          el("div", { class: "eyebrow", text: "You are the author · your questions" }),
+          el("p", { class: "notice", text: cfg.questions.length
+            ? "Each visitor answers the first question on this list they haven't answered yet, then asks you one. When they've answered them all, they wait until you add a new one."
+            : "Visitors can't trade until you save your questions. These suggestions are a starting point; edit them, one question per line." }),
+          el("label", { for: "owner-questions", class: "flabel", text: "One question per line, asked in order" }),
+          ta,
+          el("div", { class: "actions" }, saveBtn, msg)
+        )
+      );
+    }
+
+    async function renderInbox() {
+      if (!all.length) { side.replaceChildren(el("p", { class: "notice", text: "No trades yet. When someone answers your question and asks theirs, it lands here." })); return; }
+      const ps = await user.profiles([...new Set(all.map((t) => t.uid))]);
+      side.replaceChildren(...all.map((t) => {
+        const p = ps[t.uid];
+        const kids = [
+          el("div", { class: "who" }, el("img", { src: p.avatarUrl, alt: "" }), el("span", { text: p.name || "Someone" }),
+            (() => { const f = t.links && t.links.facebook && parseFacebook(t.links.facebook); return f && !f.bad ? el("a", { href: f.url, target: "_blank", rel: "noopener noreferrer", style: "font-weight:400;font-size:.8rem", text: f.label }) : null; })(),
+            el("span", { class: "pill " + (t.reply ? "done" : "open"), text: t.reply ? "answered" : "owes an answer" }),
+            el("span", { class: "muted", style: "font-weight:400;font-size:.8rem", text: when(t.createdAt) })),
+          el("dl", {},
+            el("dt", { text: "you asked" }), el("dd", { text: t.question }),
+            el("dt", { text: "they said" }), el("dd", { text: t.answer }),
+            el("dt", { text: "they ask" }), el("dd", { text: t.ask }),
+            t.reading ? [el("dt", { text: "reading" }), el("dd", {}, el("details", {}, el("summary", { text: "Their Nana Calculator reading" }), el("p", { class: "muted", style: "white-space:pre-wrap", text: t.reading })))] : null,
+            t.reply ? [el("dt", { text: "you said" }), el("dd", { text: t.reply })] : null)
+        ];
+        if (!t.reply) {
+          const rid = "reply-" + t.uid.replace(/[^\w-]/g, "") + "-" + t.id;
+          const ta = el("textarea", { id: rid, "aria-label": "Your answer", maxlength: MAXLEN, placeholder: "Your answer" });
+          const m = el("span", { class: "muted", "aria-live": "polite" });
+          const b = el("button", { type: "button", class: "btn", text: "Send answer", onclick: async () => {
+            const v = ta.value.trim(); if (!v) { m.textContent = "Write an answer first."; return; }
+            b.disabled = true;
+            try { await db.doc("trades/" + t.uid).update({ items: { [t.id]: { reply: v.slice(0, MAXLEN), repliedAt: new Date().toISOString() } } }); }
+            catch (e) { m.textContent = "Couldn't send. Try again."; b.disabled = false; }
+          } });
+          kids.push(ta, el("div", { class: "actions" }, b, m));
+        }
+        return el("div", { class: "trade" }, ...kids);
+      }));
+    }
+
+    /* ----- Visitor: answer first, then ask ----- */
+    function nextQuestion() {
+      const answered = new Set(Object.values(mine.items || {}).map((t) => t.question));
+      return cfg.questions.find((q) => !answered.has(q)) || null;
+    }
+    let draft = { answer: "", ask: "" };
+    function renderVisitor() {
+      if (isOwner) return;
+      if (!me.id) { status("Sign in to claude.ai to trade questions."); return; }
+      if (!cfg.questions.length) { status("The author hasn't set their questions yet. Check back soon."); return; }
+      const q = nextQuestion();
+      if (!q) { status("You've answered every question the author has asked so far. When they add a new one, you can trade again."); return; }
+      const ans = el("textarea", { id: "barter-answer", maxlength: MAXLEN, placeholder: "Your answer" });
+      const ask = el("textarea", { id: "barter-ask", maxlength: MAXLEN, placeholder: "Your question" });
+      const attach = el("input", { type: "checkbox", id: "barter-attach" });
+      const fbIn = el("input", { type: "text", id: "barter-fb", inputmode: "url", spellcheck: "false", autocapitalize: "off", placeholder: "facebook.com/your.name" });
+      fbIn.value = draft.fb !== undefined ? draft.fb : (state.you.fb || "");
+      const msg = el("span", { class: "muted", "aria-live": "polite" });
+      ans.value = draft.answer; ask.value = draft.ask;
+      const go = el("button", { type: "button", class: "btn", text: "Trade" });
+      const sync = () => {
+        draft = { answer: ans.value, ask: ask.value, fb: fbIn.value };
+        const answered = ans.value.trim().length > 0;
+        ask.disabled = !answered;
+        go.disabled = !answered || !ask.value.trim();
+      };
+      ans.addEventListener("input", sync); ask.addEventListener("input", sync); fbIn.addEventListener("input", sync);
+      go.addEventListener("click", async () => {
+        const a = ans.value.trim(), k = ask.value.trim();
+        if (!a) { msg.textContent = "Answer the author's question first."; return; }
+        if (!k) { msg.textContent = "Write your question."; return; }
+        go.disabled = true; msg.textContent = "Sending…";
+        const id = "t" + Date.now().toString(36);
+        const item = { question: q, answer: a.slice(0, MAXLEN), ask: k.slice(0, MAXLEN), createdAt: new Date().toISOString() };
+        const fb = parseFacebook(fbIn.value);
+        if (fb && fb.bad) { go.disabled = false; msg.textContent = "That isn't a Facebook profile link. Fix it or leave it blank."; return; }
+        if (fb) item.links = { facebook: fb.url };
+        if (attach.checked) item.reading = readingText().slice(0, 6000);
+        const ref = db.doc("trades/" + me.id);
+        try {
+          const cur = await ref.get();
+          if (cur.exists) await ref.update({ items: { [id]: item }, updatedAt: item.createdAt });
+          else await ref.set({ items: { [id]: item }, updatedAt: item.createdAt });
+          draft = { answer: "", ask: "", fb: fbIn.value };
+        } catch (e) {
+          go.disabled = false;
+          msg.textContent = e && e.code === "invalid_argument"
+            ? "You can read this page but not trade on it. Ask the author to share it with you as a Contributor."
+            : e && e.code === "quota_exceeded" ? "The barter table is full right now. Tell the author." : "Couldn't send. Try again.";
+        }
+      });
+      box.replaceChildren(
+        el("div", { class: "step" },
+          el("div", { class: "eyebrow" }, "Step 1 · ", el("b", { text: "they ask first" })),
+          el("p", { class: "their-q", text: q }),
+          el("label", { for: "barter-answer", class: "flabel", text: "Your answer (required before you can ask)" }), ans),
+        el("div", { class: "step" },
+          el("div", { class: "eyebrow", text: "Step 2 · then you ask" }),
+          el("label", { for: "barter-ask", class: "flabel", text: "Your one question" }), ask,
+          el("label", { for: "barter-fb", class: "flabel", text: "Your Facebook profile (optional, shown to the author)" }), fbIn,
+          el("div", { class: "check" }, attach, el("label", { for: "barter-attach", text: "Include my Nana Calculator reading" }))),
+        el("div", { class: "actions" }, go, msg)
+      );
+      sync();
+    }
+    function renderMine() {
+      const list = Object.keys(mine.items || {}).map((k) => mine.items[k]).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+      if (!list.length) { side.replaceChildren(el("p", { class: "notice", text: "Your trades will appear here after your first one." })); return; }
+      const owner = $("owner-name").textContent;
+      side.replaceChildren(...list.map((t) => el("div", { class: "trade" },
+        el("div", { class: "who" }, el("span", { class: "pill " + (t.reply ? "done" : "open"), text: t.reply ? "answered" : "waiting for " + owner }),
+          el("span", { class: "muted", style: "font-weight:400;font-size:.8rem", text: when(t.createdAt) })),
+        el("dl", {},
+          el("dt", { text: "they asked" }), el("dd", { text: t.question }),
+          el("dt", { text: "you said" }), el("dd", { text: t.answer }),
+          el("dt", { text: "you asked" }), el("dd", { text: t.ask }),
+          t.reply ? [el("dt", { text: "they said" }), el("dd", { text: t.reply })] : null)
+      )));
+    }
+  })();
 })();
 </script>
