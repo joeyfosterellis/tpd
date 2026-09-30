@@ -1,0 +1,716 @@
+<title>Nana Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Karla:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a single reading column. Two charts side by side (0 and 0′), then the octave of arrows, the wheel, and what 0′ carries. */
+:root {
+  --bg: #eceef3;
+  --paper: #f8f9fb;
+  --ink: #1b2131;
+  --muted: #5b6275;
+  --rule: #cfd3dd;
+  --nana: #8a3d73;
+  --you: #1c7a6f;
+  --kiln: #a8561a;
+  --nana-soft: rgba(138, 61, 115, .1);
+  --you-soft: rgba(28, 122, 111, .1);
+  --f-display: "Young Serif", "Iowan Old Style", Georgia, serif;
+  --f-body: "Karla", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11141c; --paper: #191d28; --ink: #e5e8ef; --muted: #9aa1b3; --rule: #2d3344;
+    --nana: #d58fc2; --you: #5dc4b6; --kiln: #e39a5e;
+    --nana-soft: rgba(213, 143, 194, .12); --you-soft: rgba(93, 196, 182, .12);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11141c; --paper: #191d28; --ink: #e5e8ef; --muted: #9aa1b3; --rule: #2d3344;
+  --nana: #d58fc2; --you: #5dc4b6; --kiln: #e39a5e;
+  --nana-soft: rgba(213, 143, 194, .12); --you-soft: rgba(93, 196, 182, .12);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.55;
+  padding-inline: 16px; padding-block: 28px 64px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; }
+h2 { font-size: 1.6rem; line-height: 1.2; }
+h3 { font-size: 1.15rem; }
+p { margin: 0; }
+.eyebrow { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.prime { color: var(--kiln); }
+
+/* Header */
+header { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 32px; align-items: end; }
+header .lede { max-width: 58ch; margin-top: 14px; color: var(--muted); font-size: 1.05rem; }
+.equation {
+  font-family: var(--f-mono); font-size: .92rem; line-height: 1.9;
+  border-left: 2px solid var(--kiln); padding-left: 16px;
+}
+.equation b { font-weight: 600; }
+@media (max-width: 760px) { header { grid-template-columns: 1fr; } }
+
+/* Inputs */
+.people { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 760px) { .people { grid-template-columns: 1fr; } }
+.person {
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 10px;
+  padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0;
+}
+.person.nana { border-top: 3px solid var(--nana); }
+.person.you { border-top: 3px solid var(--you); }
+.person-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.state-tag { font-family: var(--f-display); font-size: 2rem; line-height: 1; }
+.nana .state-tag { color: var(--nana); }
+.you .state-tag { color: var(--you); }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.field label, .check label { font-size: .8rem; font-weight: 600; color: var(--muted); }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 12px; }
+@media (max-width: 420px) { .row3 { grid-template-columns: 1fr 1fr; } .row3 .field:last-child { grid-column: 1 / -1; } }
+input, select {
+  font: inherit; font-size: .95rem; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; width: 100%; min-width: 0;
+}
+input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--kiln); outline-offset: 2px; }
+.check { display: flex; align-items: center; gap: 8px; }
+.check input { width: auto; }
+.example-note { font-size: .8rem; color: var(--kiln); }
+.error { color: var(--kiln); font-weight: 600; }
+
+/* Section heading */
+.section-head { display: flex; flex-direction: column; gap: 6px; max-width: 70ch; }
+
+/* Octave strip */
+.octave-scroll { overflow-x: auto; padding-bottom: 6px; }
+.octave { display: flex; align-items: flex-start; min-width: 860px; }
+.node { flex: 0 0 auto; width: 58px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.node .dot {
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--f-display); font-size: 1.2rem; border: 1.5px solid var(--rule); background: var(--paper);
+}
+.node.start .dot { border-color: var(--nana); color: var(--nana); background: var(--nana-soft); }
+.node.end .dot { border-color: var(--you); color: var(--you); background: var(--you-soft); }
+.node .who { font-size: .72rem; color: var(--muted); text-align: center; max-width: 70px; overflow-wrap: anywhere; }
+.edge { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; padding-top: 6px; gap: 2px; }
+.edge .t { font-family: var(--f-mono); font-size: .78rem; font-weight: 600; }
+.edge .line { width: 100%; height: 12px; position: relative; }
+.edge .line::before { content: ""; position: absolute; left: 2px; right: 8px; top: 5px; border-top: 1.5px solid var(--ink); }
+.edge .line::after {
+  content: ""; position: absolute; right: 2px; top: 1px; border: 5px solid transparent; border-left: 8px solid var(--ink); border-right: 0;
+}
+.edge.rev .line::before { border-top-style: dashed; border-color: var(--muted); left: 8px; }
+.edge.rev .line::after { border-left-color: var(--muted); }
+.edge.rev .line { background: none; }
+.edge.rev .line > i {
+  position: absolute; left: 2px; top: 1px; border: 5px solid transparent; border-right: 8px solid var(--muted); border-left: 0;
+}
+.edge .what { font-size: .74rem; color: var(--muted); text-align: center; }
+
+/* Wheel + table */
+.chart-grid { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: start; }
+@media (max-width: 900px) { .chart-grid { grid-template-columns: 1fr; } .wheel-box { max-width: 440px; width: 100%; margin: 0 auto; } }
+.wheel-box { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 12px; }
+.wheel-box svg { width: 100%; height: auto; display: block; max-width: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .8rem; color: var(--muted); padding: 8px 4px 2px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.sw.n { background: var(--nana); } .sw.y { background: var(--you); }
+.ln { width: 20px; border-top: 1.5px solid var(--ink); display: inline-block; }
+.ln.d { border-top: 1.5px dashed var(--muted); }
+
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; min-width: 540px; }
+th { text-align: left; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 8px 8px; border-bottom: 1px solid var(--rule); }
+td { padding: 10px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; font-size: .82rem; }
+.pos-n { color: var(--nana); } .pos-y { color: var(--you); }
+.tn { font-family: var(--f-mono); font-weight: 600; white-space: nowrap; }
+.sub { display: block; font-size: .78rem; color: var(--muted); }
+.toggle {
+  font: inherit; font-size: .76rem; font-weight: 700; border-radius: 999px; padding: 3px 10px; cursor: pointer;
+  border: 1.5px solid var(--ink); background: var(--ink); color: var(--paper); white-space: nowrap;
+}
+.toggle.rev { background: transparent; color: var(--muted); border: 1.5px dashed var(--muted); }
+.toggle:hover { opacity: .85; }
+
+/* Verdict + reading */
+.verdict { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 680px) { .verdict { grid-template-columns: 1fr; } }
+.v { border-top: 1px solid var(--rule); padding-top: 12px; display: flex; flex-direction: column; gap: 4px; }
+.v .big { font-family: var(--f-display); font-size: 1.7rem; line-height: 1.15; }
+.reading {
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 24px;
+  display: flex; flex-direction: column; gap: 14px; max-width: 76ch;
+}
+.reading p { font-size: 1.02rem; }
+.reading .formula { font-family: var(--f-mono); font-size: .9rem; color: var(--kiln); }
+.actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.btn {
+  font: inherit; font-weight: 700; font-size: .9rem; padding: 8px 14px; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+}
+.btn.ghost { background: transparent; color: var(--ink); }
+
+/* Theory */
+details.theory { border-top: 1px solid var(--rule); padding-top: 18px; }
+details.theory summary { cursor: pointer; font-family: var(--f-display); font-size: 1.3rem; }
+.theory-body { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; }
+@media (max-width: 760px) { .theory-body { grid-template-columns: 1fr; } }
+.theory-body p, .theory-body li { color: var(--muted); max-width: 62ch; }
+.theory-body ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+.fine { font-size: .82rem; color: var(--muted); max-width: 80ch; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .arc { transition: opacity .2s; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Theory calculator · 070′</div>
+      <h1>Nana Calculator</h1>
+      <p class="lede">Put in your nana's birth chart and your own. Nana is <b>0</b>. You are <b>0′</b>: the one who came back, carrying everything that happened in between. The calculator names the arrows between her sky and yours, and says which ones can be undone.</p>
+    </div>
+    <div class="equation" aria-label="The equation">
+      <b>0′ = 0 + H</b><br>
+      H = T₁ + T₂ + T₃ + T₄ + T₅ + T₆ + T₇ + T₀<br>
+      H ≠ 0, therefore 0′ ≠ 0<br>
+      <span class="muted">Tₙ can be undone only if Tₙ⁻¹ exists.</span>
+    </div>
+  </header>
+
+  <section class="people" aria-label="Birth charts">
+    <form class="person nana" id="form-nana" autocomplete="off">
+      <div class="person-head">
+        <div><div class="eyebrow">State 0 · the one who left</div><h2>Nana</h2></div>
+        <span class="state-tag">0</span>
+      </div>
+      <div class="field"><label for="nana-name">Name</label><input id="nana-name" type="text" placeholder="Nana's name"></div>
+      <div class="row">
+        <div class="field"><label for="nana-date">Birth date</label><input id="nana-date" type="date"></div>
+        <div class="field"><label for="nana-time">Birth time</label><input id="nana-time" type="time"></div>
+      </div>
+      <div class="check"><input id="nana-notime" type="checkbox"><label for="nana-notime">Time unknown (uses noon, no Rising sign)</label></div>
+      <div class="field"><label for="nana-place">Birthplace</label><select id="nana-place"></select></div>
+      <div class="row3" id="nana-custom" hidden>
+        <div class="field"><label for="nana-lat">Latitude</label><input id="nana-lat" type="number" step="0.0001" placeholder="53.35"></div>
+        <div class="field"><label for="nana-lon">Longitude</label><input id="nana-lon" type="number" step="0.0001" placeholder="-6.26"></div>
+        <div class="field"><label for="nana-tz">Time zone</label><input id="nana-tz" type="text" list="tz-list" placeholder="Europe/Dublin"></div>
+      </div>
+      <p class="example-note" id="nana-example">Example chart filled in. Replace it with your nana's.</p>
+    </form>
+
+    <form class="person you" id="form-you" autocomplete="off">
+      <div class="person-head">
+        <div><div class="eyebrow">State 0′ · the one who returned</div><h2>You</h2></div>
+        <span class="state-tag">0′</span>
+      </div>
+      <div class="field"><label for="you-name">Name</label><input id="you-name" type="text" placeholder="Your name"></div>
+      <div class="row">
+        <div class="field"><label for="you-date">Birth date</label><input id="you-date" type="date"></div>
+        <div class="field"><label for="you-time">Birth time</label><input id="you-time" type="time"></div>
+      </div>
+      <div class="check"><input id="you-notime" type="checkbox"><label for="you-notime">Time unknown (uses noon, no Rising sign)</label></div>
+      <div class="field"><label for="you-place">Birthplace</label><select id="you-place"></select></div>
+      <div class="row3" id="you-custom" hidden>
+        <div class="field"><label for="you-lat">Latitude</label><input id="you-lat" type="number" step="0.0001" placeholder="51.51"></div>
+        <div class="field"><label for="you-lon">Longitude</label><input id="you-lon" type="number" step="0.0001" placeholder="-0.13"></div>
+        <div class="field"><label for="you-tz">Time zone</label><input id="you-tz" type="text" list="tz-list" placeholder="Europe/London"></div>
+      </div>
+      <p class="example-note" id="you-example">Example chart filled in. Replace it with yours.</p>
+    </form>
+    <datalist id="tz-list"></datalist>
+  </section>
+
+  <p class="error" id="error" hidden></p>
+
+  <section id="results" style="display:flex;flex-direction:column;gap:40px">
+    <div class="section-head">
+      <div class="eyebrow">The states</div>
+      <h2 id="notation">Nana 0 → 7 → 0′ You</h2>
+      <p class="muted">The numbers are positions, not values; 7 is not better than 3. Each arrow is read from one body in the sky: how far it travelled between Nana's chart and yours. A solid arrow has no inverse. A dashed, two-headed arrow can be undone.</p>
+    </div>
+
+    <div class="octave-scroll"><div class="octave" id="octave"></div></div>
+
+    <div class="chart-grid">
+      <div class="wheel-box">
+        <svg id="wheel" viewBox="-200 -200 400 400" role="img" aria-label="Zodiac wheel showing each body's arrow from Nana's position to yours"></svg>
+        <div class="legend">
+          <span><i class="sw n"></i>Nana (0)</span>
+          <span><i class="sw y"></i>You (0′)</span>
+          <span><i class="ln"></i>irreversible</span>
+          <span><i class="ln d"></i>reversible</span>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Arrow</th><th>Nana (0)</th><th>You (0′)</th><th>Travelled</th><th>Inverse</th></tr></thead>
+          <tbody id="arrows"></tbody>
+        </table>
+        <p class="fine" style="margin-top:10px">Tap an Inverse label to change it. The defaults follow the theory: breath, language and attachment can be undone; experience, heat, learning, decay and time cannot. “Sky echo” is the next date the moving planet stands exactly where it stood for Nana: the position comes back, the history does not.</p>
+      </div>
+    </div>
+
+    <div class="verdict" id="verdict"></div>
+
+    <div class="section-head">
+      <div class="eyebrow">Apply the theory</div>
+      <h2>What 0′ carries that 0 did not</h2>
+    </div>
+    <div class="reading" id="reading"></div>
+  </section>
+
+  <details class="theory" id="theory">
+    <summary>The theory, in full</summary>
+    <div class="theory-body">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <p>A system moves through the states 0, 1, 2, 3, 4, 5, 6, 7 and returns to 0′. The numbers are positions, not values. What matters is the arrows between states: whatever had to happen for one state to become the next. Heat, breath, time, language, learning, decay, experience, and all their derivatives of habitus.</p>
+        <p>A thing that returns equals the thing that left, plus what happened to it, and what happened is never nothing. A thing is not only what it is; it is also how it became.</p>
+        <p><b>Notation.</b> <span class="mono">070′</span> is the formal form: the prime marks the return as changed. Plain <span class="mono">070</span> is a palindrome and falsely reads as reversible. <span class="mono">o7o</span> is the informal form.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <p><b>Examples</b></p>
+        <ul>
+          <li>A clay egg before and after firing.</li>
+          <li>A person who leaves home and comes back.</li>
+          <li>The musical scale: the eighth note, Sa, has the same name as the first and twice the frequency.</li>
+          <li>A name said in a new country.</li>
+        </ul>
+        <p><b>How this page applies it.</b> States: Nana's chart is 0, yours is 0′. Arrows: T₁ breath (Moon), T₂ language (Mercury), T₃ attachment (Venus), T₄ experience (Sun), T₅ heat (Mars), T₆ learning (Jupiter), T₇ decay (Saturn), and T₀ time and place, the years and distance between the two births. Reversibility is marked per arrow. The return 0′ is described below the chart.</p>
+      </div>
+    </div>
+  </details>
+
+  <p class="fine">Positions are computed in your browser with standard low-precision orbital formulas (tropical zodiac, geocentric), accurate to within about a degree for the planets and a little more for the Moon. With the birth time unknown, the Moon can be off by up to 7°. Nothing you type leaves this page; it is remembered only in this browser.</p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const rad = Math.PI / 180, deg = 180 / Math.PI;
+  const norm = (x) => ((x % 360) + 360) % 360;
+  const VS = "︎";
+
+  /* ---------- Places ---------- */
+  const CITIES = [
+    ["London", "UK", 51.5074, -0.1278, "Europe/London"], ["Manchester", "UK", 53.4808, -2.2426, "Europe/London"],
+    ["Birmingham", "UK", 52.4862, -1.8904, "Europe/London"], ["Liverpool", "UK", 53.4084, -2.9916, "Europe/London"],
+    ["Leeds", "UK", 53.8008, -1.5491, "Europe/London"], ["Bristol", "UK", 51.4545, -2.5879, "Europe/London"],
+    ["Glasgow", "UK", 55.8642, -4.2518, "Europe/London"], ["Edinburgh", "UK", 55.9533, -3.1883, "Europe/London"],
+    ["Cardiff", "UK", 51.4816, -3.1791, "Europe/London"], ["Belfast", "UK", 54.5973, -5.9301, "Europe/London"],
+    ["Dublin", "Ireland", 53.3498, -6.2603, "Europe/Dublin"], ["Cork", "Ireland", 51.8985, -8.4756, "Europe/Dublin"],
+    ["Paris", "France", 48.8566, 2.3522, "Europe/Paris"], ["Berlin", "Germany", 52.52, 13.405, "Europe/Berlin"],
+    ["Madrid", "Spain", 40.4168, -3.7038, "Europe/Madrid"], ["Rome", "Italy", 41.9028, 12.4964, "Europe/Rome"],
+    ["Lisbon", "Portugal", 38.7223, -9.1393, "Europe/Lisbon"], ["Amsterdam", "Netherlands", 52.3676, 4.9041, "Europe/Amsterdam"],
+    ["Warsaw", "Poland", 52.2297, 21.0122, "Europe/Warsaw"], ["Athens", "Greece", 37.9838, 23.7275, "Europe/Athens"],
+    ["Istanbul", "Türkiye", 41.0082, 28.9784, "Europe/Istanbul"], ["Stockholm", "Sweden", 59.3293, 18.0686, "Europe/Stockholm"],
+    ["Kyiv", "Ukraine", 50.4501, 30.5234, "Europe/Kiev"], ["Moscow", "Russia", 55.7558, 37.6173, "Europe/Moscow"],
+    ["Cairo", "Egypt", 30.0444, 31.2357, "Africa/Cairo"], ["Lagos", "Nigeria", 6.5244, 3.3792, "Africa/Lagos"],
+    ["Accra", "Ghana", 5.6037, -0.187, "Africa/Accra"], ["Nairobi", "Kenya", -1.2921, 36.8219, "Africa/Nairobi"],
+    ["Addis Ababa", "Ethiopia", 9.03, 38.74, "Africa/Addis_Ababa"], ["Johannesburg", "South Africa", -26.2041, 28.0473, "Africa/Johannesburg"],
+    ["Cape Town", "South Africa", -33.9249, 18.4241, "Africa/Johannesburg"], ["Kingston", "Jamaica", 17.9712, -76.7936, "America/Jamaica"],
+    ["Port of Spain", "Trinidad and Tobago", 10.6549, -61.5019, "America/Port_of_Spain"],
+    ["Mumbai", "India", 19.076, 72.8777, "Asia/Kolkata"], ["Delhi", "India", 28.6139, 77.209, "Asia/Kolkata"],
+    ["Kolkata", "India", 22.5726, 88.3639, "Asia/Kolkata"], ["Chennai", "India", 13.0827, 80.2707, "Asia/Kolkata"],
+    ["Karachi", "Pakistan", 24.8607, 67.0011, "Asia/Karachi"], ["Lahore", "Pakistan", 31.5204, 74.3587, "Asia/Karachi"],
+    ["Dhaka", "Bangladesh", 23.8103, 90.4125, "Asia/Dhaka"], ["Colombo", "Sri Lanka", 6.9271, 79.8612, "Asia/Colombo"],
+    ["Kathmandu", "Nepal", 27.7172, 85.324, "Asia/Kathmandu"], ["Dubai", "UAE", 25.2048, 55.2708, "Asia/Dubai"],
+    ["Tehran", "Iran", 35.6892, 51.389, "Asia/Tehran"], ["Beijing", "China", 39.9042, 116.4074, "Asia/Shanghai"],
+    ["Shanghai", "China", 31.2304, 121.4737, "Asia/Shanghai"], ["Hong Kong", "Hong Kong", 22.3193, 114.1694, "Asia/Hong_Kong"],
+    ["Tokyo", "Japan", 35.6762, 139.6503, "Asia/Tokyo"], ["Seoul", "South Korea", 37.5665, 126.978, "Asia/Seoul"],
+    ["Manila", "Philippines", 14.5995, 120.9842, "Asia/Manila"], ["Singapore", "Singapore", 1.3521, 103.8198, "Asia/Singapore"],
+    ["Kuala Lumpur", "Malaysia", 3.139, 101.6869, "Asia/Kuala_Lumpur"], ["Jakarta", "Indonesia", -6.2088, 106.8456, "Asia/Jakarta"],
+    ["Bangkok", "Thailand", 13.7563, 100.5018, "Asia/Bangkok"], ["Ho Chi Minh City", "Vietnam", 10.8231, 106.6297, "Asia/Ho_Chi_Minh"],
+    ["Sydney", "Australia", -33.8688, 151.2093, "Australia/Sydney"], ["Melbourne", "Australia", -37.8136, 144.9631, "Australia/Melbourne"],
+    ["Brisbane", "Australia", -27.4698, 153.0251, "Australia/Brisbane"], ["Perth", "Australia", -31.9505, 115.8605, "Australia/Perth"],
+    ["Auckland", "New Zealand", -36.8485, 174.7633, "Pacific/Auckland"],
+    ["New York", "USA", 40.7128, -74.006, "America/New_York"], ["Boston", "USA", 42.3601, -71.0589, "America/New_York"],
+    ["Miami", "USA", 25.7617, -80.1918, "America/New_York"], ["Chicago", "USA", 41.8781, -87.6298, "America/Chicago"],
+    ["Houston", "USA", 29.7604, -95.3698, "America/Chicago"], ["Los Angeles", "USA", 34.0522, -118.2437, "America/Los_Angeles"],
+    ["San Francisco", "USA", 37.7749, -122.4194, "America/Los_Angeles"], ["Toronto", "Canada", 43.6532, -79.3832, "America/Toronto"],
+    ["Montreal", "Canada", 45.5017, -73.5673, "America/Toronto"], ["Vancouver", "Canada", 49.2827, -123.1207, "America/Vancouver"],
+    ["Mexico City", "Mexico", 19.4326, -99.1332, "America/Mexico_City"], ["Bogotá", "Colombia", 4.711, -74.0721, "America/Bogota"],
+    ["Lima", "Peru", -12.0464, -77.0428, "America/Lima"], ["Santiago", "Chile", -33.4489, -70.6693, "America/Santiago"],
+    ["São Paulo", "Brazil", -23.5505, -46.6333, "America/Sao_Paulo"], ["Rio de Janeiro", "Brazil", -22.9068, -43.1729, "America/Sao_Paulo"],
+    ["Buenos Aires", "Argentina", -34.6037, -58.3816, "America/Argentina/Buenos_Aires"]
+  ];
+  const OTHER = "__other";
+
+  function fillPlaces(sel) {
+    const byCountry = {};
+    CITIES.forEach((c, i) => { (byCountry[c[1]] = byCountry[c[1]] || []).push([c[0], i]); });
+    Object.keys(byCountry).sort().forEach((country) => {
+      const g = document.createElement("optgroup"); g.label = country;
+      byCountry[country].forEach(([name, i]) => { const o = document.createElement("option"); o.value = String(i); o.textContent = name; g.appendChild(o); });
+      sel.appendChild(g);
+    });
+    const o = document.createElement("option"); o.value = OTHER; o.textContent = "Somewhere else (enter coordinates)"; sel.appendChild(o);
+  }
+  try {
+    const tzs = Intl.supportedValuesOf ? Intl.supportedValuesOf("timeZone") : [];
+    const dl = $("tz-list"); tzs.forEach((t) => { const o = document.createElement("option"); o.value = t; dl.appendChild(o); });
+  } catch (e) { /* free text still works */ }
+
+  /* ---------- Time ---------- */
+  function tzOffsetMs(ts, tz) {
+    const f = new Intl.DateTimeFormat("en-US", { timeZone: tz, hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+    const p = {}; f.formatToParts(new Date(ts)).forEach((x) => { p[x.type] = x.value; });
+    const asUTC = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute, +p.second);
+    return asUTC - ts;
+  }
+  function zonedToUtc(y, m, d, h, mi, tz) {
+    const naive = Date.UTC(y, m - 1, d, h, mi);
+    let ts = naive;
+    for (let k = 0; k < 3; k++) ts = naive - tzOffsetMs(ts, tz);
+    return ts;
+  }
+  const jdFromMs = (ms) => ms / 86400000 + 2440587.5;
+
+  /* ---------- Astronomy (Schlyter's low-precision method, equinox of date) ---------- */
+  function kepler(M, e) {
+    let E = M + e * Math.sin(M) * (1 + e * Math.cos(M));
+    for (let i = 0; i < 8; i++) E = E - (E - e * Math.sin(E) - M) / (1 - e * Math.cos(E));
+    return E;
+  }
+  function orbit(N, i, w, a, e, M) {
+    const E = kepler(norm(M) * rad, e);
+    const xv = a * (Math.cos(E) - e), yv = a * Math.sqrt(1 - e * e) * Math.sin(E);
+    const v = Math.atan2(yv, xv), r = Math.hypot(xv, yv);
+    const Nr = N * rad, ir = i * rad, vw = v + w * rad;
+    return {
+      x: r * (Math.cos(Nr) * Math.cos(vw) - Math.sin(Nr) * Math.sin(vw) * Math.cos(ir)),
+      y: r * (Math.sin(Nr) * Math.cos(vw) + Math.cos(Nr) * Math.sin(vw) * Math.cos(ir)),
+      z: r * Math.sin(vw) * Math.sin(ir), r, v: v * deg
+    };
+  }
+  function positions(jd) {
+    const d = jd - 2451543.5;
+    const ws = 282.9404 + 4.70935e-5 * d, es = 0.016709 - 1.151e-9 * d, Msun = norm(356.0470 + 0.9856002585 * d);
+    const s = orbit(0, 0, ws, 1, es, Msun);
+    const sunLon = norm(s.v + ws);
+    const xs = s.r * Math.cos(sunLon * rad), ys = s.r * Math.sin(sunLon * rad);
+    const out = { sun: sunLon };
+
+    // Moon
+    const Nm = 125.1228 - 0.0529538083 * d, wm = 318.0634 + 0.1643573223 * d, Mm = norm(115.3654 + 13.0649929509 * d);
+    const mo = orbit(Nm, 5.1454, wm, 60.2666, 0.0549, Mm);
+    let lonM = Math.atan2(mo.y, mo.x) * deg;
+    const Lm = norm(Nm + wm + Mm), Ls = norm(ws + Msun), D = Lm - Ls, F = Lm - Nm;
+    const S = (x) => Math.sin(x * rad);
+    lonM += -1.274 * S(Mm - 2 * D) + 0.658 * S(2 * D) - 0.186 * S(Msun) - 0.059 * S(2 * Mm - 2 * D) - 0.057 * S(Mm - 2 * D + Msun)
+      + 0.053 * S(Mm + 2 * D) + 0.046 * S(2 * D - Msun) + 0.041 * S(Mm - Msun) - 0.035 * S(D) - 0.031 * S(Mm + Msun)
+      - 0.015 * S(2 * F - 2 * D) + 0.011 * S(Mm - 4 * D);
+    out.moon = norm(lonM);
+
+    const P = {
+      mercury: [48.3313 + 3.24587e-5 * d, 7.0047 + 5e-8 * d, 29.1241 + 1.01444e-5 * d, 0.387098, 0.205635 + 5.59e-10 * d, 168.6562 + 4.0923344368 * d],
+      venus: [76.6799 + 2.4659e-5 * d, 3.3946 + 2.75e-8 * d, 54.891 + 1.38374e-5 * d, 0.72333, 0.006773 - 1.302e-9 * d, 48.0052 + 1.6021302244 * d],
+      mars: [49.5574 + 2.11081e-5 * d, 1.8497 - 1.78e-8 * d, 286.5016 + 2.92961e-5 * d, 1.523688, 0.093405 + 2.516e-9 * d, 18.6021 + 0.5240207766 * d],
+      jupiter: [100.4542 + 2.76854e-5 * d, 1.303 - 1.557e-7 * d, 273.8777 + 1.64505e-5 * d, 5.20256, 0.048498 + 4.469e-9 * d, 19.895 + 0.0830853001 * d],
+      saturn: [113.6634 + 2.3898e-5 * d, 2.4886 - 1.081e-7 * d, 339.3939 + 2.97661e-5 * d, 9.55475, 0.055546 - 9.499e-9 * d, 316.967 + 0.0334442282 * d]
+    };
+    const Mj = norm(P.jupiter[5]), Msat = norm(P.saturn[5]);
+    for (const k in P) {
+      const h = orbit.apply(null, P[k]);
+      let lh = Math.atan2(h.y, h.x) * deg;
+      const r = Math.hypot(h.x, h.y, h.z), latH = Math.atan2(h.z, Math.hypot(h.x, h.y));
+      if (k === "jupiter") lh += -0.332 * S(2 * Mj - 5 * Msat - 67.6) - 0.056 * S(2 * Mj - 2 * Msat + 21) + 0.042 * S(3 * Mj - 5 * Msat + 21)
+        - 0.036 * S(Mj - 2 * Msat) + 0.022 * Math.cos((Mj - Msat) * rad) + 0.023 * S(2 * Mj - 3 * Msat + 52) - 0.016 * S(Mj - 5 * Msat - 69);
+      if (k === "saturn") lh += 0.812 * S(2 * Mj - 5 * Msat - 67.6) - 0.229 * Math.cos((2 * Mj - 4 * Msat - 2) * rad) + 0.119 * S(Mj - 2 * Msat - 3)
+        + 0.046 * S(2 * Mj - 6 * Msat - 69) + 0.014 * S(Mj - 3 * Msat + 32);
+      const xh = r * Math.cos(latH) * Math.cos(lh * rad), yh = r * Math.cos(latH) * Math.sin(lh * rad);
+      out[k] = norm(Math.atan2(yh + ys, xh + xs) * deg);
+    }
+    out._d = d;
+    return out;
+  }
+  function ascendant(jd, lat, lon) {
+    const T = (jd - 2451545) / 36525;
+    const gmst = norm(280.46061837 + 360.98564736629 * (jd - 2451545) + 0.000387933 * T * T);
+    const ramc = norm(gmst + lon) * rad;
+    const eps = (23.4393 - 3.563e-7 * (jd - 2451543.5)) * rad;
+    return norm(Math.atan2(Math.cos(ramc), -(Math.sin(ramc) * Math.cos(eps) + Math.tan(lat * rad) * Math.sin(eps))) * deg);
+  }
+
+  /* ---------- Theory mapping ---------- */
+  const SIGNS = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
+  const SIGN_GLYPH = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"].map((g) => g + VS);
+  const BODIES = [
+    { key: "moon", n: 1, name: "Moon", glyph: "☽", arrow: "breath", rev: true, why: "In and out. Breath can be taken back." },
+    { key: "mercury", n: 2, name: "Mercury", glyph: "☿", arrow: "language", rev: true, why: "Words translate back, with an accent." },
+    { key: "venus", n: 3, name: "Venus", glyph: "♀", arrow: "attachment", rev: true, why: "A bond can loosen and be made again." },
+    { key: "sun", n: 4, name: "Sun", glyph: "☉", arrow: "experience", rev: false, why: "A lived year cannot be unlived." },
+    { key: "mars", n: 5, name: "Mars", glyph: "♂", arrow: "heat", rev: false, why: "Fired clay does not go back to wet clay." },
+    { key: "jupiter", n: 6, name: "Jupiter", glyph: "♃", arrow: "learning", rev: false, why: "What is learned cannot be unlearned." },
+    { key: "saturn", n: 7, name: "Saturn", glyph: "♄", arrow: "decay", rev: false, why: "Wear runs one way." }
+  ];
+  const SUB = ["₀", "₁", "₂", "₃", "₄", "₅", "₆", "₇"];
+  const ASPECT = ["same sign", "one sign on", "two signs on (sextile)", "three signs on (square)", "four signs on (trine)", "five signs on (quincunx)", "opposite sign"];
+
+  const fmtPos = (lon) => {
+    const s = Math.floor(lon / 30), within = lon - s * 30;
+    const dg = Math.floor(within), mn = Math.floor((within - dg) * 60);
+    return { txt: `${dg}°${String(mn).padStart(2, "0")}′ ${SIGNS[s]}`, sign: s, glyph: SIGN_GLYPH[s] };
+  };
+  const fmtDate = (ms) => new Date(ms).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+  function ymd(fromMs, toMs) {
+    const a = new Date(fromMs), b = new Date(toMs);
+    let y = b.getUTCFullYear() - a.getUTCFullYear(), m = b.getUTCMonth() - a.getUTCMonth(), dd = b.getUTCDate() - a.getUTCDate();
+    if (dd < 0) { m -= 1; dd += new Date(Date.UTC(b.getUTCFullYear(), b.getUTCMonth(), 0)).getUTCDate(); }
+    if (m < 0) { y -= 1; m += 12; }
+    return { y, m, d: dd };
+  }
+  const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
+  function haversineKm(a, b) {
+    const dLat = (b.lat - a.lat) * rad, dLon = (b.lon - a.lon) * rad;
+    const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLon / 2) ** 2;
+    return 2 * 6371 * Math.asin(Math.sqrt(h));
+  }
+  // Next date after `fromMs` when the moving body stands at `target` longitude.
+  function skyEcho(key, target, fromMs) {
+    const step = key === "moon" ? 0.25 : 1, limitDays = 40 * 365;
+    let jd = jdFromMs(fromMs), prev = null;
+    for (let t = 0; t <= limitDays; t += step) {
+      const lon = positions(jd + t)[key];
+      const diff = ((lon - target + 540) % 360) - 180;
+      if (prev !== null && prev < 0 && diff >= 0 && diff - prev < 30) return fromMs + t * 86400000;
+      prev = diff;
+    }
+    return null;
+  }
+
+  /* ---------- State ---------- */
+  const STORE = "nana-calc-v1";
+  const EXAMPLE = {
+    nana: { name: "Margaret", date: "1941-03-14", time: "06:30", notime: false, place: "10", lat: "", lon: "", tz: "" },
+    you: { name: "Aoife", date: "1998-11-02", time: "21:15", notime: false, place: "0", lat: "", lon: "", tz: "" },
+    rev: {}
+  };
+  let state;
+  try { state = JSON.parse(localStorage.getItem(STORE)) || null; } catch (e) { state = null; }
+  const isExample = !state;
+  if (!state) state = JSON.parse(JSON.stringify(EXAMPLE));
+  state.rev = state.rev || {};
+  const save = () => { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { /* not available */ } };
+
+  ["nana", "you"].forEach((who) => {
+    fillPlaces($(who + "-place"));
+    const s = state[who];
+    $(who + "-name").value = s.name; $(who + "-date").value = s.date; $(who + "-time").value = s.time;
+    $(who + "-notime").checked = !!s.notime; $(who + "-place").value = s.place;
+    $(who + "-lat").value = s.lat; $(who + "-lon").value = s.lon; $(who + "-tz").value = s.tz;
+    $(who + "-example").hidden = !isExample;
+    $(who + "-custom").hidden = s.place !== OTHER;
+    $(who + "-time").disabled = !!s.notime;
+    const form = $("form-" + who);
+    form.addEventListener("submit", (e) => e.preventDefault());
+    form.addEventListener("input", () => {
+      state[who] = {
+        name: $(who + "-name").value, date: $(who + "-date").value, time: $(who + "-time").value,
+        notime: $(who + "-notime").checked, place: $(who + "-place").value,
+        lat: $(who + "-lat").value, lon: $(who + "-lon").value, tz: $(who + "-tz").value
+      };
+      $(who + "-custom").hidden = state[who].place !== OTHER;
+      $(who + "-time").disabled = state[who].notime;
+      $("nana-example").hidden = true; $("you-example").hidden = true;
+      save(); render();
+    });
+  });
+
+  function readPerson(who, fallback) {
+    const s = state[who];
+    const name = (s.name || "").trim() || fallback;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s.date || "")) return { error: `Add ${who === "nana" ? "Nana's" : "your"} birth date.` };
+    let place;
+    if (s.place === OTHER) {
+      const lat = parseFloat(s.lat), lon = parseFloat(s.lon), tz = (s.tz || "").trim();
+      if (!isFinite(lat) || !isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) return { error: `Enter a latitude (−90 to 90) and longitude (−180 to 180) for ${name}'s birthplace.` };
+      try { new Intl.DateTimeFormat("en-US", { timeZone: tz || "x" }); } catch (e) { return { error: `Enter a time zone for ${name}'s birthplace, such as Europe/London.` }; }
+      place = { name: `${lat.toFixed(2)}, ${lon.toFixed(2)}`, country: tz, lat, lon, tz };
+    } else {
+      const c = CITIES[+s.place] || CITIES[0];
+      place = { name: c[0], country: c[1], lat: c[2], lon: c[3], tz: c[4] };
+    }
+    const [y, m, d] = s.date.split("-").map(Number);
+    const hasTime = !s.notime && /^\d{2}:\d{2}/.test(s.time || "");
+    const [hh, mm] = hasTime ? s.time.split(":").map(Number) : [12, 0];
+    let ms;
+    try { ms = zonedToUtc(y, m, d, hh, mm, place.tz); } catch (e) { ms = Date.UTC(y, m - 1, d, hh, mm); }
+    const jd = jdFromMs(ms);
+    const pos = positions(jd);
+    const asc = hasTime ? ascendant(jd, place.lat, place.lon) : null;
+    return { name, place, ms, jd, pos, asc, hasTime };
+  }
+
+  /* ---------- Render ---------- */
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const isRev = (b) => (b.key in state.rev ? state.rev[b.key] : b.rev);
+
+  function render() {
+    const N = readPerson("nana", "Nana"), Y = readPerson("you", "You");
+    const err = N.error || Y.error || (N.ms >= Y.ms ? "0′ comes after 0: Nana's birth date needs to be earlier than yours." : "");
+    $("error").hidden = !err; $("error").textContent = err;
+    $("results").style.opacity = err ? ".35" : "1";
+    if (N.error || Y.error) return;
+
+    const gap = ymd(N.ms, Y.ms);
+    const km = haversineKm(N.place, Y.place);
+    const newCountry = N.place.country !== Y.place.country;
+    const rows = BODIES.map((b) => {
+      const a = N.pos[b.key], z = Y.pos[b.key];
+      const shift = norm(z - a);
+      const signs = (fmtPos(z).sign - fmtPos(a).sign + 12) % 12;
+      return { b, a, z, shift, signs, rev: isRev(b) };
+    });
+
+    $("notation").innerHTML = `${esc(N.name)} <span class="mono">0</span> → <span class="mono">7</span> → <span class="mono prime">0′</span> ${esc(Y.name)}`;
+
+    /* Octave strip */
+    let oct = `<div class="node start"><div class="dot">0</div><div class="who">${esc(N.name)}</div></div>`;
+    rows.forEach((r) => {
+      oct += `<div class="edge ${r.rev ? "rev" : ""}"><span class="t">T${SUB[r.b.n]}</span><div class="line">${r.rev ? "<i></i>" : ""}</div><span class="what">${r.b.arrow}</span></div>`;
+      oct += `<div class="node"><div class="dot">${r.b.n}</div><div class="who">${r.b.glyph + VS} ${r.b.name}</div></div>`;
+    });
+    oct += `<div class="edge"><span class="t">T₀</span><div class="line"></div><span class="what">time &amp; place</span></div>`;
+    oct += `<div class="node end"><div class="dot">0′</div><div class="who">${esc(Y.name)}</div></div>`;
+    $("octave").innerHTML = oct;
+
+    /* Table */
+    const now = Date.now();
+    let tb = "";
+    rows.forEach((r) => {
+      const pa = fmtPos(r.a), pz = fmtPos(r.z);
+      const echo = skyEcho(r.b.key, r.a, now);
+      tb += `<tr>
+        <td><span class="tn">T${SUB[r.b.n]}</span> ${r.b.arrow}<span class="sub">${r.b.glyph + VS} ${r.b.name}</span></td>
+        <td class="num pos-n">${pa.glyph} ${pa.txt}</td>
+        <td class="num pos-y">${pz.glyph} ${pz.txt}</td>
+        <td class="num">${r.shift.toFixed(0)}°<span class="sub">${ASPECT[Math.min(r.signs, 12 - r.signs)]}</span></td>
+        <td><button type="button" class="toggle ${r.rev ? "rev" : ""}" data-key="${r.b.key}" aria-pressed="${r.rev}">${r.rev ? "T" + SUB[r.b.n] + "⁻¹ exists" : "no inverse"}</button>
+          <span class="sub">${r.rev ? "Sky echo " + (echo ? fmtDate(echo) : "none in 40 yrs") : r.b.why}</span></td>
+      </tr>`;
+    });
+    const ascRow = N.asc !== null && Y.asc !== null;
+    tb += `<tr>
+      <td><span class="tn">T₀</span> time &amp; place<span class="sub">the years between</span></td>
+      <td class="num pos-n">${fmtDate(N.ms)}<span class="sub">${esc(N.place.name)}${ascRow ? " · rising " + fmtPos(N.asc).txt : ""}</span></td>
+      <td class="num pos-y">${fmtDate(Y.ms)}<span class="sub">${esc(Y.place.name)}${ascRow ? " · rising " + fmtPos(Y.asc).txt : ""}</span></td>
+      <td class="num">${gap.y} y ${gap.m} m<span class="sub">${km < 25 ? "same place" : Math.round(km).toLocaleString() + " km"}</span></td>
+      <td><span class="toggle" style="cursor:default">no inverse</span><span class="sub">Time only runs forward.</span></td>
+    </tr>`;
+    $("arrows").innerHTML = tb;
+    $("arrows").querySelectorAll("button.toggle").forEach((btn) => btn.addEventListener("click", () => {
+      const k = btn.dataset.key, b = BODIES.find((x) => x.key === k);
+      state.rev[k] = !isRev(b); save(); render();
+    }));
+
+    drawWheel(rows, N, Y);
+
+    /* Verdict */
+    const irr = rows.filter((r) => !r.rev);
+    const echoes = rows.filter((r) => r.signs === 0);
+    $("verdict").innerHTML = `
+      <div class="v"><span class="eyebrow">H</span><span class="big">H ≠ 0</span><span class="muted">T₀ alone is ${plural(gap.y, "year")}, ${plural(gap.m, "month")}. What happened is never nothing.</span></div>
+      <div class="v"><span class="eyebrow">Irreversible arrows</span><span class="big mono">${irr.length + 1} of 8</span><span class="muted">${irr.map((r) => r.b.arrow).concat("time").join(", ")}. None of these has Tₙ⁻¹, so 0′ cannot be turned back into 0.</span></div>
+      <div class="v"><span class="eyebrow">Same sign as Nana</span><span class="big mono">${echoes.length} of 7</span><span class="muted">${echoes.length ? echoes.map((r) => r.b.name + " in " + SIGNS[fmtPos(r.z).sign]).join(", ") + ". Same name, different history, like Sa at twice the frequency." : "No body landed in Nana's sign. Every position arrived by a new route."}</span></div>`;
+
+    /* Reading */
+    const nAge = ymd(N.ms, Y.ms);
+    const paras = [];
+    paras.push(`<p><b>The states.</b> ${esc(N.name)} is 0, born ${fmtDate(N.ms)} in ${esc(N.place.name)}. ${esc(Y.name)} is 0′, born ${fmtDate(Y.ms)} in ${esc(Y.place.name)}. ${esc(N.name)} was ${plural(nAge.y, "year")} and ${plural(nAge.m, "month")} old when ${esc(Y.name)} arrived. That span is T₀, and it is never zero.</p>`);
+    let placeTxt;
+    if (km < 25) placeTxt = `Both were born in the same place. The horizon is shared; the time is not.`;
+    else placeTxt = `The birthplace moved ${Math.round(km).toLocaleString()} km${newCountry ? `, from ${esc(N.place.country)} to ${esc(Y.place.country)}. This is a name said in a new country: the same family, heard differently` : ""}.`;
+    if (ascRow) placeTxt += ` The rising sign moved from ${fmtPos(N.asc).txt} to ${fmtPos(Y.asc).txt}.`;
+    paras.push(`<p><b>Place.</b> ${placeTxt}</p>`);
+    const revRows = rows.filter((r) => r.rev);
+    if (revRows.length) paras.push(`<p><b>Arrows that can be undone.</b> ${revRows.map((r) => `${r.b.arrow} (${r.b.name}, ${r.shift.toFixed(0)}°)`).join(", ")}. These have an inverse. The sky will put each of these bodies back where it stood for ${esc(N.name)}, and ${esc(Y.name)} can breathe, speak and bond the way ${esc(N.name)} did. Undoing them restores the position, not the path.</p>`);
+    if (irr.length) paras.push(`<p><b>Arrows that cannot be undone.</b> ${irr.map((r) => `${r.b.arrow} (${r.b.name}, ${fmtPos(r.a).txt.replace(/^\S+ /, "")} → ${fmtPos(r.z).txt.replace(/^\S+ /, "")})`).join(", ")}, and time. These are the firing of the clay. They are what 0′ carries that 0 did not.</p>`);
+    if (echoes.length) paras.push(`<p><b>What looks like a return.</b> ${echoes.map((r) => `${esc(Y.name)}'s ${r.b.name} is in ${SIGNS[fmtPos(r.z).sign]}, as ${esc(N.name)}'s was`).join("; ")}. Written without the prime this would read 070, a palindrome that looks reversible. It is 070′: same sign, reached ${plural(gap.y, "year")} later by a different route.</p>`);
+    else paras.push(`<p><b>What looks like a return.</b> None of the seven bodies sits in the same sign for both of you. The octave still closes: ${esc(Y.name)} is the eighth note with the first note's name, not a copy of it.</p>`);
+    paras.push(`<p class="formula">${esc(Y.name)} (0′) = ${esc(N.name)} (0) + T₁ ${rows.map((r) => r.b.arrow).slice(0, 1)} + … + T₇ ${rows[6].b.arrow} + T₀ time &nbsp;·&nbsp; H ≠ 0 &nbsp;·&nbsp; 0′ ≠ 0</p>`);
+    paras.push(`<div class="actions"><button type="button" class="btn" id="copy">Copy reading</button><button type="button" class="btn ghost" id="reset">Show the example again</button><span class="muted" id="copied" aria-live="polite"></span></div>`);
+    $("reading").innerHTML = paras.join("");
+    $("copy").addEventListener("click", () => {
+      const text = Array.from($("reading").querySelectorAll("p")).map((p) => p.innerText).join("\n\n");
+      const done = (msg) => { $("copied").textContent = msg; };
+      try {
+        navigator.clipboard.writeText(text).then(() => done("Copied."), () => { selectReading(); done("Selected. Press Ctrl+C or ⌘C to copy."); });
+      } catch (e) { selectReading(); done("Selected. Press Ctrl+C or ⌘C to copy."); }
+    });
+    $("reset").addEventListener("click", () => {
+      try { localStorage.removeItem(STORE); } catch (e) { /* ignore */ }
+      state = JSON.parse(JSON.stringify(EXAMPLE));
+      ["nana", "you"].forEach((who) => {
+        const s = state[who];
+        $(who + "-name").value = s.name; $(who + "-date").value = s.date; $(who + "-time").value = s.time;
+        $(who + "-notime").checked = s.notime; $(who + "-place").value = s.place; $(who + "-custom").hidden = true;
+        $(who + "-time").disabled = false; $(who + "-example").hidden = false;
+      });
+      render();
+    });
+  }
+  function selectReading() {
+    const r = document.createRange(); r.selectNodeContents($("reading"));
+    const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+
+  /* ---------- Wheel ---------- */
+  function pt(lon, r) { const a = (180 + lon) * rad; return [r * Math.cos(a), -r * Math.sin(a)]; }
+  function drawWheel(rows, N, Y) {
+    const R1 = 176, R2 = 146;
+    let s = `<defs>
+      <marker id="hd-irr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--ink)"/></marker>
+      <marker id="hd-rev" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker>
+    </defs>`;
+    s += `<circle r="${R1}" style="fill:none;stroke:var(--rule)"/><circle r="${R2}" style="fill:none;stroke:var(--rule)"/>`;
+    for (let i = 0; i < 12; i++) {
+      const [x1, y1] = pt(i * 30, R2), [x2, y2] = pt(i * 30, R1);
+      s += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" style="stroke:var(--rule)"/>`;
+      const [tx, ty] = pt(i * 30 + 15, (R1 + R2) / 2);
+      s += `<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="middle" dominant-baseline="central" style="fill:var(--muted);font-size:14px">${SIGN_GLYPH[i]}</text>`;
+    }
+    // Ascendant ticks
+    [[N.asc, "var(--nana)"], [Y.asc, "var(--you)"]].forEach(([asc, c]) => {
+      if (asc === null) return;
+      const [x1, y1] = pt(asc, R1), [x2, y2] = pt(asc, R1 + 14);
+      s += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" style="stroke:${c};stroke-width:3"/>`;
+    });
+    rows.forEach((r) => {
+      const rad0 = 40 + r.b.n * 14;
+      const [x1, y1] = pt(r.a, rad0), [x2, y2] = pt(r.z, rad0);
+      s += `<circle r="${rad0}" style="fill:none;stroke:var(--rule);stroke-width:.5;opacity:.6"/>`;
+      const stroke = r.rev ? "stroke:var(--muted);stroke-dasharray:4 3" : "stroke:var(--ink)";
+      if (r.shift > 2) {
+        const large = r.shift > 180 ? 1 : 0;
+        const markers = r.rev ? `marker-start="url(#hd-rev)" marker-end="url(#hd-rev)"` : `marker-end="url(#hd-irr)"`;
+        s += `<path class="arc" d="M${x1.toFixed(1)},${y1.toFixed(1)} A${rad0},${rad0} 0 ${large} 0 ${x2.toFixed(1)},${y2.toFixed(1)}" style="fill:none;${stroke};stroke-width:1.5" ${markers}/>`;
+      }
+      s += `<circle cx="${x1.toFixed(1)}" cy="${y1.toFixed(1)}" r="4.5" style="fill:var(--nana)"/>`;
+      s += `<circle cx="${x2.toFixed(1)}" cy="${y2.toFixed(1)}" r="4.5" style="fill:var(--you)"/>`;
+      const [gx, gy] = pt(r.z + 9, rad0);
+      s += `<text x="${gx.toFixed(1)}" y="${gy.toFixed(1)}" text-anchor="middle" dominant-baseline="central" style="fill:var(--ink);font-size:10px">${r.b.glyph + VS}</text>`;
+    });
+    s += `<text x="0" y="-6" text-anchor="middle" style="fill:var(--muted);font-family:var(--f-mono);font-size:11px">0 → 0′</text>`;
+    s += `<text x="0" y="10" text-anchor="middle" style="fill:var(--kiln);font-family:var(--f-mono);font-size:11px">H ≠ 0</text>`;
+    $("wheel").innerHTML = s;
+  }
+
+  render();
+})();
+</script>
