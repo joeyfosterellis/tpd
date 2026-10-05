@@ -567,6 +567,17 @@
     $('#ending').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
   });
 
+  // ---------- the exact opposite: tap text, tap again to return ----------
+  document.addEventListener('click', e => {
+    if (!window.OPPOSITE || e.target.closest('button, input, #board, a')) return;
+    const el = e.target.closest('#storyText p, #resultCard .passage p, #ending .passage p, .w-lines li, .vtext');
+    if (!el) return;
+    const res = window.OPPOSITE.toggle(el);
+    if (res === 'back') { el.classList.remove('flipped'); toast(U.flippedBack); O('unopposite'); return; }
+    if (res === 0) { window.OPPOSITE.toggle(el); toast(U.noOpposite); return; }
+    el.classList.add('flipped'); toast(U.flipped); O('opposite', { words: res });
+  });
+
   // ---------- nav ----------
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-go]'); if (!b) return;

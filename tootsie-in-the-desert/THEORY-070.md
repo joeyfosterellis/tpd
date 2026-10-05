@@ -50,7 +50,9 @@ T₀ is the last arrow, from 7 back to 0′.
 ### Which arrows are reversible
 
 - **Reversible: a swap that makes no match.** The tiles are swapped (T) and swapped back (T⁻¹),
-  and the board is as it was. This is the only event in the game with an inverse. The observer
+  and the board is as it was.
+- **Reversible: text tapped into its exact opposite.** Tap a passage and it flips (T); tap it
+  again and the TPD returns (T⁻¹). These two are the only events in the game with an inverse. The observer
   counts these and leaves them out of H ≠ 0, because they leave no trace on the board.
 - **Not reversible: everything else.** A matched tile is burned; there is no un-match. A
   whisper changes a tile and nothing whispers it back. A revealed unknown stays known. A read

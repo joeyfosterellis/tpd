@@ -79,7 +79,9 @@ in the game.
 | Nepali first, English beside it, in every screen | REMEMBERED / GENERATED | Nepali is the main language because the main player is Nepali (REMEMBERED); the Nepali text is GENERATED |
 | Story passages stay in the original English | GENERATED | marked on every story card; no Nepali translation of the passages yet |
 | The 070′ observer (`seventy.js`) | REMEMBERED / GENERATED | the theory is REMEMBERED; mapping it onto the game is GENERATED, see `THEORY-070.md` |
-| Text-editor look | GENERATED | to the request for something simple and basic |
+| Text-editor look, painted Miami (neon pink, aqua, sunset), with emojis | GENERATED | to the requests for something simple, then Miami style with emojis |
+| Jacaranda purple background; every Devanagari letter hot pink | REMEMBERED | 5 October 2026 |
+| Tap any text for its exact opposite; tap again to return | REMEMBERED / GENERATED | asked for 5 October 2026; the word pairs in `opposites.js` and every flipped text are GENERATED and marked on screen. In 070′ terms the flip is reversible: T, then T⁻¹ |
 | Stars and score | GENERATED | |
 
 ## Publication

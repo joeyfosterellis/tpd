@@ -28,8 +28,9 @@
  *            (milliseconds lived), language (words of the TPDs read), learning (names
  *            learned, unknown tiles revealed), decay (whispers, shuffles, ghosts and doors
  *            released), experience (wins, losses, stars, knocks, restarts).
- *   T⁻¹    = exists for exactly one event in the game: a swap that makes no match is
- *            swapped back. Nothing else has an inverse. A restart returns the board, not
+ *   T⁻¹    = exists for two things in the game: a swap that makes no match is swapped
+ *            back, and text tapped into its exact opposite is tapped back. Nothing else
+ *            has an inverse. A restart returns the board, not
  *            the time or the breath, so a restart is recorded, not subtracted.
  *   0′     = what you write at the end: your name, plus everything in H.
  *
@@ -54,7 +55,7 @@
   const stateOfNight = i => { for (const s of STATES) if (s.nights.includes(i)) return s.n; return 0; };
 
   // The only event with an inverse.
-  const HAS_INVERSE = { nope: true };
+  const HAS_INVERSE = { nope: true, opposite: true, unopposite: true };
 
   function blankH() {
     return {
@@ -150,6 +151,8 @@
       }
       case 'move':    H.breath++; break;
       case 'nope':    H.inverses++; break;                  // T then T⁻¹
+      case 'opposite':   break;                           // T: the text becomes its opposite
+      case 'unopposite': H.inverses++; break;             // T⁻¹: and comes back
       case 'clear':   H.heat += d.n || 0; break;
       case 'reveal':  H.learning.revealed += d.n || 0; break;
       case 'release': H.decay.released += d.n || 0; break;
