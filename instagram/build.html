@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ne">
+<head>
+<meta charset="utf-8">
+<title>Tootsie in the Desert · Instagram</title>
+<link rel="stylesheet" href="fonts/local.css">
+<style>
+/* Twenty 1080×1350 slides, the game's look: jacaranda purple, Miami neon, hot-pink Devanagari. */
+:root {
+  --paper: #7a4fc2; --deep: #5b3599; --ink: #ffffff; --faint: #e3d6ff; --rule: #9672d6;
+  --aqua: #5ff2e6; --sun: #ffb36b; --pink: #ff3fae; --shade: #2a0f4a;
+  --font: "IBM Plex Mono", "Noto Sans Devanagari", monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: #222; font: 400 30px/1.45 var(--font); color: var(--ink); }
+.slide { width: 1080px; height: 1350px; background: var(--paper); position: relative; display: flex; flex-direction: column; overflow: hidden; margin-bottom: 20px; }
+.bar { background: linear-gradient(90deg, var(--pink), var(--sun) 55%, var(--aqua)); display: flex; justify-content: space-between; padding: 18px 48px; font-size: 26px; font-weight: 600; }
+.body { flex: 1; min-height: 0; overflow: hidden; padding: 40px 64px 18px; display: flex; flex-direction: column; gap: 22px; }
+.foot { padding: 20px 64px 34px; font-size: 24px; color: var(--faint); border-top: 2px solid var(--rule); margin: 0 64px; padding-inline: 0; }
+p, h1, h2, ul, ol, blockquote { margin: 0; }
+.dev { color: var(--pink); font-weight: 700; text-shadow: 0 2px 0 var(--shade), 0 0 10px color-mix(in srgb, var(--shade) 55%, transparent); }
+.en { color: var(--ink); font-weight: 400; }
+.brahmi { font-family: "Noto Sans Brahmi", var(--font); color: var(--aqua); font-size: 1.15em; }
+.em { font-family: "Noto Color Emoji", sans-serif; }
+.em.purple { filter: hue-rotate(190deg) saturate(1.5); }
+.eyebrow { font-size: 26px; color: var(--faint); }
+.neon { font-family: "Pacifico", cursive; font-weight: 400; font-size: 120px; line-height: 1.15; color: var(--pink); text-shadow: 5px 5px 0 var(--aqua), 0 0 30px color-mix(in srgb, var(--pink) 60%, transparent); }
+.palms { font-size: 110px; letter-spacing: 12px; }
+.big { font-size: 64px; }
+.lede { font-size: 34px; color: var(--faint); }
+.lede.big { font-size: 46px; color: var(--ink); }
+.handle { font-size: 30px; color: var(--aqua); }
+.tiles-strip { font-size: 96px; letter-spacing: 10px; margin-top: auto; }
+.cover .body { justify-content: center; gap: 34px; }
+h2 { font-size: 46px; font-weight: 600; }
+.title { font-size: 60px; line-height: 1.15; }
+.title .en { font-size: 36px; }
+.rebus { font-size: 112px; line-height: 1.05; }
+.name { font-size: 36px; font-weight: 600; margin-top: -8px; }
+.words { display: flex; flex-direction: column; gap: 8px; }
+.w { display: flex; align-items: center; gap: 20px; font-size: 28px; line-height: 1.25; }
+.w > .em { font-size: 52px; }
+.words.solo .w { font-size: 46px; } .words.solo .w > .em { font-size: 110px; }
+blockquote { border-left: 6px solid var(--aqua); padding: 4px 0 4px 24px; font-size: 29px; line-height: 1.4; }
+blockquote footer, .a-src { font-size: 22px; color: var(--faint); margin-top: 8px; }
+blockquote.flipped { border-color: var(--pink); }
+.flip { background: color-mix(in srgb, var(--aqua) 30%, transparent); border-bottom: 3px dashed var(--aqua); }
+.archive { background: var(--deep); border: 3px solid var(--sun); border-radius: 10px; padding: 16px 24px; margin-top: auto; }
+.a-head { font-size: 22px; color: var(--sun); }
+.a-cap { font-size: 27px; margin-top: 4px; line-height: 1.35; }
+.archive.hole .void { margin-top: 10px; height: 96px; border: 3px dashed var(--faint); display: grid; place-items: center; text-align: center; font-size: 22px; color: var(--faint); padding: 0 24px; }
+.mini { display: grid; grid-template-columns: repeat(6, 1fr); width: 600px; border: 5px solid var(--pink); border-radius: 10px; box-shadow: 10px 10px 0 var(--aqua); background: var(--deep); align-self: center; }
+.mini .c { aspect-ratio: 1; display: grid; place-items: center; font-size: 62px; border: 1px solid var(--rule); }
+.mini .c.sel { background: color-mix(in srgb, var(--aqua) 35%, transparent); }
+.panel { border-top: 2px solid var(--rule); border-bottom: 2px solid var(--rule); padding: 18px 0; display: flex; flex-direction: column; gap: 10px; }
+.tpd, .branches { font-size: 26px; }
+.k { color: var(--aqua); }
+.steps { font-size: 34px; padding-left: 50px; }
+.branches { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.legend { font-size: 28px; }
+.arrow { font-size: 70px; text-align: center; }
+.eq { font-size: 110px; font-weight: 600; color: var(--pink); text-shadow: 5px 5px 0 var(--aqua); }
+.eq.small { font-size: 34px; color: var(--ink); text-shadow: none; }
+.states { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; font-size: 54px; }
+.states span { display: inline-flex; flex-direction: column; align-items: center; font-size: 54px; }
+.states b { font-size: 24px; color: var(--sun); }
+.states i { font-style: normal; color: var(--faint); font-size: 28px; }
+.namebox { font-size: 80px; letter-spacing: 4px; }
+.cta { font-size: 34px; color: var(--sun); margin-top: auto; }
+</style>
+</head>
+<body>
+<div id="slides"></div>
+<script src="../tootsie-in-the-desert/words.js"></script>
+<script src="../tootsie-in-the-desert/branches.js"></script>
+<script src="../tootsie-in-the-desert/nepali.js"></script>
+<script src="../tootsie-in-the-desert/opposites.js"></script>
+<script src="../tootsie-in-the-desert/levels.js"></script>
+<script src="slides.js"></script>
+</body>
+</html>
