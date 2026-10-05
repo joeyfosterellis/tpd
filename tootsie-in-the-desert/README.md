@@ -1,24 +1,25 @@
 # Tootsie in the Desert (the game)
 
-A match-three game of names, in fourteen nights, built from every draft of Joey Foster Ellis's
-*Tootsie in the Desert*. Swap tiles, spell each name in emoji, and unlock what the name means
-in the story, with every version of the line from every draft side by side.
-
-For adults: the nights quote the drafts in full.
+A match-three game of names in fourteen nights. Swap tiles, spell each name in emoji, and open
+what the name means, with every version of the line from every TPD side by side.
 
 ## Play
 
-Open `index.html` in any browser, on a phone or a computer. No install and no build step.
+Open `index.html` in any browser, on a phone or a computer. No install, no build step.
 
-- Swipe or drag a tile onto its neighbour, or tap one tile and then the next.
+- Touch a word to read it in Brahmi, its TPD, and where it joins the story.
+- Drag a tile onto its neighbour, or tap one tile and then the next.
 - Keyboard: focus the board, arrows move, Enter selects, then an arrow swaps.
-- Match 4 in a line to make a Habibi tile (❤️), which clears its row or column.
-- Match 5 to make the coat of many colours (🌈). Swap it with any tile to clear that whole colour.
+- Match 4 in a line for a ❤️ tile, which clears its row or column.
+- Match 5 for the coat of many colours 🌈. Swap it with any tile to clear that whole colour.
 - Progress is saved in the browser.
 
 ## Files
 
-- `index.html`: the page and its styles
-- `levels.js`: the fourteen nights, every quoted passage, and every version, with its draft
+- `index.html`: the page
+- `words.js`: every word on the board, with its emoji, Brahmi, TPD chain and sentences
+- `levels.js`: the fourteen nights, every passage and every version, each with its TPD
 - `game.js`: the match-three engine and the screens
-- `MANIFEST.md`: what is SOURCED from the drafts and what is GENERATED for the game
+- `seventy.js`: the 070′ observer. Invisible; read it from the console with `o7o.report()`
+- `THEORY-070.md`: 070′ applied to this game
+- `MANIFEST.md`: what is SOURCED and what is GENERATED

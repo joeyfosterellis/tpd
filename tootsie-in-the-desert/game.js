@@ -4,11 +4,14 @@
 
   const N = 8;
   const NIGHTS = window.NIGHTS;
+  const W = window.WORDS;
   const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const T = reduceMotion ? { swap: 60, pop: 80, fall: 90 } : { swap: 170, pop: 230, fall: 220 };
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   const $ = s => document.querySelector(s);
   const rnd = n => Math.floor(Math.random() * n);
+  // 070′: report what happens to the invisible observer (seventy.js). Never blocks play.
+  const O = (type, d) => { try { if (window.o7o) window.o7o.observe(type, d); } catch (e) {} };
 
   // ---------- storage (best effort) ----------
   const store = {
@@ -37,7 +40,7 @@
       const st = starsBy[n.key] || 0;
       return '<li><button class="night" data-i="' + i + '"' + (locked ? ' disabled aria-label="Locked: ' + esc(n.title) + '"' : '') + '>' +
         '<span class="night-icon">' + (locked ? '🔒' : tileHTML(n.icon)) + '</span>' +
-        '<span class="night-text"><span class="eyebrow">' + esc(n.label) + ' · draft: ' + esc(n.draft) + '</span>' +
+        '<span class="night-text"><span class="eyebrow">' + esc(n.label) + ' · TPD ' + esc(n.draft) + '</span>' +
         '<span class="night-title">' + esc(n.title) + '</span></span>' +
         '<span class="night-stars" aria-label="' + st + ' of 3 stars">' + '★'.repeat(st) + '<span class="dim">' + '★'.repeat(3 - st) + '</span></span>' +
         '</button></li>';
@@ -53,12 +56,13 @@
   function openStory(i) {
     cur = i;
     const n = NIGHTS[i];
-    $('#storyEyebrow').textContent = n.label + ' · draft: ' + n.draft;
+    $('#storyEyebrow').textContent = n.label + ' · TPD ' + n.draft;
     $('#storyTitle').textContent = n.title;
     $('#storyText').innerHTML = paras(n.intro.text);
     $('#storySrc').textContent = n.intro.src;
     $('#storyHint').textContent = n.hint;
     show('story');
+    O('read', { night: i, words: n.intro.text.split(/\s+/).length });
   }
   $('#playBtn').addEventListener('click', () => startLevel(cur));
 
@@ -82,6 +86,7 @@
       knocks: 0, moved: 0, busy: false, sel: null, score: 0, done: false,
     };
     tilesEl.innerHTML = ''; overEl.innerHTML = '';
+    $('#wordPanel').innerHTML = '<p class="meta">// touch a word to read where it joins the story</p>';
     for (let y = 0; y < N; y++) { G.grid.push(new Array(N).fill(null)); G.over.push(new Array(N).fill(null)); }
     $('#playTitle').textContent = n.title;
     $('#playEyebrow').textContent = n.label;
@@ -110,7 +115,7 @@
     return tile;
   }
   function paint(tile) {
-    const e = tile.sp === 'rb' ? '🌈' : tile.hid ? '❓' : G.types[tile.t];
+    const e = tile.sp === 'rb' ? '🌈' : tile.hid ? '❓' : W[G.types[tile.t]].e;
     tile.el.innerHTML = tileHTML(e) + (tile.sp === 'h' || tile.sp === 'v' ? '<span class="badge badge-' + tile.sp + '">❤️</span>' : '');
     tile.el.classList.toggle('hid', tile.hid && tile.sp !== 'rb');
     tile.el.classList.toggle('special', !!tile.sp);
@@ -169,7 +174,7 @@
   // ---------- HUD ----------
   function renderHUD() {
     $('#moves').textContent = G.moves;
-    let h = G.goals.map(g => '<li class="goal' + (g.left <= 0 ? ' met' : '') + '">' + tileHTML(g.e) + '<b>' + (g.left > 0 ? g.left : '✓') + '</b></li>').join('');
+    let h = G.goals.map(g => '<li class="goal' + (g.left <= 0 ? ' met' : '') + '">' + tileHTML(W[g.e].e) + esc(W[g.e].word) + ' <b>' + (g.left > 0 ? g.left : '✓') + '</b></li>').join('');
     if (G.overKind) {
       const c = overCount();
       h += '<li class="goal' + (c === 0 ? ' met' : '') + '">' + tileHTML(G.overKind === 'ghost' ? '👻' : '🚪') + '<b>' + (c > 0 ? c : '✓') + '</b></li>';
@@ -232,7 +237,32 @@
       }
       guard++;
     } while (guard < 40 && (findRuns().length > 0 || !hasMove()));
-    if (animate) toast('No moves left. The story reshuffles.');
+    if (animate) { toast('No moves left. The story reshuffles.'); O('shuffle'); }
+  }
+
+  // ---------- the word panel: touch a word, read where it joins the story ----------
+  function mark(text, word) {
+    const safe = esc(text);
+    const re = new RegExp('(' + word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+    return safe.replace(re, '<mark>$1</mark>');
+  }
+  function showWord(tile) {
+    const el = $('#wordPanel');
+    if (!tile) return;
+    if (tile.sp === 'rb') {
+      el.innerHTML = '<p class="w-head"><span class="em">🌈</span> <b>the coat of many colours</b></p><p class="meta">swap it with any word to clear every tile of that word</p>';
+      return;
+    }
+    if (tile.hid) {
+      el.innerHTML = '<p class="w-head"><span class="em">❓</span> <b>unknown</b></p><p class="meta">a match next to it will make it known</p>';
+      return;
+    }
+    const id = G.types[tile.t], w = W[id];
+    el.innerHTML =
+      '<p class="w-head">' + tileHTML(w.e) + ' <b>' + esc(w.word) + '</b> <span class="brahmi" lang="und-Brah">' + window.toBrahmi(w.br) + '</span></p>' +
+      '<p class="w-tpd"><span class="meta">TPD</span> ' + w.tpd.map(esc).join(' <span class="meta">→</span> ') + '</p>' +
+      '<ul class="w-lines">' + w.lines.map(([t, s]) => '<li>' + mark(t, w.word.split(' ')[0]) + ' <span class="meta">' + esc(s) + '</span></li>').join('') + '</ul>';
+    O('touch', { word: id });
   }
 
   // ---------- input ----------
@@ -250,6 +280,7 @@
   boardEl.addEventListener('pointerdown', ev => {
     if (!G || G.busy || G.done) return;
     const c = cellFrom(ev); if (!c) return;
+    showWord(G.grid[c[1]][c[0]]);
     start = { c, x: ev.clientX, y: ev.clientY, moved: false };
     try { boardEl.setPointerCapture(ev.pointerId); } catch (e) {}
   });
@@ -289,6 +320,7 @@
       if (G.sel) { const a = G.sel; select(null); kc = n2; trySwap(a, n2); }
       else kc = n2;
       drawCursor();
+      showWord(G.grid[kc[1]][kc[0]]);
     } else if (k === 'Enter' || k === ' ') { ev.preventDefault(); select(G.sel ? null : kc.slice()); }
   });
   boardEl.addEventListener('focus', () => { if (!kc) kc = [3, 3]; drawCursor(); });
@@ -322,9 +354,11 @@
       A.el.classList.add('nope'); B.el.classList.add('nope');
       await sleep(T.swap + 60);
       A.el.classList.remove('nope'); B.el.classList.remove('nope');
+      O('nope');
       G.busy = false; return;
     }
     G.moves--; G.moved++;
+    O('move');
     renderHUD();
     await resolve([a, b], clearSet);
     await afterTurn();
@@ -367,7 +401,7 @@
       }
       // clear
       const reveal = new Set();
-      let n = 0;
+      let n = 0, released = 0, revealed = 0;
       for (const k of clear) {
         const [x, y] = k.split(',').map(Number);
         const t = G.grid[y][x]; if (!t) continue;
@@ -378,18 +412,21 @@
           setTimeout(() => t.el.classList.remove('born'), 400);
         } else {
           if (t.sp !== 'rb') for (const g of G.goals) if (g.t === t.t && g.left > 0) g.left--;
-          if (t.hid) { t.hid = false; paint(t); }
+          if (t.hid) { t.hid = false; paint(t); revealed++; }
           t.el.classList.add('pop');
           const el = t.el; setTimeout(() => el.remove(), T.pop);
           G.grid[y][x] = null; n++;
         }
-        if (G.over[y][x]) G.over[y][x] = null;
+        if (G.over[y][x]) { G.over[y][x] = null; released++; }
         for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) reveal.add((x + dx) + ',' + (y + dy));
       }
       for (const k of reveal) {
         const [x, y] = k.split(',').map(Number);
-        const t = G.grid[y] && G.grid[y][x]; if (t && t.hid) { t.hid = false; paint(t); }
+        const t = G.grid[y] && G.grid[y][x]; if (t && t.hid) { t.hid = false; paint(t); revealed++; }
       }
+      O('clear', { n, chain });
+      if (revealed) O('reveal', { n: revealed });
+      if (released) O('release', { n: released });
       G.score += n * 10 * chain;
       renderOverlays(); renderHUD();
       await sleep(T.pop);
@@ -419,6 +456,7 @@
         t.t = nt; paint(t);
         t.el.classList.add('whisper'); const el = t.el; setTimeout(() => el.classList.remove('whisper'), 600);
       }
+      O('whisper', { n: n.whisper });
       await sleep(T.pop);
       await resolve(null, null);
     }
@@ -427,6 +465,7 @@
       addOverlays('door', n.over.knockAdd, false);
       boardEl.classList.add('knock'); setTimeout(() => boardEl.classList.remove('knock'), 500);
       toast('The banging continued, fists now pounding even louder against the door.');
+      O('knock');
       renderHUD();
     }
     if (goalsMet()) return win();
@@ -445,10 +484,13 @@
     const st = starsFor();
     starsBy[G.n.key] = Math.max(starsBy[G.n.key] || 0, st); store.set('stars', starsBy);
     if (G.i + 1 > unlocked) { unlocked = Math.min(NIGHTS.length - 1, G.i + 1); store.set('unlocked', unlocked); }
+    O('win', { night: G.i, stars: st });
+    O('learn', { name: G.n.name.word });
     setTimeout(() => showResult(true, st), 450);
   }
   function lose() {
     G.done = true;
+    O('lose', { night: G.i });
     setTimeout(() => showResult(false, 0), 450);
   }
   function showResult(won, st) {
@@ -456,8 +498,7 @@
     const r = $('#resultCard');
     if (!won) {
       r.innerHTML = '<p class="eyebrow">' + esc(n.label) + '</p><h2 class="display">The night ended first.</h2>' +
-        '<p class="lede">Ahmed left before the story was finished. He always did.</p>' +
-        '<div class="actions"><button class="btn primary" id="retry">Try the night again</button><button class="btn" id="toNights">All nights</button></div>';
+        '<div class="actions"><button class="cmd" id="retry">retry</button><button class="cmd" id="toNights">nights</button></div>';
       show('result');
       $('#retry').onclick = () => startLevel(G.i);
       $('#toNights').onclick = () => { renderNights(); show('nights'); };
@@ -468,20 +509,20 @@
       '<p class="eyebrow">' + esc(n.label) + ' · cleared · <span class="stars">' + '★'.repeat(st) + '<span class="dim">' + '★'.repeat(3 - st) + '</span></span></p>' +
       '<p class="rebus" aria-hidden="true">' + n.name.rebus.map(tileHTML).join('') + '</p>' +
       '<h2 class="display">' + esc(n.name.word) + '</h2>' +
-      '<blockquote class="passage">' + paras(n.name.meaning) + '<footer class="stamp"><span>SOURCED</span>' + esc(n.name.src) + '</footer></blockquote>' +
-      (n.versions && n.versions.length ? '<section class="versions"><h3>All versions are correct</h3>' +
+      '<blockquote class="passage">' + paras(n.name.meaning) + '<footer class="stamp">SOURCED · TPD ' + esc(n.name.src) + '</footer></blockquote>' +
+      (n.versions && n.versions.length ? '<section class="versions"><h3>All versions</h3>' +
         n.versions.map(v => '<div class="vgroup"><p class="vlabel">' + esc(v.label) + '</p><ul>' +
           v.items.map(([t, s]) => '<li><span class="vtext">' + esc(t) + '</span><span class="vsrc">' + esc(s) + '</span></li>').join('') +
           '</ul></div>').join('') + '</section>' : '') +
-      '<div class="actions">' + (last ? '<button class="btn primary" id="next">Write your own name</button>' : '<button class="btn primary" id="next">Next night</button>') +
-      '<button class="btn" id="toNights">All nights</button></div>';
+      '<div class="actions">' + (last ? '<button class="cmd" id="next">write your name</button>' : '<button class="cmd" id="next">next night</button>') +
+      '<button class="cmd" id="toNights">nights</button></div>';
     show('result');
     $('#next').onclick = () => last ? openFinale() : openStory(G.i + 1);
     $('#toNights').onclick = () => { renderNights(); show('nights'); };
   }
 
   // ---------- finale ----------
-  const allEmoji = [...new Set(NIGHTS.flatMap(n => n.tiles).concat(['🌈', '❓', '👻', '🚪']))];
+  const allEmoji = [...new Set(NIGHTS.flatMap(n => n.tiles).map(id => W[id].e).concat(['🌈', '❓', '👻', '🚪']))];
   let picks = store.get('picks', []);
   function openFinale() {
     $('#yourName').value = store.get('name', '');
@@ -504,14 +545,15 @@
     e.preventDefault();
     const nm = $('#yourName').value.trim() || 'Habibi';
     store.set('name', nm); store.set('picks', picks);
+    O('return', { name: nm, emoji: picks.slice() });
     const E = window.ENDING;
     $('#ending').innerHTML =
       '<p class="rebus" aria-hidden="true">' + (picks.length ? picks.map(tileHTML).join('') : tileHTML('❓')) + '</p>' +
       '<h2 class="display">' + esc(nm) + '</h2>' +
-      '<blockquote class="passage">' + paras(E.definition.text) + '<footer class="stamp"><span>SOURCED</span>' + esc(E.definition.src) + '</footer></blockquote>' +
-      '<blockquote class="passage quiet">' + paras(E.scheherazade.text) + '<footer class="stamp"><span>SOURCED</span>' + esc(E.scheherazade.src) + '</footer></blockquote>' +
+      '<blockquote class="passage">' + paras(E.definition.text) + '<footer class="stamp">SOURCED · TPD ' + esc(E.definition.src) + '</footer></blockquote>' +
+      '<blockquote class="passage quiet">' + paras(E.scheherazade.text) + '<footer class="stamp">SOURCED · TPD ' + esc(E.scheherazade.src) + '</footer></blockquote>' +
       '<p class="lede center">The story is not finished.</p>' +
-      '<div class="actions"><button class="btn" id="endNights" type="button">Play any night again</button></div>';
+      '<div class="actions"><button class="cmd" id="endNights" type="button">nights</button></div>';
     $('#ending').hidden = false;
     $('#endNights').onclick = () => { renderNights(); show('nights'); };
     $('#ending').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
@@ -524,7 +566,7 @@
     if (to === 'nights') renderNights();
     show(to);
   });
-  $('#restartBtn').addEventListener('click', () => { if (G && !G.busy) startLevel(G.i); });
+  $('#restartBtn').addEventListener('click', () => { if (G && !G.busy) { O('restart', { night: G.i }); startLevel(G.i); } });
 
   renderNights();
   show('title');

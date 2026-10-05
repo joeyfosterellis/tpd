@@ -1,22 +1,21 @@
 // Tootsie in the Desert: the fourteen nights.
-// Every passage below is quoted verbatim from Joey Foster Ellis's drafts of
-// "Tootsie in the Desert". `src` names the draft. All versions are treated as
-// one story: where drafts disagree, the disagreement is shown, not resolved.
+// Every passage below is SOURCED verbatim from a TPD; `src` names the TPD.
+// All versions are one story: where TPDs disagree, every version is kept.
 // Game mechanics, tile choices and level order are GENERATED (see MANIFEST.md).
 
 window.NIGHTS = [
 {
   key: 'prologue', label: 'Prologue', draft: '1453', icon: '🍈',
   title: 'The Durian',
-  tiles: ['🍈', '🦧', '🌴', '⛵', '🏰', '🌙'],
-  goals: [['🍈', 12]], moves: 20,
+  tiles: ['durian', 'orangutan', 'java', 'trader', 'constantinople', 'moon'],
+  goals: [['durian', 12]], moves: 20,
   hint: 'Swap two neighbouring tiles to line up three or more of a kind.',
-  intro: { src: 'Tootsie V1 · Prologue', text:
+  intro: { src: 'V1 · prologue', text:
 `In 1453, on a large Indonesian island west of Java, a Sumatran orangutan witnessed the first introduction of Durian into the western palate. And although that year also marks the fall of Constantinople, the end of the hundred years war, and the introduction of Islam to the west, it is the finding of Durio Zibethinus by an Arabic trader that would forever change the course of history.` },
   name: {
     word: 'The Purple Durian', rebus: ['🍈'],
     meaning: `"Because when you eat Durian, you eat a bit of personal history. It's like you have to base its flavour off of everything you've ever eaten, and it ends up being a true reflection of self, a flashback of identity."`,
-    src: 'Tootsie V1 · Chapter 1',
+    src: 'V1 · chapter 1',
   },
   versions: [
     { label: 'How it smells', items: [
@@ -31,10 +30,10 @@ window.NIGHTS = [
 {
   key: 'faith', label: 'Night 1', draft: 'V1', icon: '✈️',
   title: 'Absolute Faith',
-  tiles: ['🦘', '👶', '🏝️', '🍸', '🔵', '✈️'],
-  goals: [['🦘', 8], ['👶', 8], ['🏝️', 8]], moves: 26,
+  tiles: ['joey', 'foster', 'island', 'negroni', 'token', 'aeroplane'],
+  goals: [['joey', 8], ['foster', 8], ['island', 8]], moves: 26,
   hint: 'Spell his name in emoji: kangaroo, child, island.',
-  intro: { src: 'Tootsie V1 · Chapter 1: Absolute Faith', text:
+  intro: { src: 'V1 · chapter 1', text:
 `Growing up in limbo between a church and a cemetery, Joey had seen apparitions since a kid and was not surprised when the person flying next to him had died thirty years prior. She was Gladys Sinclair, and according to her, she was killed in a 1988 plane crash over the strait of Hormuz.
 
 The steward handed Joey his signature drink, equal parts gin, Campari, and sweet vermouth: a negroni.
@@ -43,7 +42,7 @@ Joey tucked his fancy sweater into his tight tan corduroys, dug deep into his ri
   name: {
     word: 'Joey Foster Ellis', rebus: ['🦘', '👶', '🏝️'],
     meaning: `"My name is Joey," he replied, being a bit cautious of what he was getting himself into. "Joey Foster Ellis. Think Joey like a baby kangaroo, Foster like the child and Ellis like the island."`,
-    src: 'Tootsie V1 · Chapter 1',
+    src: 'V1 · chapter 1',
   },
   versions: [
     { label: 'What "Joey" means', items: [
@@ -59,10 +58,10 @@ Joey tucked his fancy sweater into his tight tan corduroys, dug deep into his ri
 {
   key: 'gladys', label: 'Night 2', draft: 'V1', icon: '👻',
   title: 'Gladys',
-  tiles: ['👑', '🥪', '👗', '🍸', '🥣', '🌹'],
-  goals: [['👑', 8]], over: { kind: 'ghost', count: 12 }, moves: 26,
+  tiles: ['gladys', 'sandwich', 'chiffon', 'negroni', 'labneh', 'rose'],
+  goals: [['gladys', 8]], over: { kind: 'ghost', count: 12 }, moves: 26,
   hint: 'Ghosts haunt the squares. Make a match on a haunted square to let it go.',
-  intro: { src: 'Tootsie V1 · Chapter 1', text:
+  intro: { src: 'V1 · chapter 1', text:
 `As her bluish translucent form softly took shape, Joey saw Gladys's teal chiffon dress shimmer against the first-class seats of the Boeing Dreamliner.
 
 "To be honest, Gladys, I'm worried about you. Ghosts never appear to me without reason, and they always want something and won't leave me alone until it's done."
@@ -73,7 +72,7 @@ Joey tucked his fancy sweater into his tight tan corduroys, dug deep into his ri
   name: {
     word: 'Gladys', rebus: ['👑', '🥪'],
     meaning: `"The name is Gladys," she said, "It's Welsh, meaning princess, but I'm as American as a bologna sandwich... with mustard," she added.`,
-    src: 'Tootsie V1 · Chapter 1',
+    src: 'V1 · chapter 1',
   },
   versions: [
     { label: 'Her clue', items: [
@@ -91,10 +90,10 @@ Joey tucked his fancy sweater into his tight tan corduroys, dug deep into his ri
 {
   key: 'queer', label: 'Night 3', draft: 'V1', icon: '🦆',
   title: 'The Queer Jihad',
-  tiles: ['🦆', '👹', '👽', '💃', '🎭', '🙏'],
-  goals: [['🦆', 5], ['👹', 5], ['👽', 5], ['💃', 5], ['🎭', 5]], moves: 30,
+  tiles: ['quack', 'uggle', 'extranean', 'evangelista', 'raisonneur', 'shukri'],
+  goals: [['quack', 5], ['uggle', 5], ['extranean', 5], ['evangelista', 5], ['raisonneur', 5]], moves: 30,
   hint: 'Collect every letter of QUEER.',
-  intro: { src: 'Tootsie V1 · Chapter 1', text:
+  intro: { src: 'V1 · chapter 1', text:
 `For about nine months prior, after a one-night stand in Bangkok, his partner of that fuck, Sukree, had approached him with a proposition, "Come work for the Queer Jihad in Qatar". Sukree was a five-foot-four Thai Muslim bottom and had supposedly been scoping him out for the job.
 
 "The queer what?" Joey asked.
@@ -107,7 +106,7 @@ Joey tucked his fancy sweater into his tight tan corduroys, dug deep into his ri
   name: {
     word: 'QUEER', rebus: ['🦆', '👹', '👽', '💃', '🎭'],
     meaning: `Quack: Talk loudly and foolishly. Uggle: A horrid ugly thing. Extranean: An outsider, stranger, one not belonging to a home. Evangelista: A person who worships and glorifies the 90s supermodel in an almost religious fashion. Raisonneur: A character in a play, novel, or the like who voices the central theme, philosophy, or point of view of the work.`,
-    src: 'Tootsie V1 · Chapter 1',
+    src: 'V1 · chapter 1',
   },
   versions: [
     { label: 'Sukree', items: [
@@ -122,10 +121,10 @@ Joey tucked his fancy sweater into his tight tan corduroys, dug deep into his ri
 {
   key: 'khakis', label: 'Night 4', draft: 'khakis', icon: '✂️',
   title: 'The Barbershop',
-  tiles: ['✂️', '🧔', '👖', '❤️', '🫒', '🚕'],
-  goals: [['❤️', 10], ['✂️', 8], ['🧔', 8]], moves: 26,
+  tiles: ['barber', 'beard', 'khakis', 'habibi', 'argan', 'taxi'],
+  goals: [['habibi', 10], ['barber', 8], ['beard', 8]], moves: 26,
   hint: 'Match four in a line to make a Habibi tile. It clears its whole row or column.',
-  intro: { src: 'May 2023 manuscript', text:
+  intro: { src: 'May 2023', text:
 `An hour earlier, we led fiercely different lives.
 
 Me a foreign student living in Doha, deciphering Islamic artefacts, and him a barber fashioning marks of masculinity, hiding whatever effeminate traits one was scared to expose.
@@ -158,8 +157,8 @@ Watching each other grow, I unzipped from my stonewashed jeans and him from his 
 {
   key: 'gomorrah', label: 'Night 5', draft: 'gomorrah', icon: '🔥',
   title: 'A Gomorrah in Al-Gharafa',
-  tiles: ['👂', '🕌', '🪞', '🌼', '☁️', '🔥'],
-  goals: [['👂', 10], ['🌼', 8], ['☁️', 8]], moves: 26,
+  tiles: ['adhan', 'musalla', 'mirror', 'daffodil', 'cotton', 'gomorrah'],
+  goals: [['adhan', 10], ['daffodil', 8], ['cotton', 8]], moves: 26,
   hint: 'Daffodil-brown and soft cotton. Listen.',
   intro: { src: 'khakis', text:
 `Watching each other grow, they unzipped from their stonewashed jeans and stood there in their off-white undies. Joey's briefs were a tight-fit, Ahmed's hung loosely around his groin, where the shadow of his package gradually became a mound in a sea of tattered white cloth. Joey's five-nine stature looked meagre against Ahmed's six-foot frame as he leaned upward to kiss his chapped lips, a result of the Qatari sunburn that manifested a reddish glow across both their faces. But Ahmed withdrew from something so intimate, a common occurrence of Middle Eastern men who didn't identify with western labels—making Joey feel rejected.
@@ -195,10 +194,10 @@ Akin to a grand mal seizure, Ahmed's vision rolled back into itself while his Mi
 {
   key: 'loofah', label: 'Night 6', draft: 'loofah', icon: '🧽',
   title: 'Desalination',
-  tiles: ['🧽', '💧', '🚿', '🫒', '🟪', '🍍'],
-  goals: [['💧', 12], ['🧽', 10]], moves: 26,
+  tiles: ['loofah', 'desalination', 'shower', 'argan', 'rayon', 'pineapple'],
+  goals: [['desalination', 12], ['loofah', 10]], moves: 26,
   hint: 'Argan oil, a loofah, purple rayon. Wash it off.',
-  intro: { src: 'May 2023 manuscript', text:
+  intro: { src: 'May 2023', text:
 `Ahmed left the room smelling of argan oil and sweat that the aircon soon extinguished.
 
 Standing there, looking at Ahmed as he washed his body, I saw an enormous strength behind each pass of the loofah. It was as if the sins of our lust were dirt on his skin, and Ahmed had hoped for fresh cells to grow into something purer.
@@ -228,10 +227,10 @@ I knew that purification for Ahmed was half of faith, and his devotion to God, l
 {
   key: 'polaris', label: 'Night 7', draft: 'polaris', icon: '⭐',
   title: 'The Dream',
-  tiles: ['⭐', '☀️', '🌙', '🎼', '🥄', '🐻'],
-  goals: [['⭐', 11], ['☀️', 1], ['🌙', 1]], moves: 16,
+  tiles: ['star', 'sun', 'moon', 'symphony', 'utensils', 'polaris'],
+  goals: [['star', 11], ['sun', 1], ['moon', 1]], moves: 16,
   hint: 'Eleven stars, one sun and a moon.',
-  intro: { src: 'May 2023 manuscript', text:
+  intro: { src: 'May 2023', text:
 `Ahmed turned onto his back and looked toward the ceiling as if its facade were a window to the midnight sky.
 
 "It all started with a dream," he said. "Yousef saw eleven stars, one sun, and a moon in that vision, and they bowed to him as though he was their conductor."
@@ -242,7 +241,7 @@ Orion's belt and the seven sisters were some of the only constellations I knew, 
   name: {
     word: 'Yousef', rebus: ['⭐', '☀️', '🌙'],
     meaning: `"Habibi, you know, I often wonder if Yousef looked a bit like you. Blonde hair, white skin, a coarse Arab beard." ... "What makes the story of your name special is that it's a story about truth."`,
-    src: 'May 2023 manuscript',
+    src: 'May 2023',
   },
   versions: [
     { label: 'Who the stars were', items: [
@@ -250,22 +249,22 @@ Orion's belt and the seven sisters were some of the only constellations I knew, 
       ['"The eleven stars represented the ten brothers and one sister of Yousef." "The Sun represented Jacob, his father and the Moon his mother, Rachel."', 'hydrant · habibi · argan · gomorrah'],
     ]},
     { label: 'What Joey asked', items: [
-      ['"A symphony?"', 'most drafts'],
+      ['"A symphony?"', 'most TPDs'],
       ['"A master of ceremony?"', 'gomorrah'],
     ]},
     { label: 'Who he was meant to be', items: [
-      [`"Just because we didn't turn into the person we wanted to be doesn't mean we didn't turn into the person we were meant to be."`, 'Ahmed, in khakis · coat · May 2023'],
-      [`"Just because we didn't turn into the person we wanted to be doesn't mean we didn't turn into the person we were meant to be," he'd tell himself.`, 'Joey, in hydrant · habibi'],
+      [`"Just because we didn't turn into the person we wanted to be doesn't mean we didn't turn into the person we were meant to be."`, 'said by Ahmed · khakis · coat · May 2023'],
+      [`"Just because we didn't turn into the person we wanted to be doesn't mean we didn't turn into the person we were meant to be," he'd tell himself.`, 'said by Joey · hydrant · habibi'],
     ]},
   ],
 },
 {
   key: 'flamingo', label: 'Night 8', draft: 'flamingo', icon: '🦩',
   title: 'Chinese Whispers',
-  tiles: ['🐸', '🦩', '🔥', '🎺', '📖', '🤴'],
-  goals: [['🦩', 14]], whisper: 2, moves: 24,
+  tiles: ['frog', 'flamingo', 'bonfire', 'yankee', 'quran', 'prince'],
+  goals: [['flamingo', 14]], whisper: 2, moves: 24,
   hint: 'After every move, two tiles are whispered into something else.',
-  intro: { src: 'May 2023 manuscript', text:
+  intro: { src: 'May 2023', text:
 `"There was truth in the stars, but the problem was that he told that truth to his father, and his brother's wife overheard. She then told her husband, and he then told the others."
 
 "Did the story remain the same?"
@@ -274,7 +273,7 @@ I thought about Chinese whispers, my childhood game. Sitting around a bonfire, o
   name: {
     word: 'Quran', rebus: ['📖'],
     meaning: `"Habibi, do you know that 'Quran' in Arabic literally means 'recitation'? It sets Islam above all others in that its words are directly from the source with no syllable tarnished." ... I ignored such blatant religious bias, but I understood translation and its impact in that power came from the translator, not the originator.`,
-    src: 'May 2023 manuscript',
+    src: 'May 2023',
   },
   versions: [
     { label: 'What "Quran" means', items: [
@@ -282,25 +281,25 @@ I thought about Chinese whispers, my childhood game. Sitting around a bonfire, o
       [`"'Quran' in Arabic literally means 'recitation'"`, 'May 2023'],
     ]},
     { label: 'The question', items: [
-      ['"Did the story stay the same?"', 'most drafts'],
+      ['"Did the story stay the same?"', 'most TPDs'],
       ['"Did the story remain the same?"', 'May 2023'],
     ]},
     { label: 'Who overheard', items: [
-      [`"his brother's wife overheard. She then told her husband, and then he told the others."`, 'most drafts'],
+      [`"his brother's wife overheard. She then told her husband, and then he told the others."`, 'most TPDs'],
       [`"The problem was that he told the dream to his father and his brothers overheard."`, 'gomorrah'],
     ]},
     { label: 'Ten years earlier', items: [
-      ['"Chinese whispers in French is Arabic whispers"', 'Apple Note, 27 March 2013'],
+      ['"Chinese whispers in French is Arabic whispers"', 'note · 27 March 2013'],
     ]},
   ],
 },
 {
   key: 'coat', label: 'Night 9', draft: 'coat', icon: '🧥',
   title: 'The Coat of Many Colours',
-  tiles: ['🟥', '🟧', '🟨', '🟩', '🟦', '🟪'],
-  goals: [['🟥', 7], ['🟧', 7], ['🟨', 7], ['🟩', 7], ['🟦', 7], ['🟪', 7]], moves: 28,
+  tiles: ['red', 'orange', 'yellow', 'green', 'blue', 'violet'],
+  goals: [['red', 7], ['orange', 7], ['yellow', 7], ['green', 7], ['blue', 7], ['violet', 7]], moves: 28,
   hint: 'Match five in a line to sew the coat. Swap it with any colour to clear every tile of that colour.',
-  intro: { src: 'May 2023 manuscript', text:
+  intro: { src: 'May 2023', text:
 `"Yes, and it turned Yousef's siblings jealous. The truth was misinterpreted as a brag, and they saw their father bestow favouritism upon Yousef and gift him what was called the coat of many colours."
 
 "Describe it to me?" I asked, trying hard to imagine such a coat of colours in a room full of darkness.
@@ -328,10 +327,10 @@ I thought about Chinese whispers, my childhood game. Sitting around a bonfire, o
 {
   key: 'cigarette', label: 'Night 10', draft: 'cigarette', icon: '🚬',
   title: 'The Knock',
-  tiles: ['🚬', '🎬', '💂', '🧻', '🔒', '🌃'],
-  goals: [['🎬', 8]], over: { kind: 'door', count: 4, knockEvery: 4, knockAdd: 2, knocks: 3 }, moves: 26,
+  tiles: ['cigarette', 'movie', 'guard', 'toilet', 'lock', 'doha'],
+  goals: [['movie', 8]], over: { kind: 'door', count: 4, knockEvery: 4, knockAdd: 2, knocks: 3 }, moves: 26,
   hint: 'Every few moves, someone knocks. Clear every door before your moves run out.',
-  intro: { src: 'May 2023 manuscript', text:
+  intro: { src: 'May 2023', text:
 `We lived a life of fear, to love in fear, go out in fear, touch in fear.
 
 One might say we did it because it's like sneaking a cigarette behind your mother's back, knowing the consequences if she were to smell you, but you do it anyway because you're a rebel or because you're just a kid.
@@ -344,7 +343,7 @@ Panic rushed through us.` },
   name: {
     word: 'A friend', rebus: ['🎬'],
     meaning: `The light flicked on, showing two guards. ... "Who are you?" the taller one asked Ahmed. "A friend. Watching a movie." The taller guard paused, looking intensely at Ahmed and then myself before returning his gaze to Ahmed again.`,
-    src: 'May 2023 manuscript',
+    src: 'May 2023',
   },
   versions: [
     { label: 'How long in Doha', items: [
@@ -363,10 +362,10 @@ Panic rushed through us.` },
 {
   key: 'musalla', label: 'Night 11', draft: 'musalla', icon: '🕌',
   title: 'Qada Salah',
-  tiles: ['🕌', '🤲', '💧', '📖', '🧎', '🌙'],
-  goals: [['🤲', 10], ['📖', 8], ['💧', 8]], moves: 26,
+  tiles: ['musalla', 'ahmed', 'wudu', 'fatiha', 'salah', 'maghrib'],
+  goals: [['ahmed', 10], ['fatiha', 8], ['wudu', 8]], moves: 26,
   hint: 'Wudu first: hands, face, arms, head and feet.',
-  intro: { src: 'May 2023 manuscript', text:
+  intro: { src: 'May 2023', text:
 `Intrigued by the rituals I had seen my classmates practice in the musalla just outside my door, I asked him about the significance of the prayer he was about to perform.
 
 Ahmed began by imparting to me the knowledge of wudu, the ritual ablution that precedes the act of prayer. With delicate precision, he demonstrated the cleansing of hands, face, arms, head, and feet, imbuing each gesture with the sanctity of tradition.
@@ -375,7 +374,7 @@ He told me when to recite the opening chapter of the Quran, Al-Fatiha, and when 
   name: {
     word: 'Qada Salah', rebus: ['🤲', '🕌'],
     meaning: `"I missed the Maghrib earlier because we were together. So, I'll perform a Qada Salah, a makeup prayer for the one I missed. I still need to thank Allah for the day and seek His guidance. 'Qada' in Arabic means 'to fulfil,' and 'Salah' means 'prayer.' So, 'Qada Salah' is essentially fulfilling the missed prayer."`,
-    src: 'May 2023 manuscript',
+    src: 'May 2023',
   },
   versions: [
     { label: 'What Joey called him', items: [
@@ -392,17 +391,17 @@ He told me when to recite the opening chapter of the Quran, Al-Fatiha, and when 
 {
   key: 'lavender', label: 'Night 12', draft: 'lavender', icon: '💜',
   title: 'The Unknown',
-  tiles: ['💜', '🌅', '🪞', '🏙️', '🌫️', '🔑'],
-  goals: [['💜', 10], ['🌅', 8]], hidden: 0.45, moves: 26,
+  tiles: ['lavender', 'sundown', 'mirror', 'city', 'unknown', 'truth'],
+  goals: [['lavender', 10], ['sundown', 8]], hidden: 0.45, moves: 26,
   hint: 'Some tiles are unknown. They still match. A match next to one reveals it.',
-  intro: { src: 'May 2023 manuscript', text:
+  intro: { src: 'May 2023', text:
 `The night had started with the pinkness of the Qatari sundown burning against the mirrored glass windows of my Lavender Village apartment dorm room.
 
 Now it ended with the absence of light and a quiet headiness while I wondered why Yousef never just denied the dream. I thought back to before about what truths to choose for myself, others, and the world. Why not all? Not here, not anywhere really, because I understood then that if you decided to be open in your world, they would find out about it in this world. I honestly questioned if concealing something saved you or if the act of revealment freed a path for your story to begin.` },
   name: {
     word: 'God', rebus: ['❓'],
     meaning: `"I just clump everything the world throws at me into a pile, especially the stuff I don't understand, and then label that pile the 'unknown' and rename it 'God.' If I don't know something, then God must know it because that is the 'unknown.'"`,
-    src: 'every draft',
+    src: 'every TPD',
   },
   versions: [
     { label: 'What Ahmed asked', items: [
@@ -420,15 +419,15 @@ Now it ended with the absence of light and a quiet headiness while I wondered wh
 {
   key: 'tootsie', label: 'The Last Night', draft: 'May 2023', icon: '💃',
   title: 'Tootsie in the Desert',
-  tiles: ['💃', '🏜️', '👠', '💄', '👑', '💅'],
-  goals: [['💃', 15], ['👠', 8]], whisper: 1, hidden: 0.2, moves: 30,
+  tiles: ['tootsie', 'desert', 'drag', 'makeup', 'queen', 'concealer'],
+  goals: [['tootsie', 15], ['drag', 8]], whisper: 1, hidden: 0.2, moves: 30,
   hint: 'Everything shifts. Some of it is unknown. Dance anyway.',
-  intro: { src: 'desalination · preface', text:
+  intro: { src: 'desalination', text:
 `Why "Tootsie in the Desert"? Because the games are just dressed up in drag, hiding for a brief moment the truth that lies beneath it.` },
   name: {
     word: 'Tootsie in the Desert', rebus: ['💃', '🏜️'],
     meaning: `"I later coined it "Tootsie in the Desert," a drag queen forever shifting in the dunes, signifying our ever-changing identities. Examining naming's impact, we might cultivate self-awareness, inclusivity, and societal acceptance."`,
-    src: 'May 2023 manuscript',
+    src: 'May 2023',
   },
   versions: [
     { label: 'Why the title', items: [
@@ -441,5 +440,5 @@ Now it ended with the absence of light and a quiet headiness while I wondered wh
 
 window.ENDING = {
   definition: { src: 'khakis', text: `"Yes. Exactly. Define us. But it is not the names that define us; it is who we are that write the definition."` },
-  scheherazade: { src: 'May 2023 manuscript', text: `Like Scheherazade, Ahmed left each night without ever completely finishing the narrative. He dealt only with the beginning of Yousef's story mainly because that's where he and I were at our start.` },
+  scheherazade: { src: 'May 2023', text: `Like Scheherazade, Ahmed left each night without ever completely finishing the narrative. He dealt only with the beginning of Yousef's story mainly because that's where he and I were at our start.` },
 };
