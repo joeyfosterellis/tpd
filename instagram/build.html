@@ -35,8 +35,9 @@ p, h1, h2, ul, ol, blockquote { margin: 0; }
 h2 { font-size: 46px; font-weight: 600; }
 .title { font-size: 60px; line-height: 1.15; }
 .title .en { font-size: 36px; }
-.rebus { font-size: 112px; line-height: 1.05; }
-.name { font-size: 36px; font-weight: 600; margin-top: -8px; }
+.rebus-row { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+.rebus { font-size: 96px; line-height: 1.05; }
+.name { font-size: 36px; font-weight: 600; }
 .words { display: flex; flex-direction: column; gap: 8px; }
 .w { display: flex; align-items: center; gap: 20px; font-size: 28px; line-height: 1.25; }
 .w > .em { font-size: 52px; }
@@ -48,7 +49,7 @@ blockquote.flipped { border-color: var(--pink); }
 .archive { background: var(--deep); border: 3px solid var(--sun); border-radius: 10px; padding: 16px 24px; margin-top: auto; }
 .a-head { font-size: 22px; color: var(--sun); }
 .a-cap { font-size: 27px; margin-top: 4px; line-height: 1.35; }
-.archive.hole .void { margin-top: 10px; height: 96px; border: 3px dashed var(--faint); display: grid; place-items: center; text-align: center; font-size: 22px; color: var(--faint); padding: 0 24px; }
+.archive.hole .void { margin-top: 8px; min-height: 56px; padding-block: 8px; border: 3px dashed var(--faint); display: grid; place-items: center; text-align: center; font-size: 20px; color: var(--faint); padding: 6px 24px; }
 .mini { display: grid; grid-template-columns: repeat(6, 1fr); width: 600px; border: 5px solid var(--pink); border-radius: 10px; box-shadow: 10px 10px 0 var(--aqua); background: var(--deep); align-self: center; }
 .mini .c { aspect-ratio: 1; display: grid; place-items: center; font-size: 62px; border: 1px solid var(--rule); }
 .mini .c.sel { background: color-mix(in srgb, var(--aqua) 35%, transparent); }
@@ -66,16 +67,46 @@ blockquote.flipped { border-color: var(--pink); }
 .states b { font-size: 24px; color: var(--sun); }
 .states i { font-style: normal; color: var(--faint); font-size: 28px; }
 .namebox { font-size: 80px; letter-spacing: 4px; }
+.p2 { color: var(--faint); }
+.p2.small, .small { font-size: 0.8em; }
+/* the poll: one option per TPD */
+.poll { background: var(--shade); border: 3px solid var(--pink); border-radius: 18px; padding: 16px 22px; display: flex; flex-direction: column; gap: 10px; }
+.poll-head { font-size: 22px; color: var(--pink); }
+.poll-q { font-size: 30px; font-weight: 600; line-height: 1.25; }
+.opts { display: flex; flex-direction: column; gap: 8px; }
+.opt { display: grid; grid-template-columns: 36px 1fr; column-gap: 12px; align-items: baseline; background: var(--paper); border-radius: 999px; padding: 6px 20px; }
+.opt b { color: var(--aqua); grid-row: span 2; font-size: 28px; }
+.o-t { font-size: 26px; line-height: 1.25; }
+.o-s { font-size: 18px; color: var(--faint); }
+.poll-all { font-size: 20px; color: var(--aqua); }
+/* TikTok: 1080 × 1920, text kept clear of the side buttons and the caption at the bottom */
+.night .title { font-size: 50px; }
+.night .title .p2 { font-size: 30px; }
+.night blockquote { font-size: 26px; }
+.night .archive .a-cap { font-size: 24px; }
+.night .body { gap: 13px; }
+.night .poll { gap: 7px; padding: 14px 22px; }
+.mini { width: 520px !important; }
+.mini .c { font-size: 52px; }
+.fmt-tt .slide { height: 1920px; }
+.fmt-tt .body { padding: 100px 160px 20px 64px; gap: 26px; }
+.fmt-tt .foot { margin-bottom: 330px; margin-right: 160px; }
+.fmt-tt .rebus { font-size: 110px; }
+.fmt-tt .title { font-size: 66px; }
+.fmt-tt .neon { font-size: 110px; }
+.fmt-tt .mini { width: 640px; }
 .cta { font-size: 34px; color: var(--sun); margin-top: auto; }
 </style>
 </head>
 <body>
 <div id="slides"></div>
+<script src="../tootsie-in-the-desert/deva.js"></script>
 <script src="../tootsie-in-the-desert/words.js"></script>
 <script src="../tootsie-in-the-desert/branches.js"></script>
 <script src="../tootsie-in-the-desert/nepali.js"></script>
 <script src="../tootsie-in-the-desert/opposites.js"></script>
 <script src="../tootsie-in-the-desert/levels.js"></script>
+<script src="i18n.js"></script>
 <script src="slides.js"></script>
 </body>
 </html>
