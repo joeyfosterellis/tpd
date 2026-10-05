@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="ne">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tootsie in the Desert</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Noto+Sans+Brahmi&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Noto+Sans+Brahmi&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
 <style>
 /* Layout: a plain text editor. One file, one column, one typeface. */
 :root {
@@ -16,7 +16,7 @@
   --rule: #e2e2e2;
   --gutter: #f6f6f6;
   --mark: #7a3fd1;      /* the purple durian: selection, the cursor, the one accent */
-  --font: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font: "IBM Plex Mono", "Noto Sans Devanagari", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) { --paper: #161616; --ink: #e6e6e6; --faint: #7d7d7d; --rule: #2c2c2c; --gutter: #1d1d1d; --mark: #b48cff; color-scheme: dark; }
@@ -36,6 +36,7 @@ body { margin: 0; background: var(--paper); color: var(--ink); font: 400 15px/1.
 section[id] { display: flex; flex-direction: column; gap: 1.2em; }
 h1, h2, h3, p, blockquote, ul, ol { margin: 0; }
 h1, h2 { font-size: 1rem; font-weight: 600; }
+h1 .en, h2 .en { font-weight: 400; }
 h1::before, h2::before { content: "# "; color: var(--faint); font-weight: 400; }
 .meta { color: var(--faint); }
 .dim { opacity: 0.3; }
@@ -117,6 +118,16 @@ button:focus-visible, input:focus-visible, #board:focus-visible { outline: 1px d
 .toast::before { content: "> "; color: var(--faint); }
 .toast.on { opacity: 1; }
 
+/* English beside Nepali */
+.en { color: var(--faint); font-weight: 400; }
+h2 .en::before { content: "· "; }
+.night-title { font-weight: 600; }
+.night-en { color: var(--faint); font-size: 0.85rem; }
+.ne { font-size: 1.15rem; }
+.w-branches { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.25em; font-size: 0.85rem; }
+.kind { color: var(--mark); }
+.kind::after { content: ":"; color: var(--faint); }
+
 /* the word panel */
 .word-panel { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: 0.8em; display: flex; flex-direction: column; gap: 0.5em; min-height: 6.5em; }
 .w-head { display: flex; align-items: baseline; gap: 0.6em; flex-wrap: wrap; }
@@ -167,35 +178,37 @@ mark { background: color-mix(in srgb, var(--mark) 22%, transparent); color: inhe
 <main class="wrap">
 
   <section id="title">
-    <h1>Tootsie in the Desert</h1>
-    <p>A game of names in fourteen nights.</p>
-    <p>Every tile is a word. Touch a word to read it in Brahmi, its TPD, and where it joins the story. Swap two to line up three of a kind. Each night spells a name.</p>
+    <h1>टुट्सी इन द डेजर्ट <span class="en">Tootsie in the Desert</span></h1>
+    <p>चौध रातमा नामहरूको खेल।<br><span class="en">A game of names in fourteen nights.</span></p>
+    <p>हरेक टायल एउटा शब्द हो। शब्द छुनुहोस्: नेपाली, ब्राह्मी, त्यसको TPD, र त्यो कथामा कहाँ जोडिन्छ। दुई टायल साटेर तीन मिलाउनुहोस्। हरेक रातले एउटा नाम लेख्छ।<br>
+    <span class="en">Every tile is a word. Touch a word to read it in Nepali and Brahmi, its TPD, and where it joins the story. Swap two to line up three. Each night spells a name.</span></p>
     <div class="cmds">
-      <button class="cmd" data-go="nights">begin</button>
-      <button class="cmd" data-go="about">about</button>
+      <button class="cmd" data-go="nights">सुरु · begin</button>
+      <button class="cmd" data-go="about">बारेमा · about</button>
     </div>
   </section>
 
   <section id="nights" hidden>
-    <div class="hud"><h2>Nights</h2><button class="cmd" data-go="title">back</button></div>
+    <div class="hud"><h2>रातहरू <span class="en">Nights</span></h2><button class="cmd" data-go="title">फर्क · back</button></div>
     <ol class="night-list" id="nightList"></ol>
   </section>
 
   <section id="story" hidden>
-    <div class="hud"><span class="meta" id="storyEyebrow"></span><button class="cmd" data-go="nights">back</button></div>
+    <div class="hud"><span class="meta" id="storyEyebrow"></span><button class="cmd" data-go="nights">फर्क · back</button></div>
     <h2 id="storyTitle"></h2>
+    <p class="meta">मूल अङ्ग्रेजीमा · in the original English</p>
     <blockquote class="passage">
       <div id="storyText" class="passage"></div>
       <footer class="stamp">SOURCED · TPD <span id="storySrc"></span></footer>
     </blockquote>
     <p class="hint" id="storyHint"></p>
-    <div class="cmds"><button class="cmd" id="playBtn">play</button></div>
+    <div class="cmds"><button class="cmd" id="playBtn">खेल · play</button></div>
   </section>
 
   <section id="play" hidden>
     <div class="hud">
       <span><span class="meta" id="playEyebrow"></span> <span id="playTitle"></span></span>
-      <span><span id="moves">0</span> <span class="meta">moves</span></span>
+      <span><span id="moves">०</span> <span class="meta">चाल · moves</span></span>
     </div>
     <ul class="goals" id="goals" aria-label="Goals"></ul>
     <div id="board" tabindex="0" role="application" aria-label="Game board. Arrow keys move, Enter selects, then an arrow swaps.">
@@ -206,8 +219,8 @@ mark { background: color-mix(in srgb, var(--mark) 22%, transparent); color: inhe
     <div id="wordPanel" class="word-panel" aria-live="polite"></div>
     <p class="hint" id="playHint"></p>
     <div class="hud">
-      <span class="meta">score <span id="score">0</span></span>
-      <span class="cmds"><button class="cmd" id="restartBtn">restart</button><button class="cmd" data-go="nights">nights</button></span>
+      <span class="meta">अङ्क · score <span id="score">०</span></span>
+      <span class="cmds"><button class="cmd" id="restartBtn">फेरि · restart</button><button class="cmd" data-go="nights">रातहरू · nights</button></span>
     </div>
   </section>
 
@@ -216,26 +229,28 @@ mark { background: color-mix(in srgb, var(--mark) 22%, transparent); color: inhe
   </section>
 
   <section id="finale" hidden>
-    <h2>Your name</h2>
+    <h2>तपाईंको नाम <span class="en">Your name</span></h2>
     <form id="nameForm" style="display:flex;flex-direction:column;gap:1.2em">
       <div class="field">
-        <label for="yourName">name</label>
+        <label for="yourName">नाम · name</label>
         <input id="yourName" name="yourName" autocomplete="given-name" maxlength="40" placeholder="Habibi">
       </div>
       <div class="field">
-        <label>in emoji, up to three</label>
+        <label>इमोजीमा, तीनसम्म · in emoji, up to three</label>
         <div class="picked" id="picked"></div>
         <div class="emoji-pick" id="emojiPick"></div>
       </div>
-      <div class="cmds"><button class="cmd" type="submit">write</button></div>
+      <div class="cmds"><button class="cmd" type="submit">लेख · write</button></div>
     </form>
     <div id="ending" hidden style="display:flex;flex-direction:column;gap:1.2em"></div>
   </section>
 
   <section id="about" hidden>
-    <div class="hud"><h2>About</h2><button class="cmd" data-go="title">back</button></div>
-    <p>Every passage comes from a TPD. All versions are one story. Where TPDs disagree, every version is kept and shown side by side.</p>
-    <p>Every tile is a word. Touch it to see the word in Brahmi, the word's own TPD (how it became that word), and the sentences where it joins the story.</p>
+    <div class="hud"><h2>बारेमा <span class="en">About</span></h2><button class="cmd" data-go="title">फर्क · back</button></div>
+    <p>हरेक अंश एउटा TPD बाट आएको हो। सबै संस्करण एउटै कथा हुन्। TPD हरू फरक परे, सबै संस्करण सँगै राखिएका छन्।<br>
+    <span class="en">Every passage comes from a TPD. All versions are one story. Where TPDs disagree, every version is kept and shown side by side.</span></p>
+    <p>हरेक टायल एउटा शब्द हो: नेपालीमा, ब्राह्मीमा, अरू भाषामा, उस्तै आवाजमा, र गलत सुनिएको रूपमा पनि। गलत अनुवाद पनि शब्दको TPD हो।<br>
+    <span class="en">Every tile is a word: in Nepali, in Brahmi, in other languages, in words that sound the same, and as it gets misheard. A mistranslation is part of the word's TPD too.</span></p>
     <p class="meta">TPDs in this game:</p>
     <ul class="about-list">
       <li>V1</li>
@@ -245,7 +260,7 @@ mark { background: color-mix(in srgb, var(--mark) 22%, transparent); color: inhe
     </ul>
     <dl class="stamps">
       <dt>SOURCED</dt><dd>every passage, meaning and version, with its TPD</dd>
-      <dt>GENERATED</dt><dd>the game: tiles, emoji names, the order of the nights, ghosts, doors, whispers, unknown tiles; each word's emoji, its TPD chain and its Brahmi spelling</dd>
+      <dt>GENERATED</dt><dd>the game: tiles, emoji names, the order of the nights, ghosts, doors, whispers, unknown tiles; each word's emoji, its Nepali, its Brahmi, its TPD chain and its branches</dd>
     </dl>
   </section>
 
@@ -253,6 +268,8 @@ mark { background: color-mix(in srgb, var(--mark) 22%, transparent); color: inhe
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="seventy.js"></script>
 <script src="words.js"></script>
+<script src="branches.js"></script>
+<script src="nepali.js"></script>
 <script src="levels.js"></script>
 <script src="game.js"></script>
 </body>

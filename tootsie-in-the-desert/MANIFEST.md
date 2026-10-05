@@ -69,10 +69,15 @@ in the game.
 | Unknown tiles (❓) on Night 12 and the last night | GENERATED | from the unknown renamed God, SOURCED to every TPD |
 | Habibi tile (match 4) and the coat of many colours (match 5) | GENERATED | |
 | Your name in emoji, at the end | GENERATED | |
-| Every tile is a word (`words.js`): 80 words from the story | GENERATED | the choice of words and their emoji |
+| Every tile is a word (`words.js`): 79 words from the story | GENERATED | the choice of words and their emoji |
 | Each word's sentences, shown when the word is touched | SOURCED | verbatim, each with its TPD |
 | Each word's TPD chain (how the word became that word) | GENERATED | from general etymology, not from the record; where an origin is uncertain the chain says so |
-| Each word in Brahmi | GENERATED | spelled by sound with a simple scheme, so it is approximate; English sounds Brahmi lacks (f, z) are the nearest letters |
+| Each word in Nepali (Devanagari), how it is said, and its Nepali note | GENERATED | `nepali.js`; to be read by a Nepali speaker before it is trusted |
+| Each word in Brahmi | GENERATED | converted letter by letter from the Nepali Devanagari, which descends from Brahmi |
+| Each word's branches: other languages, sound-alikes, mishearings, other lives | GENERATED | `branches.js`, from general knowledge; uncertain claims say so; items marked SOURCED come from a TPD |
+| Jabba the Hutt heard as "Java the Hut" | REMEMBERED | 5 October 2026: a mishearing is part of the word's TPD |
+| Nepali first, English beside it, in every screen | REMEMBERED / GENERATED | Nepali is the main language because the main player is Nepali (REMEMBERED); the Nepali text is GENERATED |
+| Story passages stay in the original English | GENERATED | marked on every story card; no Nepali translation of the passages yet |
 | The 070′ observer (`seventy.js`) | REMEMBERED / GENERATED | the theory is REMEMBERED; mapping it onto the game is GENERATED, see `THEORY-070.md` |
 | Text-editor look | GENERATED | to the request for something simple and basic |
 | Stars and score | GENERATED | |

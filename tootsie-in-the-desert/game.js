@@ -5,6 +5,9 @@
   const N = 8;
   const NIGHTS = window.NIGHTS;
   const W = window.WORDS;
+  const NE = window.NE, U = NE.ui, B = window.BRANCHES || {};
+  const nd = n => NE.digits(n);
+  const neTitle = n => NE.nights[n.key][0], neLabel = n => NE.nights[n.key][1];
   const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const T = reduceMotion ? { swap: 60, pop: 80, fall: 90 } : { swap: 170, pop: 230, fall: 220 };
   const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -40,8 +43,8 @@
       const st = starsBy[n.key] || 0;
       return '<li><button class="night" data-i="' + i + '"' + (locked ? ' disabled aria-label="Locked: ' + esc(n.title) + '"' : '') + '>' +
         '<span class="night-icon">' + (locked ? '🔒' : tileHTML(n.icon)) + '</span>' +
-        '<span class="night-text"><span class="eyebrow">' + esc(n.label) + ' · TPD ' + esc(n.draft) + '</span>' +
-        '<span class="night-title">' + esc(n.title) + '</span></span>' +
+        '<span class="night-text"><span class="eyebrow">' + esc(neLabel(n)) + ' · ' + esc(n.label) + ' · TPD ' + esc(n.draft) + '</span>' +
+        '<span class="night-title">' + esc(neTitle(n)) + '</span><span class="night-en">' + esc(n.title) + '</span></span>' +
         '<span class="night-stars" aria-label="' + st + ' of 3 stars">' + '★'.repeat(st) + '<span class="dim">' + '★'.repeat(3 - st) + '</span></span>' +
         '</button></li>';
     }).join('');
@@ -56,11 +59,11 @@
   function openStory(i) {
     cur = i;
     const n = NIGHTS[i];
-    $('#storyEyebrow').textContent = n.label + ' · TPD ' + n.draft;
-    $('#storyTitle').textContent = n.title;
+    $('#storyEyebrow').textContent = neLabel(n) + ' · ' + n.label + ' · TPD ' + n.draft;
+    $('#storyTitle').innerHTML = esc(neTitle(n)) + ' <span class="en">' + esc(n.title) + '</span>';
     $('#storyText').innerHTML = paras(n.intro.text);
     $('#storySrc').textContent = n.intro.src;
-    $('#storyHint').textContent = n.hint;
+    $('#storyHint').innerHTML = esc(NE.hints[n.key]) + '<br><span class="en">' + esc(n.hint) + '</span>';
     show('story');
     O('read', { night: i, words: n.intro.text.split(/\s+/).length });
   }
@@ -86,11 +89,11 @@
       knocks: 0, moved: 0, busy: false, sel: null, score: 0, done: false,
     };
     tilesEl.innerHTML = ''; overEl.innerHTML = '';
-    $('#wordPanel').innerHTML = '<p class="meta">// touch a word to read where it joins the story</p>';
+    $('#wordPanel').innerHTML = '<p class="meta">' + esc(U.touch) + '</p>';
     for (let y = 0; y < N; y++) { G.grid.push(new Array(N).fill(null)); G.over.push(new Array(N).fill(null)); }
-    $('#playTitle').textContent = n.title;
-    $('#playEyebrow').textContent = n.label;
-    $('#playHint').textContent = n.hint;
+    $('#playTitle').textContent = neTitle(n) + ' · ' + n.title;
+    $('#playEyebrow').textContent = neLabel(n);
+    $('#playHint').innerHTML = esc(NE.hints[n.key]) + '<br><span class="en">' + esc(n.hint) + '</span>';
     show('play');
     layout();
     // fill without initial matches
@@ -173,14 +176,14 @@
 
   // ---------- HUD ----------
   function renderHUD() {
-    $('#moves').textContent = G.moves;
-    let h = G.goals.map(g => '<li class="goal' + (g.left <= 0 ? ' met' : '') + '">' + tileHTML(W[g.e].e) + esc(W[g.e].word) + ' <b>' + (g.left > 0 ? g.left : '✓') + '</b></li>').join('');
+    $('#moves').textContent = nd(G.moves);
+    let h = G.goals.map(g => '<li class="goal' + (g.left <= 0 ? ' met' : '') + '">' + tileHTML(W[g.e].e) + esc(NE.words[g.e][0]) + ' <b>' + (g.left > 0 ? nd(g.left) : '✓') + '</b></li>').join('');
     if (G.overKind) {
       const c = overCount();
-      h += '<li class="goal' + (c === 0 ? ' met' : '') + '">' + tileHTML(G.overKind === 'ghost' ? '👻' : '🚪') + '<b>' + (c > 0 ? c : '✓') + '</b></li>';
+      h += '<li class="goal' + (c === 0 ? ' met' : '') + '">' + tileHTML(G.overKind === 'ghost' ? '👻' : '🚪') + '<b>' + (c > 0 ? nd(c) : '✓') + '</b></li>';
     }
     $('#goals').innerHTML = h;
-    $('#score').textContent = G.score;
+    $('#score').textContent = nd(G.score);
   }
   let toastTimer = null;
   function toast(msg) {
@@ -237,7 +240,7 @@
       }
       guard++;
     } while (guard < 40 && (findRuns().length > 0 || !hasMove()));
-    if (animate) { toast('No moves left. The story reshuffles.'); O('shuffle'); }
+    if (animate) { toast(U.noMoves); O('shuffle'); }
   }
 
   // ---------- the word panel: touch a word, read where it joins the story ----------
@@ -250,17 +253,22 @@
     const el = $('#wordPanel');
     if (!tile) return;
     if (tile.sp === 'rb') {
-      el.innerHTML = '<p class="w-head"><span class="em">🌈</span> <b>the coat of many colours</b></p><p class="meta">swap it with any word to clear every tile of that word</p>';
+      el.innerHTML = '<p class="w-head"><span class="em">🌈</span> <b>' + esc(U.coatWord) + '</b></p><p class="meta">' + esc(U.coatHelp) + '</p>';
       return;
     }
     if (tile.hid) {
-      el.innerHTML = '<p class="w-head"><span class="em">❓</span> <b>unknown</b></p><p class="meta">a match next to it will make it known</p>';
+      el.innerHTML = '<p class="w-head"><span class="em">❓</span> <b>' + esc(U.unknownWord) + '</b></p><p class="meta">' + esc(U.unknownHelp) + '</p>';
       return;
     }
-    const id = G.types[tile.t], w = W[id];
+    const id = G.types[tile.t], w = W[id], ne = NE.words[id];
+    const K = U.kinds;
+    const branches = (ne[2] ? [['नेपाली', ne[2]]] : []).concat(B[id] || []);
     el.innerHTML =
-      '<p class="w-head">' + tileHTML(w.e) + ' <b>' + esc(w.word) + '</b> <span class="brahmi" lang="und-Brah">' + window.toBrahmi(w.br) + '</span></p>' +
+      '<p class="w-head">' + tileHTML(w.e) + ' <b class="ne">' + esc(ne[0]) + '</b>' +
+        ' <span class="brahmi" lang="und-Brah">' + window.devaToBrahmi(ne[0]) + '</span>' +
+        ' <span class="meta">' + esc(ne[1]) + ' · </span><b>' + esc(w.word) + '</b></p>' +
       '<p class="w-tpd"><span class="meta">TPD</span> ' + w.tpd.map(esc).join(' <span class="meta">→</span> ') + '</p>' +
+      (branches.length ? '<ul class="w-branches">' + branches.map(([k, t]) => '<li><span class="kind">' + esc(K[k] || k) + '</span> ' + esc(t) + '</li>').join('') + '</ul>' : '') +
       '<ul class="w-lines">' + w.lines.map(([t, s]) => '<li>' + mark(t, w.word.split(' ')[0]) + ' <span class="meta">' + esc(s) + '</span></li>').join('') + '</ul>';
     O('touch', { word: id });
   }
@@ -346,7 +354,7 @@
         const other = A.sp === 'rb' ? B : A, rb = A.sp === 'rb' ? A : B;
         clearSet.add(rb.x + ',' + rb.y);
         for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) { const t = G.grid[y][x]; if (t.sp !== 'rb' && t.t === other.t) clearSet.add(x + ',' + y); }
-        toast('The coat of many colours.');
+        toast(U.coatToast);
       }
     } else if (findRuns().length === 0) {
       swapGrid(a[0], a[1], b[0], b[1]);
@@ -464,7 +472,7 @@
       G.knocks++;
       addOverlays('door', n.over.knockAdd, false);
       boardEl.classList.add('knock'); setTimeout(() => boardEl.classList.remove('knock'), 500);
-      toast('The banging continued, fists now pounding even louder against the door.');
+      toast(U.knockToast);
       O('knock');
       renderHUD();
     }
@@ -497,8 +505,8 @@
     const n = G.n;
     const r = $('#resultCard');
     if (!won) {
-      r.innerHTML = '<p class="eyebrow">' + esc(n.label) + '</p><h2 class="display">The night ended first.</h2>' +
-        '<div class="actions"><button class="cmd" id="retry">retry</button><button class="cmd" id="toNights">nights</button></div>';
+      r.innerHTML = '<p class="eyebrow">' + esc(neLabel(n)) + ' · ' + esc(n.label) + '</p><h2 class="display">' + esc(U.endedFirst) + '</h2>' +
+        '<div class="actions"><button class="cmd" id="retry">' + esc(U.retry) + '</button><button class="cmd" id="toNights">' + esc(U.nights) + '</button></div>';
       show('result');
       $('#retry').onclick = () => startLevel(G.i);
       $('#toNights').onclick = () => { renderNights(); show('nights'); };
@@ -506,16 +514,16 @@
     }
     const last = G.i === NIGHTS.length - 1;
     r.innerHTML =
-      '<p class="eyebrow">' + esc(n.label) + ' · cleared · <span class="stars">' + '★'.repeat(st) + '<span class="dim">' + '★'.repeat(3 - st) + '</span></span></p>' +
+      '<p class="eyebrow">' + esc(neLabel(n)) + ' · ' + esc(n.label) + ' · ✓ <span class="stars">' + '★'.repeat(st) + '<span class="dim">' + '★'.repeat(3 - st) + '</span></span></p>' +
       '<p class="rebus" aria-hidden="true">' + n.name.rebus.map(tileHTML).join('') + '</p>' +
       '<h2 class="display">' + esc(n.name.word) + '</h2>' +
       '<blockquote class="passage">' + paras(n.name.meaning) + '<footer class="stamp">SOURCED · TPD ' + esc(n.name.src) + '</footer></blockquote>' +
-      (n.versions && n.versions.length ? '<section class="versions"><h3>All versions</h3>' +
+      (n.versions && n.versions.length ? '<section class="versions"><h3>' + esc(U.allVersions) + '</h3>' +
         n.versions.map(v => '<div class="vgroup"><p class="vlabel">' + esc(v.label) + '</p><ul>' +
           v.items.map(([t, s]) => '<li><span class="vtext">' + esc(t) + '</span><span class="vsrc">' + esc(s) + '</span></li>').join('') +
           '</ul></div>').join('') + '</section>' : '') +
-      '<div class="actions">' + (last ? '<button class="cmd" id="next">write your name</button>' : '<button class="cmd" id="next">next night</button>') +
-      '<button class="cmd" id="toNights">nights</button></div>';
+      '<div class="actions">' + (last ? '<button class="cmd" id="next">' + esc(U.writeName) + '</button>' : '<button class="cmd" id="next">' + esc(U.next) + '</button>') +
+      '<button class="cmd" id="toNights">' + esc(U.nights) + '</button></div>';
     show('result');
     $('#next').onclick = () => last ? openFinale() : openStory(G.i + 1);
     $('#toNights').onclick = () => { renderNights(); show('nights'); };
@@ -531,13 +539,13 @@
     $('#ending').hidden = true;
     show('finale');
   }
-  function renderPicked() { $('#picked').innerHTML = picks.length ? picks.map(tileHTML).join('') : '<span class="dim">Pick up to three</span>'; }
+  function renderPicked() { $('#picked').innerHTML = picks.length ? picks.map(tileHTML).join('') : '<span class="dim">' + esc(U.pickUpTo) + '</span>'; }
   $('#emojiPick').addEventListener('click', e => {
     const b = e.target.closest('.pick'); if (!b) return;
     const em = b.dataset.e;
     if (picks.includes(em)) picks = picks.filter(p => p !== em);
     else if (picks.length < 3) picks.push(em);
-    else return toast('Three is enough for a name.');
+    else return toast(U.threeEnough);
     b.classList.toggle('on', picks.includes(em)); b.setAttribute('aria-pressed', picks.includes(em));
     renderPicked();
   });
@@ -552,8 +560,8 @@
       '<h2 class="display">' + esc(nm) + '</h2>' +
       '<blockquote class="passage">' + paras(E.definition.text) + '<footer class="stamp">SOURCED · TPD ' + esc(E.definition.src) + '</footer></blockquote>' +
       '<blockquote class="passage quiet">' + paras(E.scheherazade.text) + '<footer class="stamp">SOURCED · TPD ' + esc(E.scheherazade.src) + '</footer></blockquote>' +
-      '<p class="lede center">The story is not finished.</p>' +
-      '<div class="actions"><button class="cmd" id="endNights" type="button">nights</button></div>';
+      '<p class="lede center">' + esc(U.notFinished) + '</p>' +
+      '<div class="actions"><button class="cmd" id="endNights" type="button">' + esc(U.nights) + '</button></div>';
     $('#ending').hidden = false;
     $('#endNights').onclick = () => { renderNights(); show('nights'); };
     $('#ending').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
